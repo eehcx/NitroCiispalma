@@ -1,4 +1,5 @@
 # Configuraciones 
+[Dependencias en uso]([URL](https://www.notion.so/eehcx/CiispalmaApp-21defb2fa1dc4d6498ee240158a6f98e?pvs=4))
 
 &nbsp;
 
