@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "351676747017",
+    "firebase_url": "https://ciispalmaapp-default-rtdb.firebaseio.com",
+    "project_id": "ciispalmaapp",
+    "storage_bucket": "ciispalmaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351676747017:android:4e78cf3a1cc716f7f357d8",
+        "android_client_info": {
+          "package_name": "com.ciispalma.CalculatorApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351676747017-jsf294b15k3nmkb65glpbet9hre01erd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2rKriyFbueTzN43BCZxASiFSFFimOQAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351676747017-jsf294b15k3nmkb65glpbet9hre01erd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
