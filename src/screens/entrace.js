@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, StatusBar, Alert, Button, ImageBackground, TouchableOpacity, Text, View } from 'react-native';
 const styles = StyleSheet.create({
     safeArea: {
-    backgroundColor: 'white',
+        backgroundColor: 'white',
     },
 });
 
