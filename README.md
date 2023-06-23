@@ -72,5 +72,5 @@ npm react-native start
     ```
 - #### *Si no te aparece el menú, entonces ejecuta:*
     ```
-    npm react-native run-android
+    npx react-native run-android
     ```

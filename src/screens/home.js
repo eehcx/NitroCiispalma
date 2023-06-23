@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native';
 
-
 const HomeScreen = ({ navigateToScreen }) => {
   return (
       
