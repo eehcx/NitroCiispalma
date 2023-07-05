@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
     },
     activeIndicator: {
     backgroundColor: '#6c9b6d'
+    },
+    entraceText: {
+        fontWeight: '300',
+        color: '#e6e6fa',
     }
 });
 
@@ -55,14 +59,16 @@ const InputScreen = ({ navigateToScreen }) => {
             <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
-                source={require('../assets/signup.jpg')}
+                source={require('../assets/fondo2.jpg')}
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
+                <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>
-                        <Text style={[styles.heading, { color: '#fafafa' }]}>Attention to the moment</Text>
-                        <Text style={[styles.caption, { color: '#fafafa' }]}>Prompt service = happy customers.</Text>
+                        <Text style={[styles.heading, { color: '#fafafa' }]}>Ciispalma Calculator</Text>
+                        <Text style={[styles.caption, { color: '#fafafa' }]}>El Aceite de Palma: Un Tesoro para la Salud y el Sabor</Text>
                     </View>
+                </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     button: {
     padding: 13,
-    backgroundColor: '#1a624f',
+    backgroundColor: '#336633',
     borderRadius: 15,
     width: 150,
     },
