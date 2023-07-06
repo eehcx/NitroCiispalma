@@ -1,0 +1,52 @@
+{
+    "clientes_aniadado": {
+        "1": {
+            "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
+            "informes": {
+                "fecha": "2023-07-05",
+                "contenido": "Este es el informe del Cliente 1",
+                "calculo": {
+                    "nombre": "Cálculo 1",
+                    "resultado": 150.5
+                }
+            },
+            "fecha_creacion": "2023-07-05"
+        }
+    },
+    "clientes": {
+        "1": {
+            "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
+            "informes": {
+                "id": "1"
+            },
+            "fecha_creacion": "2023-07-05"
+        }
+    },
+    "informes": {
+        "1": {
+            "procedencia": "Variada",
+            "tipo_cultivo": "Palma de aceite",
+            "fecha_recepcion": "2023-07-05",
+            "fecha_entrega": "2023-07-05",
+            "no_solicitud": "28",
+            "no_muestra": "23",
+            "metodo_usado": "Método 1",
+            "observaciones": "Estas son las observaciones del informe 1",
+            "paquetes":{
+                "1": {
+                    "nombre": "Completo",
+                    "analisis": ["pH", "CE", "MO", "P", "K", "Mg", "Ca", "Fe", "Cu", "Mn", "Zn", "S", "B"]
+                }
+            },
+            "calculo": {
+                "id": "1"
+            }
+        }
+    },
+    "calculos": {
+        "1": {
+            "nombre": "Cálculo 1",
+            "resultado": 150.5
+        }
+    }
+}
