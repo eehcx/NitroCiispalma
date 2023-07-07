@@ -1,18 +1,4 @@
 {
-    "clientes_aniadado": {
-        "1": {
-            "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
-            "informes": {
-                "fecha": "2023-07-05",
-                "contenido": "Este es el informe del Cliente 1",
-                "calculo": {
-                    "nombre": "Cálculo 1",
-                    "resultado": 150.5
-                }
-            },
-            "fecha_creacion": "2023-07-05"
-        }
-    },
     "clientes": {
         "1": {
             "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
@@ -35,7 +21,7 @@
             "paquetes":{
                 "1": {
                     "nombre": "Completo",
-                    "analisis": ["pH", "CE", "MO", "P", "K", "Mg", "Ca", "Fe", "Cu", "Mn", "Zn", "S", "B"]
+                    "analisis": ["pH", "Conductividad eléctrica(CE)", "Materia orgánica(MO)", "Fósforo (P)", "Potasio(K)", "Magnesio (Mg)", "Calcio (Ca)", "Hierro (Fe)", "Cobre (Cu)", "Magnesio (Mn)", "Zinc (Zn)", "Azufre (S)", "Boro (B)"]
                 }
             },
             "calculo": {
@@ -44,9 +30,80 @@
         }
     },
     "calculos": {
-        "1": {
-            "nombre": "Cálculo 1",
-            "resultado": 150.5
+        "pH": {
+            "1":{
+                "IdLab":"B",
+                "Valor": 12.6
+            }
+        },
+        "CE":{
+            "1":{
+                "IdLab":"P",
+                "CE us/cm":"101.00",
+                "dsm-1": "101.00"
+            }
+        },
+        "MO":{
+            "1":{
+                "IdLab":"517",
+                "mL FeSO4": "13.6",
+                "MO(%)": "4.38"
+            }
+        },
+        "H-AI": {
+            "IdLab": "12378",
+            "P. Muestra (g)":"5",
+                "Alícuota (ml)":"40",
+                "Vol. Estrac (ml)":"50",
+                "N HCl":"0.0955",
+                "N NaOH":"0.0984",
+            "1":{
+                "Acidez":{
+                    "ml NaOH":"",
+                    "cmol":"",
+                    "promedio":{
+                    }
+                },
+                "Aluminio":{
+                    "ml HCl":"",
+                    "cmol":"",
+                    "promedio":{
+                    }
+                }
+            }
+        },
+        "bases_intercambiables":{
+            "1":{
+                "IdLab": "12378",
+                "calcio":{
+                    "ppm":"",
+                    "cmol kg":"",
+                    "promedio":{
+
+                    }
+                },
+                "potacio":{
+                    "ppm":"",
+                    "cmol kg":"",
+                    "promedio": {
+
+                    }
+                },
+                "magnecio":{
+                    "ppm":"",
+                    "cmol kg":"",
+                    "promedio":{
+
+                    }
+                },
+                "sodio":{
+                    "ppm":"",
+                    "cmol kg":"",
+                    "promedio":{
+                        
+                    }
+                }
+            }
         }
     }
 }
