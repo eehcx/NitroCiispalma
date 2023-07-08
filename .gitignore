@@ -1,7 +1,5 @@
 # Dependency directories
 /node_modules
-/android/app/libs
-/android/app/build
 /ios/Pods
 /ios/Podfile.lock
 /ios/build
@@ -12,11 +10,6 @@
 # Android specific files
 **/local.properties
 **/*.keystore
-
-# Gradle files
-**/gradle-wrapper.jar
-**/.gradle
-**/build/
 
 # React Native Debug files
 **/android/app/src/debug/**
