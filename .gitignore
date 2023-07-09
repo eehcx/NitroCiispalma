@@ -1,5 +1,8 @@
 # Dependency directories
 /node_modules
+/android
+/android/app/libs
+/android/app/build
 /ios/Pods
 /ios/Podfile.lock
 /ios/build
@@ -16,8 +19,30 @@
 **/android/app/src/staging/**
 **/android/app/src/release/**
 
-# Node.js files
-package-lock.json
-npm-debug.log
-yarn.lock
+# Android Studio files
+/.idea
+.gradle
+/local.properties
+/.gradle
+/captures
+
+# Build files for Android
+**/build/
+**/app/build/
+**/android/app/build/
+
+# Android Emulator files
+/AndroidStudioProjects/*.avd/
+
+# Proguard files
+**/proguard-rules.pro
+**/proguard-*.txt
+
+# Google Play Services configuration files
+**/google-services.json
+
+# Keystore files
+**/*.jks
+
+
 

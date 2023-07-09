@@ -7,7 +7,7 @@ import SignipScreen from './screens/sigin';
 // COMPONENTES
 
 const App = () => {
-  const [currentScreen, setCurrentScreen] = useState('entrace');
+  const [currentScreen, setCurrentScreen] = useState('home');
 
   const navigateToScreen = (screen) => {
     setCurrentScreen(screen);
