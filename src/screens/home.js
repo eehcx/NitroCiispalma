@@ -1,33 +1,17 @@
-import React from 'react';
-// import type {PropsWithChildren} from 'react';
-import { 
-  StyleSheet, 
-  Switch, 
-  TouchableOpacity, 
-  Alert, 
-  TextInput, 
-  Text, 
-  Button, 
-  View, 
-  ImageBackground 
-} from 'react-native';
-// import { styled } from 'nativewind';
-import { styled } from 'nativewind';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
-const StyledTouchableOpacity = styled(TouchableOpacity)
+import NavBar from '../components/NativationBar';
 
-import Notices from '../components/announcements';
-
-const HomeScreen = ({ navigateToScreen }) => {
+const MainScreen = ({navigateToScreen}) => {
   return (
-      
-      <StyledView style={{ flex: 1 }}>
-        <Notices />
-      </StyledView>
+    <View style={{ flex: 1 }}>
+      <Text>
+        Hola
+      </Text>
+      <NavBar />
+    </View>
   );
 };
 
-
-export default HomeScreen;
+export default MainScreen;
