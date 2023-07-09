@@ -1,48 +1,14 @@
 # Dependency directories
 /node_modules
 /android
-/android/app/libs
-/android/app/build
-/ios/Pods
-/ios/Podfile.lock
-/ios/build
-
-# macOS specific files
-.DS_Store
-
-# Android specific files
-**/local.properties
-**/*.keystore
-
-# React Native Debug files
-**/android/app/src/debug/**
-**/android/app/src/staging/**
-**/android/app/src/release/**
+/ios
 
 # Android Studio files
 /.idea
-.gradle
-/local.properties
-/.gradle
-/captures
+/.bundle
 
-# Build files for Android
-**/build/
-**/app/build/
-**/android/app/build/
-
-# Android Emulator files
-/AndroidStudioProjects/*.avd/
-
-# Proguard files
-**/proguard-rules.pro
-**/proguard-*.txt
-
-# Google Play Services configuration files
-**/google-services.json
-
-# Keystore files
-**/*.jks
+# IDE files
+/.vscode
 
 
 
