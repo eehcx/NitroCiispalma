@@ -33,7 +33,7 @@ const SignipScreen = ({ navigateToScreen }) => {
 
     return (
         <ImageBackground
-        source={require('../assets/signup.jpg')}
+        source={require('../assets/images/signup.jpg')}
         style={styles.imageBackground}
         resizeMode="cover"
       >

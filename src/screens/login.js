@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withExpoSnack } from 'nativewind';
 import { StyleSheet, Switch, TouchableOpacity,  Alert, TextInput, Text, Button, View, ImageBackground } from 'react-native';
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -45,7 +44,7 @@ const LoginScreen = ({ navigateToScreen }) => {
             <TextInput style={InputForms.input} 
             placeholder="Contraseña" 
             secureTextEntry={true}
-            maxLength={10}
+            maxLength={30}
             value={password}
             onChangeText={setPassword}
             />

@@ -1,9 +1,10 @@
 import React from 'react';
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
-
 //REACT NATIVE Y TAILWIND CSS
-import { StyleSheet, SafeAreaView, StatusBar, Alert, Button, ImageBackground, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, StatusBar, Alert, Button, ImageBackground, TouchableOpacity, View } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
+
 const styles = StyleSheet.create({
     safeArea: {
         backgroundColor: 'white',
@@ -23,13 +24,11 @@ const styles = StyleSheet.create({
         marginRight: 100
     },
     heading: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#fafafa'
+        fontWeight: 'bold',
+        color: '#fafafa'
     },
     caption: {
-    fontSize: 25,
-    color: '#fafafa'
+        color: '#fafafa'
     },
     indicatorContainer: {
     flexDirection: 'row',
@@ -54,19 +53,20 @@ const styles = StyleSheet.create({
 });
 
 const InputScreen = ({ navigateToScreen }) => {
+    const theme = useTheme();
     return (
         <View style={{ flex: 1 }}>
             <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
-                source={require('../assets/fondo2.jpg')}
+                source={require('../assets/images/fondo2.jpg')}
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>
-                        <Text style={[styles.heading, { color: '#fafafa' }]}>Ciispalma Calculator</Text>
-                        <Text style={[styles.caption, { color: '#fafafa' }]}>El Aceite de Palma: Un Tesoro para la Salud y el Sabor</Text>
+                        <Text variant='displayMedium' style={[styles.heading, { color: '#fafafa' }]}>Ciispalma Calculator</Text>
+                        <Text variant='titleLarge' style={[styles.caption, { color: '#fafafa' }]}>El Aceite de Palma: Un Tesoro para la Salud y el Sabor</Text>
                     </View>
                 </View>
                 </View>
