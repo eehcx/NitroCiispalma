@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Switch, TouchableOpacity,  Alert, TextInput, Text, Button, View, ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Firebase dependencias e importaciones
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from '../firebase';
@@ -9,7 +11,7 @@ import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
 
 const LoginScreen = ({ navigateToScreen }) => {
-  //onPress={handleLogin}
+    onPress={handleLogin}
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -21,7 +23,20 @@ const LoginScreen = ({ navigateToScreen }) => {
         .then((userCredential) => {
           console.log('Usuario loggeado');
           const user = userCredential.user;
-          //console.log(user);
+
+          // Guardar el estado de la sesión con AsyncStorage
+          const saveLoginState = async (user) => {
+            try {
+              await AsyncStorage.setItem('user', JSON.stringify(user));
+            } catch (error) {
+              console.log('Error al guardar el estado de inicio de sesión:', error);
+            }
+          };
+
+          // Guardar el estado de la sesión
+          saveLoginState(user);
+
+          console.log(user);
           // Realiza la navegación a la siguiente pantalla
           navigateToScreen('home');
         })
@@ -57,6 +72,6 @@ const LoginScreen = ({ navigateToScreen }) => {
         </View>
         </View>
     );
-};
+}
 
 export default LoginScreen;

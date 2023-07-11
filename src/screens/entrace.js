@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#6c9b6d'
     },
     entraceText: {
-        fontWeight: '300',
         color: '#e6e6fa',
     }
 });
@@ -73,15 +72,15 @@ const InputScreen = ({ navigateToScreen }) => {
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
                         <TouchableOpacity style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
-                            <Text style={buttonStyles.buttonText}>LOG IN</Text>
+                            <Text variant='titleSmall' style={buttonStyles.buttonText}>LOG IN</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
-                            <Text style={buttonStyles.buttonText_signup}>SIGN UP</Text>
+                            <Text variant='titleSmall' style={buttonStyles.buttonText_signup}>SIGN UP</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ alignItems: 'center', marginBottom: 30 }}>
-                        <Text style={styles.entraceText}>Colabora con 
-                            <Text style={{ fontWeight: '500' }}> Ciispalma</Text>
+                        <Text variant='titleMedium' style={styles.entraceText}>Colabora con 
+                            <Text style={styles.entraceText}> Ciispalma</Text>
                         </Text>
                     </View>
                 </View>

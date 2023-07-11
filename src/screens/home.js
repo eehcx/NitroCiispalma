@@ -1,17 +1,35 @@
-import * as React from 'react';
-import { View, StatusBar, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import { Button, Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // Pantallas de la aplicación
 import ProfileScreen from './profile';
 import SettingsScreen from './settings';
+import buttonStyles from '../styles/buttonStyles';
 
 const Tab = createBottomTabNavigator();
 
 export default MainBarScreen = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginState();
+  }, []);
+
+  const checkLoginState = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user');
+      if (user) {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.log('Error al verificar el estado de inicio de sesión:', error);
+    }
+  };
+
   return (
     <NavigationContainer>
       <Tab.Navigator
