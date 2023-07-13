@@ -1,9 +1,10 @@
 import React from 'react';
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
-
 //REACT NATIVE Y TAILWIND CSS
-import { StyleSheet, SafeAreaView, StatusBar, Alert, Button, ImageBackground, TouchableOpacity, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, StatusBar, Alert, ImageBackground, View } from 'react-native';
+import { useTheme, Text, Button, TouchableRipple,  } from 'react-native-paper';
+
 const styles = StyleSheet.create({
     safeArea: {
         backgroundColor: 'white',
@@ -23,13 +24,11 @@ const styles = StyleSheet.create({
         marginRight: 100
     },
     heading: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: '#fafafa'
+        fontWeight: 'bold',
+        color: '#fafafa'
     },
     caption: {
-    fontSize: 25,
-    color: '#fafafa'
+        color: '#fafafa'
     },
     indicatorContainer: {
     flexDirection: 'row',
@@ -48,40 +47,40 @@ const styles = StyleSheet.create({
     backgroundColor: '#6c9b6d'
     },
     entraceText: {
-        fontWeight: '300',
         color: '#e6e6fa',
     }
 });
 
 const InputScreen = ({ navigateToScreen }) => {
+    const theme = useTheme();
     return (
         <View style={{ flex: 1 }}>
             <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
-                source={require('../assets/fondo2.jpg')}
+                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} 
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>
-                        <Text style={[styles.heading, { color: '#fafafa' }]}>Ciispalma Calculator</Text>
-                        <Text style={[styles.caption, { color: '#fafafa' }]}>El Aceite de Palma: Un Tesoro para la Salud y el Sabor</Text>
+                        <Text variant='displayMedium' style={[styles.heading, { color: '#fafafa' }]}>Ciispalma Calculator</Text>
+                        <Text variant='titleLarge' style={[styles.caption, { color: '#fafafa' }]}>El Aceite de Palma: Un Tesoro para la Salud y el Sabor</Text>
                     </View>
                 </View>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
-                        <TouchableOpacity style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
-                            <Text style={buttonStyles.buttonText}>LOG IN</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
-                            <Text style={buttonStyles.buttonText_signup}>SIGN UP</Text>
-                        </TouchableOpacity>
+                        <TouchableRipple style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
+                            <Text variant='titleSmall' style={buttonStyles.buttonText}>LOG IN</Text>
+                        </TouchableRipple>
+                        <TouchableRipple style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
+                            <Text variant='titleSmall' style={buttonStyles.buttonText_signup}>SIGN UP</Text>
+                        </TouchableRipple>
                     </View>
                     <View style={{ alignItems: 'center', marginBottom: 30 }}>
-                        <Text style={styles.entraceText}>Colabora con 
-                            <Text style={{ fontWeight: '500' }}> Ciispalma</Text>
+                        <Text variant='titleMedium' style={styles.entraceText}>Colabora con 
+                            <Text style={styles.entraceText}> Ciispalma</Text>
                         </Text>
                     </View>
                 </View>

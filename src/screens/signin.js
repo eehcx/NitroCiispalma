@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../firebase';
+import { firebaseConfig } from '../utils/firebase/firebase';
 
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
@@ -33,7 +33,7 @@ const SignipScreen = ({ navigateToScreen }) => {
 
     return (
         <ImageBackground
-        source={require('../assets/signup.jpg')}
+        source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/signup.jpg?alt=media&token=1b56ef87-73b9-49b2-b9ef-5ed793977835' }} 
         style={styles.imageBackground}
         resizeMode="cover"
       >

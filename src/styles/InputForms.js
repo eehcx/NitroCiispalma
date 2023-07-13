@@ -20,7 +20,7 @@ export default StyleSheet.create({
     },
     formTitle: {
         fontSize: 26,
-        color: '#000',
+        color: '#2F363B',
         fontWeight: 'bold',
         marginBottom: 20,
     },
@@ -28,8 +28,8 @@ export default StyleSheet.create({
         width: '100%',
         height: 37,
         borderWidth: 1,
-        backgroundColor: '#e6e6fa',
-        borderColor: '#e6e6fa',
+        backgroundColor: '#ECECEC',
+        borderColor: '#ECECEC',
         borderRadius: 20,
         marginBottom: 15,
         paddingHorizontal: 10,
@@ -37,7 +37,7 @@ export default StyleSheet.create({
     signInText: {
         marginTop: 20,
         fontSize: 16,
-        color: '#000',
+        color: '#2F363B',
     },
     signInLink: {
         color: '#4ab269'

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     button: {
     padding: 13,
-    backgroundColor: '#336633',
+    backgroundColor: '#1E6E28',
     borderRadius: 15,
     width: 150,
     },
@@ -19,12 +19,12 @@ export default StyleSheet.create({
     },
     button_signup: {
     padding: 13,
-    backgroundColor: '#e6e6fa',
+    backgroundColor: '#ECECEC',
     borderRadius: 15,
     width: 150,
     },
     buttonText_signup: {
-    color: '#270d52',
+    color: '#2F363B',
     fontWeight: 'bold',
     textAlign: 'center',
     },
@@ -32,7 +32,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 8,
-        backgroundColor: '#5fdd85',
+        backgroundColor: '#87ED95',
         borderRadius: 19,
         width: 180,
         height: 40,

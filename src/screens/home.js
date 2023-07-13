@@ -1,33 +1,133 @@
-import React from 'react';
-// import type {PropsWithChildren} from 'react';
-import { 
-  StyleSheet, 
-  Switch, 
-  TouchableOpacity, 
-  Alert, 
-  TextInput, 
-  Text, 
-  Button, 
-  View, 
-  ImageBackground 
-} from 'react-native';
-// import { styled } from 'nativewind';
-import { styled } from 'nativewind';
+import React, { useState, useEffect } from 'react';
+import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer, CommonActions } from '@react-navigation/native';
+import { Button, Text, BottomNavigation, Card } from 'react-native-paper';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const StyledView = styled(View)
-const StyledText = styled(Text)
-const StyledTouchableOpacity = styled(TouchableOpacity)
+// Pantallas de la aplicación
+import ProfileScreen from './profile';
+import SettingsScreen from './settings';
+import buttonStyles from '../styles/buttonStyles';
 
-import Notices from '../components/announcements';
+const Tab = createBottomTabNavigator();
 
-const HomeScreen = ({ navigateToScreen }) => {
+export default MainBarScreen = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginState();
+  }, []);
+
+  const checkLoginState = async () => {
+    try {
+      const user = await AsyncStorage.getItem('user');
+      if (user) {
+        setIsLoggedIn(true);
+      }
+    } catch (error) {
+      console.log('Error al verificar el estado de inicio de sesión:', error);
+    }
+  };
+
   return (
-      
-      <StyledView style={{ flex: 1 }}>
-        <Notices />
-      </StyledView>
+    <NavigationContainer>
+      <Tab.Navigator
+        initialRouteName="home" // Ruta por defecto al iniciar la aplicación
+        screenOptions={{
+          headerShown: false,
+        }}
+        tabBar={({ navigation, state, descriptors, insets }) => (
+          <BottomNavigation.Bar
+            navigationState={state}
+            safeAreaInsets={insets}
+            onTabPress={({ route, preventDefault }) => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
+              if (!event.defaultPrevented) {
+                navigation.dispatch({
+                  ...CommonActions.navigate(route.name),
+                  target: state.key,
+                });
+              }
+            }}
+            renderIcon={({ route, focused, color }) => {
+              const { options } = descriptors[route.key];
+              if (options.tabBarIcon) {
+                return options.tabBarIcon({ focused, color, size: 24 });
+              }
+              return null;
+            }}
+            getLabelText={({ route }) => {
+              const { options } = descriptors[route.key];
+              const label =
+                options.tabBarLabel !== undefined
+                  ? options.tabBarLabel
+                  : options.title !== undefined
+                  ? options.title
+                  : route.name;
+              return label;
+            }}
+          />
+        )}
+      >
+        <Tab.Screen
+          name="settings"
+          component={SettingsScreen}
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="settings" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="home"
+          component={HomeScreen}
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="home" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="profile"
+          component={ProfileScreen}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color, size }) => (
+              <Ionicons name="person" size={size} color={color} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 };
 
+function HomeScreen() {
+  return (
+    <View style={ styles.container }>
+      <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
+      <Text variant="headlineMedium">Home!</Text>
+      <Card>
+        <Card.Content>
+          <Text variant="titleLarge"></Text>
+          <Text variant="bodyMedium">Card content</Text>
+        </Card.Content>
+      </Card>
+    </View>
+  );
+}
 
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
