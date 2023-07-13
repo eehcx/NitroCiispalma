@@ -2,8 +2,8 @@ import React from 'react';
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
 //REACT NATIVE Y TAILWIND CSS
-import { StyleSheet, SafeAreaView, StatusBar, Alert, Button, ImageBackground, TouchableOpacity, View } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { StyleSheet, SafeAreaView, StatusBar, Alert, ImageBackground, View } from 'react-native';
+import { useTheme, Text, Button, TouchableRipple,  } from 'react-native-paper';
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -58,7 +58,7 @@ const InputScreen = ({ navigateToScreen }) => {
             <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
-                source={require('../assets/images/fondo2.jpg')}
+                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} 
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
                 <View style={{ flex: 1 }}>
@@ -71,12 +71,12 @@ const InputScreen = ({ navigateToScreen }) => {
                 </View>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
-                        <TouchableOpacity style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
+                        <TouchableRipple style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
                             <Text variant='titleSmall' style={buttonStyles.buttonText}>LOG IN</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
+                        </TouchableRipple>
+                        <TouchableRipple style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
                             <Text variant='titleSmall' style={buttonStyles.buttonText_signup}>SIGN UP</Text>
-                        </TouchableOpacity>
+                        </TouchableRipple>
                     </View>
                     <View style={{ alignItems: 'center', marginBottom: 30 }}>
                         <Text variant='titleMedium' style={styles.entraceText}>Colabora con 

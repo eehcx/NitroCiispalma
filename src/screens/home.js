@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, CommonActions } from '@react-navigation/native';
-import { Button, Text, BottomNavigation } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Button, Text, BottomNavigation, Card } from 'react-native-paper';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 // Pantallas de la aplicación
 import ProfileScreen from './profile';
@@ -80,7 +80,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Settings',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" color={color} size={size} />
+              <Ionicons name="settings" size={size} color={color} />
             ),
           }}
         />
@@ -90,7 +90,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="home" color={color} size={size} />
+              <Ionicons name="home" size={size} color={color} />
             ),
           }}
         />
@@ -100,7 +100,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="person" color={color} size={size} />
+              <Ionicons name="person" size={size} color={color} />
             ),
           }}
         />
@@ -111,9 +111,15 @@ export default MainBarScreen = () => {
 
 function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
+    <View style={ styles.container }>
+      <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
       <Text variant="headlineMedium">Home!</Text>
+      <Card>
+        <Card.Content>
+          <Text variant="titleLarge"></Text>
+          <Text variant="bodyMedium">Card content</Text>
+        </Card.Content>
+      </Card>
     </View>
   );
 }

@@ -1,7 +1,6 @@
 //cosas a considerar el numero de salida depende de los numeros de digitos a mostrar, por lo que se siguio en base a lo mostrado en excel
 //tambien que las entradas estan fixeadas pero al ser una funcion aparte no se incluye esta deberia ser usada al introducir los campos a la base de datos
 
-
 //CE
 //Convierte CE us/cm a dsm^-1
 function CE_Cm_Dsm(Ce_uscm)

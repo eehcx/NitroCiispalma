@@ -1,48 +1,17 @@
-# Dependency directories
-/node_modules
-/yarn.lock
-/package-lock.json
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
 
-# Android Studio files
-
-# Build directories
-/android/app/build
-/ios/build
-
-# macOS specific files
+# macOS
 .DS_Store
 
-# Android specific files
-**/local.properties
-**/*.keystore
-
-# Editor-specific files
-.idea/
-.vscode/
-/.idea
-/.bundle
-
-# React Native Debug files
-**/android/app/src/debug/**
-**/android/app/src/staging/**
-**/android/app/src/release/**
-
-# Node.js files
-npm-debug.log*
-
-# Miscellaneous
-**/*.log
-**/*.tmp
-**/*.bak
-**/*.swp
-**/*.DS_Store
-**/*.sublime-*
-**/*.swo
-**/*.swn
-**/*.bak
-**/._*
-**/Thumbs.db
-
-# Custom configuration files (modify as needed)
-/custom-config.json
-/custom-env.js
+# Temporary files created by Metro to check the health of the file watcher
+.metro-health-check*
