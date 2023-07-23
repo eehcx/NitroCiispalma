@@ -3,7 +3,8 @@ import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import { Button, Text, BottomNavigation, Card } from 'react-native-paper';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import Octicons from '@expo/vector-icons/Octicons';
+import { Color, Border, FontSize } from "../styles/GlobalStyles";
 
 // Pantallas de la aplicación
 import ProfileScreen from './profile';
@@ -80,7 +81,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Settings',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="settings" size={size} color={color} />
+              <Octicons name="gear" size={size} color={color} />
             ),
           }}
         />
@@ -90,7 +91,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="home" size={size} color={color} />
+              <Octicons name="home" size={size} color={color} />
             ),
           }}
         />
@@ -100,7 +101,7 @@ export default MainBarScreen = () => {
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
+              <Octicons name="person" size={size} color={color} />
             ),
           }}
         />
