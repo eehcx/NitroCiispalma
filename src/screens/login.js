@@ -5,26 +5,24 @@ import { Text, Button   } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../utils/firebase/firebase';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { app } from '../utils/firebase/firebaseInit';
 // Estilos de la pantalla
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
-  //const [text, setText] = React.useState('');
-  const app = initializeApp(firebaseConfig);
+  // Firebase
   const auth = getAuth(app);
-  //onPress={handleLogin}
+  // React Navigation
+  const navigation = useNavigation();
+  // Estados de los inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleNavigateToSignIn = () => {
     navigation.navigate('signin');
   };
-
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -45,7 +43,7 @@ const LoginScreen = () => {
         };
         saveLoginState(user);
         console.log(user);
-        navigation.navigate('home');
+        navigation.navigate('main');
       })
       .catch((error) => {
         console.log('Error al loggear usuario:', error);

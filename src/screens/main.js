@@ -15,7 +15,7 @@ export default MainBarScreen = () => {
 
     return (
         <Tab.Navigator
-        //initialRouteName="home"
+        initialRouteName="home"
         screenOptions={{
             headerShown: false,
         }}

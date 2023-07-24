@@ -3,8 +3,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar, Text, Card, Appbar, Button, Divider  } from 'react-native-paper';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import Octicons from '@expo/vector-icons/Octicons';
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
+    const navigation = useNavigation();
 
     //LOGOUT
     const handleLogout = async () => {
@@ -13,6 +16,7 @@ const ProfileScreen = () => {
             await AsyncStorage.removeItem('user');
 
             console.log('Usuario deslogueado');
+            navigation.navigate('entrace');
 
         } catch (error) {
             console.log('Error al cerrar sesión:', error);

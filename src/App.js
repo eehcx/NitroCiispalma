@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppLoading } from 'expo';
-
 // Importación de fuentes
 import { useFonts } from 'expo-font';
 import {
