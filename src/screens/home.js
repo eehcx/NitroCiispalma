@@ -1,126 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, CommonActions } from '@react-navigation/native';
 import { Button, Text, BottomNavigation, Card } from 'react-native-paper';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Color, Border, FontSize } from "../styles/GlobalStyles";
 
-// Pantallas de la aplicación
-import ProfileScreen from './profile';
-import SettingsScreen from './settings';
-import buttonStyles from '../styles/buttonStyles';
-
-const Tab = createBottomTabNavigator();
-
-export default MainBarScreen = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    checkLoginState();
-  }, []);
-
-  const checkLoginState = async () => {
-    try {
-      const user = await AsyncStorage.getItem('user');
-      if (user) {
-        setIsLoggedIn(true);
-      }
-    } catch (error) {
-      console.log('Error al verificar el estado de inicio de sesión:', error);
-    }
-  };
-
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="home" // Ruta por defecto al iniciar la aplicación
-        screenOptions={{
-          headerShown: false,
-        }}
-        tabBar={({ navigation, state, descriptors, insets }) => (
-          <BottomNavigation.Bar
-            navigationState={state}
-            safeAreaInsets={insets}
-            onTabPress={({ route, preventDefault }) => {
-              const event = navigation.emit({
-                type: 'tabPress',
-                target: route.key,
-                canPreventDefault: true,
-              });
-              if (!event.defaultPrevented) {
-                navigation.dispatch({
-                  ...CommonActions.navigate(route.name),
-                  target: state.key,
-                });
-              }
-            }}
-            renderIcon={({ route, focused, color }) => {
-              const { options } = descriptors[route.key];
-              if (options.tabBarIcon) {
-                return options.tabBarIcon({ focused, color, size: 24 });
-              }
-              return null;
-            }}
-            getLabelText={({ route }) => {
-              const { options } = descriptors[route.key];
-              const label =
-                options.tabBarLabel !== undefined
-                  ? options.tabBarLabel
-                  : options.title !== undefined
-                  ? options.title
-                  : route.name;
-              return label;
-            }}
-          />
-        )}
-      >
-        <Tab.Screen
-          name="settings"
-          component={SettingsScreen}
-          options={{
-            tabBarLabel: 'Settings',
-            tabBarIcon: ({ color, size }) => (
-              <Octicons name="gear" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="home"
-          component={HomeScreen}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarIcon: ({ color, size }) => (
-              <Octicons name="home" size={size} color={color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="profile"
-          component={ProfileScreen}
-          options={{
-            tabBarLabel: 'Profile',
-            tabBarIcon: ({ color, size }) => (
-              <Octicons name="person" size={size} color={color} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-};
-
-function HomeScreen() {
+const HomeScreen = () => {
   const name = 'eehcx';
   return (
     <View style={styles.mainscreen}>
-      <StatusBar backgroundColor='#58b06d' barStyle="light-content" />
+      <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
       <View style={styles.entrace}>
         <View style={styles.fondo} />
         <Text style={styles.aurora}>{name}</Text>
         <View style={[styles.holaAuroraParent, styles.aviIconPosition]}>
           <Text style={[styles.holaAurora, styles.quVasAPosition]}>
-            Hola {name},
+            hola {name},         
           </Text>
           <Text style={[styles.quVasA, styles.quVasAPosition]}>
             ¿Qué vas a hacer hoy?
@@ -165,23 +59,23 @@ function HomeScreen() {
         <View style={[styles.seccionesInner, styles.groupChildLayout]}>
           <View style={[styles.seccionesInner, styles.groupChildLayout]}>
             <View style={[styles.groupChild3, styles.groupChildLayout]} />
-            <Text style={styles.mac}>Mac</Text>
+            <Text style={styles.mac}>Todo</Text>
           </View>
         </View>
         <View style={[styles.rectangleGroup, styles.groupChildLayout]}>
           <View style={[styles.groupChild4, styles.groupChildLayout]} />
-          <Text style={[styles.iphone, styles.ipadPosition]}>iPhone</Text>
+          <Text style={[styles.iphone, styles.ipadPosition]}>Herramientas</Text>
         </View>
         <View style={[styles.rectangleParent1, styles.groupChildLayout]}>
           <View style={[styles.groupChild4, styles.groupChildLayout]} />
-          <Text style={[styles.ipad, styles.ipadPosition]}>iPad</Text>
+          <Text style={[styles.ipad, styles.ipadPosition]}>Historial</Text>
         </View>
       </View>
       <Text style={[styles.herramientas, styles.herramientasTypo]}>
         Herramientas
       </Text>
       <Text style={[styles.informesHechos, styles.herramientasTypo]}>
-        Informes hechos
+        Historial de clientes
       </Text>
     </View>
   );
@@ -485,3 +379,5 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 });
+
+export default HomeScreen;

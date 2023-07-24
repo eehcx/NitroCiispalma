@@ -2,22 +2,29 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity,  Alert, View, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, Button   } from 'react-native-paper';
-
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from '../utils/firebase/firebase';
-
+// Estilos de la pantalla
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
 
-const LoginScreen = ({ navigateToScreen }) => {
-  const [text, setText] = React.useState('');
+const LoginScreen = () => {
+  const navigation = useNavigation();
+  //const [text, setText] = React.useState('');
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   //onPress={handleLogin}
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handleNavigateToSignIn = () => {
+    navigation.navigate('signin');
+  };
+
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -29,14 +36,16 @@ const LoginScreen = ({ navigateToScreen }) => {
         // Guardar el estado de la sesión con AsyncStorage
         const saveLoginState = async (user) => {
           try {
-            await AsyncStorage.setItem('user', JSON.stringify(user));
+            const jsonFirebaseUser = JSON.stringify(user);
+            await AsyncStorage.setItem('user', jsonFirebaseUser);
           } catch (error) {
             console.log('Error al guardar el estado de inicio de sesión:', error);
           }
+          console.log('Done.')
         };
         saveLoginState(user);
         console.log(user);
-        navigateToScreen('home');
+        navigation.navigate('home');
       })
       .catch((error) => {
         console.log('Error al loggear usuario:', error);
@@ -65,7 +74,7 @@ const LoginScreen = ({ navigateToScreen }) => {
             <Text style={buttonStyles.buttonText_Black}>LOG IN</Text>
           </TouchableOpacity>
           <TouchableOpacity >
-            <Text onPress={() => navigateToScreen('signin')} style={InputForms.signInText}>¿No estás registrado? <Text style={InputForms.signInLink}>SIGN IN</Text></Text>
+            <Text onPress={handleNavigateToSignIn} style={InputForms.signInText}>¿No estás registrado? <Text style={InputForms.signInLink}>SIGN IN</Text></Text>
           </TouchableOpacity>
       </View>
     </View>

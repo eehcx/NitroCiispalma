@@ -4,14 +4,16 @@ import { Avatar, Text, Card, Appbar, Button, Divider  } from 'react-native-paper
 import { View, StyleSheet, StatusBar } from 'react-native';
 import Octicons from '@expo/vector-icons/Octicons';
 
-const ProfileScreen = ({ navigateToScreen }) => {
+const ProfileScreen = () => {
 
     //LOGOUT
-    const handleLogout = async (navigateToScreen) => {
+    const handleLogout = async () => {
         try {
-            // Eliminar el estado de inicio de sesión de AsyncStorage
+            // Elimina el estado de inicio de sesión con AsyncStorage
             await AsyncStorage.removeItem('user');
-            navigateToScreen('entrace');
+
+            console.log('Usuario deslogueado');
+
         } catch (error) {
             console.log('Error al cerrar sesión:', error);
         }
@@ -48,12 +50,12 @@ const ProfileScreen = ({ navigateToScreen }) => {
                 <Card.Content>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Octicons name="location" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Palma de Mallorca</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Datos de usuario</Text>
                     </View>
                     <Divider />
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Octicons name="organization" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>CIIS</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Historial</Text>
                     </View>
                     <Divider />
                 </Card.Content>
@@ -61,40 +63,31 @@ const ProfileScreen = ({ navigateToScreen }) => {
                 <Card.Content>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Octicons name="location" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Palma de Mallorca</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Tema</Text>
                     </View>
                     <Divider />
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Octicons name="organization" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>CIIS</Text>
-                    </View>
                     <Divider />
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Octicons name="location" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Palma de Mallorca</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Idioma</Text>
                     </View>
                     <Divider />
                 </Card.Content>
-                <Card.Title title="Politicas y Privacidad" />
+                <Card.Title title="Adicionales" />
                 <Card.Content>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Octicons name="location" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Palma de Mallorca</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Politicas y Privacidad</Text>
                     </View>
                     <Divider />
                     <View style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
                         <Octicons name="location" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Palma de Mallorca</Text>
-                    </View>
-                    <Divider />
-                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                        <Octicons name="organization" size={24} color='#000' />
-                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>CIIS</Text>
+                        <Text variant='labelLarge' style={{ marginLeft: 16 }}>Acerca de</Text>
                     </View>
                     <Divider />
                 </Card.Content>
                 <Button  mode="contained" style={[styles.textWrapper,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleLogout}>
-                        LOGOUT
+                    LOGOUT
                 </Button>
             </Card>
         </View>

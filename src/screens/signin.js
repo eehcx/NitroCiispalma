@@ -3,19 +3,24 @@ import React, { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from '../utils/firebase/firebase';
-
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
 import buttonStyles from '../styles/buttonStyles';
 import InputForms from '../styles/InputForms';
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 
-//<TextInput style={InputForms.input} placeholder="Confirmar contraseña"  maxLength={20} secureTextEntry={true} />
-const SignipScreen = ({ navigateToScreen }) => {
+const SignipScreen = () => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+
+  const handleNavigateToLogIn = () => {
+    navigation.navigate('login');
+  };
 
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password)
@@ -24,7 +29,7 @@ const SignipScreen = ({ navigateToScreen }) => {
         const user = userCredential.user;
         //console.log(user);
         // Realiza la navegación a la siguiente pantalla
-        navigateToScreen('login');
+        navigation.navigate('login');
       })
       .catch((error) => {
         console.log('Error al crear usuario:', error);
@@ -48,7 +53,7 @@ const SignipScreen = ({ navigateToScreen }) => {
               <Text style={buttonStyles.buttonText_Black}>SIGN IN</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text style={InputForms.signInText} onPress={() => navigateToScreen('login')} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
+              <Text style={InputForms.signInText} onPress={handleNavigateToLogIn} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
           </TouchableOpacity>
           </View>
         </View>
