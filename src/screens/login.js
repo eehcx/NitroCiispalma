@@ -30,6 +30,9 @@ const LoginScreen = () => {
 
         console.log('Usuario loggeado');
         const user = userCredential.user;
+        const userId = user.uid;
+        const userEmail = user.email;
+        const userDisplayName = user.displayName;
 
         // Guardar el estado de la sesión con AsyncStorage
         const saveLoginState = async (user) => {
@@ -42,7 +45,7 @@ const LoginScreen = () => {
           console.log('Done.')
         };
         saveLoginState(user);
-        console.log(user);
+        console.log(userId + ' ' + userEmail + ' ' + userDisplayName);
         navigation.navigate('main');
       })
       .catch((error) => {

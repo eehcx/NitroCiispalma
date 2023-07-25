@@ -1,13 +1,4 @@
-{
-    "clientes": {
-        "1": {
-            "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
-            "informes": {
-                "id": "1"
-            },
-            "fecha_creacion": "2023-07-05"
-        }
-    },
+{    
     "informes": {
         "1": {
             "procedencia": "Variada",

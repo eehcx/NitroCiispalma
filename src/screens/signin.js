@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 // Firebase dependencias e importaciones
 import { app } from '../utils/firebase/firebaseInit';
-import { getDatabase, ref, set } from '@react-native-firebase/database';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
 import buttonStyles from '../styles/buttonStyles';
@@ -12,32 +11,32 @@ import InputForms from '../styles/InputForms';
 import { useNavigation } from '@react-navigation/native';
 
 const SignipScreen = () => {
-  const [showNextPage, setShowNextPage] = useState(false);
-  // Firebase
-  const auth = getAuth(app);
   // React Navigation
   const navigation = useNavigation();
+  // Firebase
+  const auth = getAuth(app);
   // Estados de los inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
+  const [phone, setPhone] = useState('');
   // Funciones de navegación
   const handleNavigateToLogIn = () => {
     navigation.navigate('login');
   };
 
   const handleCreateAccount = () => {
-    if (!displayName || !email || !password) {
-      console.log('Por favor, ingresa todos los campos requeridos.');
-      return;
-    }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        const userId = user.uid;
-        console.log('Usuario creado');
-        console.log(userId);
-        setShowNextPage(true);
+        updateProfile(user, { displayName: displayName })
+          .then(() => {
+            console.log(user);
+            navigation.navigate('login');
+          })
+          .catch((error) => {
+            console.log('Error al guardar el displayName:', error);
+          });
       })
       .catch((error) => {
         console.log('Error al crear usuario:', error);
@@ -51,37 +50,20 @@ const SignipScreen = () => {
         resizeMode="cover"
       >
         <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
-
-        {!showNextPage ? (
         <View style={InputForms.container}>
           <View style={InputForms.formContainer}>
             <Text style={InputForms.formTitle}>Crear cuenta</Text>
+            <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} placeholder="Nombre" maxLength={90} />
             <TextInput style={InputForms.input} value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Correo Electrónico" maxLength={90} />
             <TextInput style={InputForms.input} value={password} onChangeText={setPassword} placeholder="Contraseña" maxLength={90} keyboardType="default" secureTextEntry={true} />
             <TouchableOpacity style={buttonStyles.formButton} onPress={handleCreateAccount}>
-              <Text style={buttonStyles.buttonText_Black}>Next Page</Text>
+              <Text style={buttonStyles.buttonText_Black}>SIGN UP</Text>
             </TouchableOpacity>
             <TouchableOpacity>
               <Text style={InputForms.signInText} onPress={handleNavigateToLogIn} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
             </TouchableOpacity>
           </View>
         </View>
-        ) : (
-        <View id='form1' style={InputForms.container}>
-          <View style={InputForms.formContainer}>
-            <Text style={InputForms.formTitle}>Crear cuenta</Text>
-            <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} placeholder="Nombre" maxLength={90} />
-            <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} keyboardType='phone-pad' placeholder="Telefono" maxLength={10} />
-            <TouchableOpacity style={buttonStyles.formButton} onPress={handleCreateAccount}>
-              <Text style={buttonStyles.buttonText_Black}>SIGN IN</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={InputForms.signInText} onPress={handleNavigateToLogIn} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        )}
-
       </ImageBackground>
     );
 };
