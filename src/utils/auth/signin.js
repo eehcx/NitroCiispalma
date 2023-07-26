@@ -1,12 +1,12 @@
 // Componentes necesarios
 import React, { useState } from 'react';
 // Firebase dependencias e importaciones
-import { app } from '../utils/firebase/firebaseInit';
+import { app } from '../firebase/firebaseInit';
 import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
-import buttonStyles from '../styles/buttonStyles';
-import InputForms from '../styles/InputForms';
+import buttonStyles from '../../styles/buttonStyles';
+import InputForms from '../../styles/InputForms';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 

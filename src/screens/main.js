@@ -17,12 +17,16 @@ export default MainBarScreen = () => {
         <Tab.Navigator
         initialRouteName="home"
         screenOptions={{
-            headerShown: false,
+            headerShown: false
         }}
-        tabBar={({ navigation, state, descriptors, insets }) => (
+        tabBar={({ 
+            navigation, state, descriptors, insets }) => (
             <BottomNavigation.Bar
             navigationState={state}
             safeAreaInsets={insets}
+            style={{
+                backgroundColor: '#f5f5f5',
+            }}
             onTabPress={({ route, preventDefault }) => {
                 const event = navigation.emit({
                 type: 'tabPress',

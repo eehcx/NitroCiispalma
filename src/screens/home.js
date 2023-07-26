@@ -1,20 +1,76 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TouchableOpacity, StyleSheet } from 'react-native';
-import { Button, Text, BottomNavigation, Card } from 'react-native-paper';
+import { View, StatusBar, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Button, Text, BottomNavigation, Card, TouchableRipple } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Color, Border, FontSize } from "../styles/GlobalStyles";
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
-  const name = 'eehcx';
+  const navigation = useNavigation();
+  // Hooks para el estado de la aplicación
+  const [email, setEmail] = useState('');
+  const [displayName, setDisplayName] = useState('');
+
+  const getFirstName = (displayName) => {
+    const names = displayName.split(' ');
+    return names[0];
+  };
+
+  const handleNavigateToCalc = () => {
+    navigation.navigate('calculator');
+  };
+
+  const handleNavigateToHistory = () => {
+    navigation.navigate('history');
+  };
+
+  const handleNavigateToCustomers = () => {
+    navigation.navigate('customers');
+  };
+
+  // Función para obtener los datos del usuario desde AsyncStorage
+  const getUserDataFromAsyncStorage = async () => {
+    try {
+      // Obtener el objeto del usuario almacenado en AsyncStorage
+      const userJson = await AsyncStorage.getItem('user');
+
+      if (userJson) {
+        // Convertir el JSON a un objeto de JavaScript
+        const user = JSON.parse(userJson);
+
+        // Obtener el displayName del usuario
+        const { displayName } = user;
+
+        // Obtener el primer nombre antes del espacio
+        const firstName = getFirstName(displayName);
+
+        // Guardar el valor en el estado
+        setDisplayName(firstName);
+      } else {
+        console.log('No se encontró ningún usuario almacenado en AsyncStorage.');
+      }
+    } catch (error) {
+      console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
+    }
+  };
+
+  // Ejecutar la función para obtener los datos del usuario cuando el componente se monte
+  useEffect(() => {
+    getUserDataFromAsyncStorage();
+  }, []); // El segundo argumento (un array vacío) asegura que se ejecute solo una vez al montar el componente
+  
+
   return (
     <View style={styles.mainscreen}>
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
       <View style={styles.entrace}>
         <View style={styles.fondo} />
-        <Text style={styles.aurora}>{name}</Text>
+        <Text style={styles.aurora}>{displayName}</Text>
         <View style={[styles.holaAuroraParent, styles.aviIconPosition]}>
           <Text style={[styles.holaAurora, styles.quVasAPosition]}>
-            hola {name},         
+            hola {displayName},         
           </Text>
           <Text style={[styles.quVasA, styles.quVasAPosition]}>
             ¿Qué vas a hacer hoy?
@@ -22,66 +78,136 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={[styles.search, styles.searchLayout]}>
-        <View style={[styles.rectangle, styles.searchLayout]} />
-        <View style={styles.groupParent}>
-          <View style={styles.ellipseParent}>
-            <View style={styles.groupChild} />
-          </View>
-          <Text style={styles.searchForPages}>{`Search For Pages`}</Text>
-        </View>
+        <TextInput style={styles.input} placeholder='Search for pages'/>
       </View>
-      <View style={[styles.mainscreenInner, styles.mainscreenInnerLayout]}>
-        <View style={[styles.rectangleWrapper, styles.mainscreenInnerLayout]}>
-          <View style={[styles.groupItem, styles.groupBg]} />
-        </View>
-      </View>
-      <View style={[styles.mainscreenChild, styles.groupLayout]}>
-        <View style={[styles.rectangleContainer, styles.groupLayout]}>
-          <View style={[styles.groupInner, styles.groupLayout]} />
-        </View>
-      </View>
-      <View style={styles.groupContainer}>
-        <View style={[styles.rectangleContainer, styles.groupLayout]}>
-          <View style={[styles.groupInner, styles.groupLayout]} />
-        </View>
-        <View style={[styles.groupWrapper, styles.groupLayout]}>
-          <View style={[styles.rectangleContainer, styles.groupLayout]}>
-            <View style={[styles.groupInner, styles.groupLayout]} />
-          </View>
-        </View>
-      </View>
-      <View style={[styles.mainscreenInner1, styles.mainscreenInnerLayout]}>
-        <View style={[styles.rectangleWrapper, styles.mainscreenInnerLayout]}>
-          <View style={[styles.groupItem, styles.groupBg]} />
-        </View>
-      </View>
-      <View style={styles.secciones}>
-        <View style={[styles.seccionesInner, styles.groupChildLayout]}>
-          <View style={[styles.seccionesInner, styles.groupChildLayout]}>
-            <View style={[styles.groupChild3, styles.groupChildLayout]} />
-            <Text style={styles.mac}>Todo</Text>
-          </View>
-        </View>
-        <View style={[styles.rectangleGroup, styles.groupChildLayout]}>
-          <View style={[styles.groupChild4, styles.groupChildLayout]} />
-          <Text style={[styles.iphone, styles.ipadPosition]}>Herramientas</Text>
-        </View>
-        <View style={[styles.rectangleParent1, styles.groupChildLayout]}>
-          <View style={[styles.groupChild4, styles.groupChildLayout]} />
-          <Text style={[styles.ipad, styles.ipadPosition]}>Historial</Text>
-        </View>
-      </View>
-      <Text style={[styles.herramientas, styles.herramientasTypo]}>
+
+      {/* Filtro de herramientas */}
+      <Text variant="titleLarge" style={[styles.herramientas, styles.herramientasTypo]}>
         Herramientas
       </Text>
-      <Text style={[styles.informesHechos, styles.herramientasTypo]}>
+      <View style={styles.containerTools}>
+        <TouchableOpacity onPress={handleNavigateToCalc} style={styles.groupItem}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fcalculator.png?alt=media&token=40ac4df3-24dc-4190-804e-f6c1d6c6561d' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 170 }]}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fview.png?alt=media&token=ef261487-db31-4be4-8264-038163d028cf' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity> 
+      </View>
+
+      {/* Filtro de historial */}
+      
+      <Text variant="titleLarge" style={[styles.informesHechos, styles.herramientasTypo]}>
         Historial de clientes
       </Text>
+
+      <TouchableOpacity onPress={handleNavigateToHistory} style={[styles.groupLayout, { marginTop: 600, marginLeft:65 }]}>
+        <View style={styles.containerIco}>
+          <Octicons style={styles.iconContent} name="history" size={35} color='#ccc' />
+        </View>
+      </TouchableOpacity>
+
+      {/* Filtro de secciones */}
+      <View style={styles.secciones}>
+        <TouchableOpacity style={[ styles.groupChildLayout]}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fnews.png?alt=media&token=6c919a3d-ced0-4bc0-8ca3-df49705214c5' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[ styles.groupChildLayout, styles.rectangleGroup]}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ftools.png?alt=media&token=799bc63d-8183-474a-a386-10e4341c1a31' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.rectangleParent1, styles.groupChildLayout]}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  secciones: {
+    flexDirection: 'row',
+    top: 250,
+    left: 65,
+    position: "absolute",
+  },
+  groupChildLayout: {
+    width: 88,
+    height: 88,
+    backgroundColor: "#ececec",
+    borderRadius: Border.br_smi,
+    position: "absolute",
+  },
+  rectangleGroup: {
+    left: 105,
+  },
+  rectangleParent1: {
+    left: 210,
+  },
+  // DEMAS ESTILOS
+  containerIco:{
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  iconContent:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  Icon3d:{
+    width: 35,
+    height: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerHistory:{
+    flex: 1,
+  },
+  groupLayout: {
+    height: 55,
+    width: 298,
+    position: "absolute",
+    top: 0,
+    backgroundColor: Color.whitesmoke,
+    borderRadius: Border.br_smi,
+    left: 0,
+  },
+  containerTools:{
+    flex: 1,
+    left: 65,
+    top: 350,
+  },
+  groupItem: {
+    height: 125,
+    width: 125,
+    position: "absolute",
+    top: 0,
+    backgroundColor: "#ececec",
+    borderRadius: Border.br_smi,
+    left: 0,
+  },
   aviIconPosition: {
     top: 36,
     position: "absolute",
@@ -90,41 +216,6 @@ const styles = StyleSheet.create({
     color: Color.white,
     textAlign: "left",
     left: 0,
-    position: "absolute",
-  },
-  searchLayout: {
-    height: 50,
-    width: 340,
-    position: "absolute",
-  },
-  mainscreenInnerLayout: {
-    height: 125,
-    width: 125,
-    position: "absolute",
-  },
-  groupBg: {
-    backgroundColor: Color.whitesmoke,
-    borderRadius: Border.br_smi,
-    left: 0,
-  },
-  groupLayout: {
-    height: 55,
-    width: 298,
-    position: "absolute",
-  },
-  groupChildLayout: {
-    width: 88,
-    height: 88,
-    top: 0,
-    position: "absolute",
-  },
-  ipadPosition: {
-    color: Color.gray_100,
-    left: 24,
-    alignItems: "center",
-    display: "flex",
-    fontSize: FontSize.size_xs,
-    height: 14,
     position: "absolute",
   },
   iconLayout: {
@@ -137,9 +228,7 @@ const styles = StyleSheet.create({
   herramientasTypo: {
     height: 30,
     width: 226,
-    color: Color.black,
-    fontWeight: "500",
-    fontSize: FontSize.size_xl,
+    color: "#000",
     alignItems: "center",
     display: "flex",
     left: 65,
@@ -189,46 +278,11 @@ const styles = StyleSheet.create({
     height: 242,
     position: "absolute",
   },
-  rectangle: {
-    borderRadius: 25,
-    backgroundColor: Color.white,
-    shadowColor: "rgba(182, 182, 182, 0.15)",
-    shadowOffset: {
-      width: 3,
-      height: 5,
-    },
-    shadowRadius: 15,
-    elevation: 15,
-    shadowOpacity: 1,
-    left: 0,
-    top: 0,
-  },
   ellipseIcon: {
     left: 1,
     width: 12,
     height: 12,
     top: 0,
-    position: "absolute",
-  },
-  groupChild: {
-    top: 11,
-    left: 9,
-    borderRadius: 3,
-    backgroundColor: Color.lightgray,
-    width: 2,
-    height: 5,
-    transform: [
-      {
-        rotate: "-45.72deg",
-      },
-    ],
-    position: "absolute",
-  },
-  ellipseParent: {
-    top: 1,
-    width: 14,
-    height: 14,
-    left: 0,
     position: "absolute",
   },
   searchForPages: {
@@ -240,79 +294,23 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
-  groupParent: {
-    top: 16,
-    width: 147,
-    height: 21,
-    left: 26,
-    position: "absolute",
-  },
   search: {
     top: 169,
     left: 44,
-  },
-  groupItem: {
-    height: 125,
-    width: 125,
-    position: "absolute",
-    top: 0,
-  },
-  rectangleWrapper: {
-    left: 0,
-    top: 0,
   },
   mainscreenInner: {
     left: 65,
     top: 404,
     width: 125,
   },
-  groupInner: {
-    backgroundColor: Color.whitesmoke,
-    borderRadius: Border.br_smi,
-    left: 0,
-    top: 0,
-  },
-  rectangleContainer: {
-    left: 0,
-    top: 0,
-  },
-  mainscreenChild: {
-    top: 595,
-    left: 65,
-  },
   groupWrapper: {
     top: 63,
     left: 0,
-  },
-  groupContainer: {
-    top: 659,
-    height: 118,
-    width: 298,
-    left: 65,
-    position: "absolute",
   },
   mainscreenInner1: {
     left: 238,
     top: 404,
     width: 125,
-  },
-  groupChild3: {
-    backgroundColor: "#41525c",
-    borderRadius: Border.br_smi,
-    width: 88,
-    left: 0,
-  },
-  mac: {
-    left: 30,
-    width: 40,
-    alignItems: "center",
-    display: "flex",
-    fontSize: FontSize.size_xs,
-    top: 50,
-    height: 30,
-    color: Color.white,
-    textAlign: "left",
-    position: "absolute",
   },
   vectorIcon: {
     height: "30.68%",
@@ -326,44 +324,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     overflow: "hidden",
   },
-  seccionesInner: {
-    left: 0,
-  },
-  groupChild4: {
-    backgroundColor: Color.whitesmoke,
-    borderRadius: Border.br_smi,
-    left: 0,
-  },
-  iphone: {
-    width: 42,
-    top: 54,
-    left: 24,
-    textAlign: "left",
-  },
   phonelandscapeIcon: {
     top: 20,
   },
-  rectangleGroup: {
-    left: 105,
-  },
-  ipad: {
-    top: 55,
-    textAlign: "center",
-    justifyContent: "center",
-    width: 41,
-  },
   tabletIcon: {
     top: 17,
-  },
-  rectangleParent1: {
-    left: 210,
-  },
-  secciones: {
-    top: 250,
-    height: 88,
-    width: 298,
-    left: 65,
-    position: "absolute",
   },
   herramientas: {
     top: 362,
@@ -378,6 +343,17 @@ const styles = StyleSheet.create({
     height: 850,
     overflow: "hidden",
   },
+  input: {
+    width: '75%',
+    height: 45,
+    borderWidth: 1,
+    backgroundColor: '#ECECEC',
+    borderColor: '#ECECEC',
+    borderRadius: 20,
+    marginBottom: 15,
+    marginLeft: 10,
+    paddingHorizontal: 10,
+},
 });
 
 export default HomeScreen;

@@ -29,13 +29,14 @@ import {
 
 // Pantallas de la aplicación
 import InputScreen from './screens/entrace';
-import LoginScreen from './screens/login';
+import LoginScreen from './utils/auth/login';
 import MainScreen from './screens/main'
 import HomeScreen from './screens/home';
-import SignipScreen from './screens/signin';
+import SignipScreen from './utils/auth/signin';
 import ProfileScreen from './screens/profile';
-import SettingsScreen from './screens/settings';
-
+import CalculatorScreen from './screens/calculator';
+import HistoryScreen from './screens/history';
+import CustomersScreen from './screens/customers';
 
 // Fuentes de la aplicación
 async function loadFonts() {
@@ -117,7 +118,22 @@ export default function App() {
         name="profile" 
         component={ProfileScreen} 
         options={{ headerShown: false }}/>
-        <Stack.Screen name="settings" component={SettingsScreen} />
+        <Stack.Screen 
+        name="calculator" 
+        component={CalculatorScreen} 
+        options={{ title: 'Calculadora', }}/>
+        <Stack.Screen 
+        name="history"
+        component={HistoryScreen}
+        options={{
+          title: 'Historial de cálculos',
+        }}/>
+        <Stack.Screen
+        name="customers"
+        component={CustomersScreen}
+        options={{
+          title: 'Clientes',
+        }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

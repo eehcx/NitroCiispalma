@@ -6,10 +6,10 @@ import { Text, Button   } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../utils/firebase/firebaseInit';
+import { app } from '../firebase/firebaseInit';
 // Estilos de la pantalla
-import buttonStyles from '../styles/buttonStyles';
-import InputForms from '../styles/InputForms';
+import buttonStyles from '../../styles/buttonStyles';
+import InputForms from '../../styles/InputForms';
 
 const LoginScreen = () => {
   // Firebase
@@ -67,7 +67,7 @@ const LoginScreen = () => {
           <TextInput style={InputForms.input} 
           placeholder="Contraseña" 
           secureTextEntry={true}
-          maxLength={25}
+          maxLength={100}
           value={password}
           onChangeText={setPassword}
           />
