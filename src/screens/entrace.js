@@ -67,7 +67,6 @@ const InputScreen = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
                 source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} 

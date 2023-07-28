@@ -37,6 +37,7 @@ import ProfileScreen from './screens/profile';
 import CalculatorScreen from './screens/calculator';
 import HistoryScreen from './screens/history';
 import CustomersScreen from './screens/customers';
+import RegisterCustomer from './components/events/NewCustomer';
 
 // Fuentes de la aplicación
 async function loadFonts() {
@@ -122,7 +123,7 @@ export default function App() {
         name="calculator" 
         component={CalculatorScreen} 
         options={{ title: 'Calculadora', }}/>
-        <Stack.Screen 
+        <Stack.Screen
         name="history"
         component={HistoryScreen}
         options={{
@@ -133,6 +134,18 @@ export default function App() {
         component={CustomersScreen}
         options={{
           title: 'Clientes',
+          headerStyle: {
+            backgroundColor: '#fafafa', // Cambia el color de fondo del encabezado aquí
+          },
+        }}/>
+        <Stack.Screen
+        name="registerCustomer"
+        component={RegisterCustomer}
+        options={{
+          title: 'Agrega un cliente nuevo',
+          headerStyle: {
+            backgroundColor: '#fafafa',
+          },
         }}/>
       </Stack.Navigator>
     </NavigationContainer>

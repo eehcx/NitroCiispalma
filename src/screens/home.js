@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Button, Text, BottomNavigation, Card, TouchableRipple } from 'react-native-paper';
+import { Button, Text, BottomNavigation, Card, TouchableRipple, Searchbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Color, Border, FontSize } from "../styles/GlobalStyles";
@@ -12,6 +12,10 @@ const HomeScreen = () => {
   // Hooks para el estado de la aplicación
   const [email, setEmail] = useState('');
   const [displayName, setDisplayName] = useState('');
+
+  const [searchQuery, setSearchQuery] = React.useState('');
+
+  const onChangeSearch = query => setSearchQuery(query);
 
   const getFirstName = (displayName) => {
     const names = displayName.split(' ');
@@ -70,7 +74,7 @@ const HomeScreen = () => {
         <Text style={styles.aurora}>{displayName}</Text>
         <View style={[styles.holaAuroraParent, styles.aviIconPosition]}>
           <Text style={[styles.holaAurora, styles.quVasAPosition]}>
-            hola {displayName},         
+            Hola {displayName},         
           </Text>
           <Text style={[styles.quVasA, styles.quVasAPosition]}>
             ¿Qué vas a hacer hoy?
@@ -78,7 +82,12 @@ const HomeScreen = () => {
         </View>
       </View>
       <View style={[styles.search, styles.searchLayout]}>
-        <TextInput style={styles.input} placeholder='Search for pages'/>
+        <Searchbar
+          style={styles.input}
+          placeholder="Search for pages"
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+        />
       </View>
 
       {/* Filtro de herramientas */}
@@ -295,7 +304,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   search: {
-    top: 169,
+    top: 160,
     left: 44,
   },
   mainscreenInner: {
@@ -345,12 +354,9 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '75%',
-    height: 45,
     borderWidth: 1,
     backgroundColor: '#ECECEC',
     borderColor: '#ECECEC',
-    borderRadius: 20,
-    marginBottom: 15,
     marginLeft: 10,
     paddingHorizontal: 10,
 },
