@@ -1,13 +1,4 @@
-{
-    "clientes": {
-        "1": {
-            "nombre": "INDUSTRIAS OLEPALMA SA DE CV",
-            "informes": {
-                "id": "1"
-            },
-            "fecha_creacion": "2023-07-05"
-        }
-    },
+{    
     "informes": {
         "1": {
             "procedencia": "Variada",
@@ -62,12 +53,14 @@
                     "ml NaOH":"",
                     "cmol":"",
                     "promedio":{
+                        "valor": ""
                     }
                 },
                 "Aluminio":{
                     "ml HCl":"",
                     "cmol":"",
                     "promedio":{
+                        "valor": ""
                     }
                 }
             }
@@ -79,34 +72,42 @@
                     "ppm":"",
                     "cmol kg":"",
                     "promedio":{
-
+                        "valor": ""
                     }
                 },
                 "potacio":{
                     "ppm":"",
                     "cmol kg":"",
-                    "promedio": {
-
+                    "promedio":{
+                        "valor": ""
                     }
                 },
                 "magnecio":{
                     "ppm":"",
                     "cmol kg":"",
                     "promedio":{
-
+                        "valor": ""
                     }
                 },
                 "sodio":{
                     "ppm":"",
                     "cmol kg":"",
                     "promedio":{
-                        
+                        "valor": ""
                     }
                 }
             }
         },
         "micros":{
-            
+            "1":{
+                "IdLab": "87163",
+                "nombre Elemento":"",
+                "ppm":"",
+                "mg kg^-1":"",
+                "promedio":{
+                    "valor": ""
+                }
+            }
         }
     }
 }

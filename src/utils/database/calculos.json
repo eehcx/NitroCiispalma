@@ -1,0 +1,90 @@
+{
+    "pH": {
+    "1": {
+        "IdLab": "B",
+        "Valor": 12.6
+    }
+    },
+    "CE": {
+    "1": {
+        "IdLab": "P",
+        "CE_us_cm": 101.00,
+        "dsm_1": 101.00
+    }
+    },
+    "MO": {
+    "1": {
+        "IdLab": "517",
+        "mL_FeSO4": 13.6,
+        "MO(%)": 4.38
+    }
+    },
+    "H_AI": {
+    "IdLab": "12378",
+    "P_Muestra_g": 12,
+    "Alicuota_ml": 40,
+    "Vol_Estrac_ml": 50,
+    "N_HCl": 0.0955,
+    "N_NaOH": 0.0984,
+    "1": {
+        "Acidez": {
+        "ml_NaOH": 12,
+        "cmol": 12,
+        "promedio": {
+            "valor": 12
+        }
+        },
+        "Aluminio": {
+        "ml_HCl": 14,
+        "cmol": 12,
+        "promedio": {
+            "valor": 12
+        }
+        }
+    }
+    },
+    "bases_intercambiables": {
+    "1": {
+        "IdLab": "12378",
+        "calcio": {
+        "ppm": 12,
+        "cmol_kg": 12,
+        "promedio": {
+            "valor": 12
+        }
+        },
+        "potacio": {
+        "ppm": 12,
+        "cmol_kg": 12,
+        "promedio": {
+            "valor": 12
+        }
+        },
+        "magnecio": {
+        "ppm": 12,
+        "cmol_kg": 12,
+        "promedio": {
+            "valor": 12
+        }
+        },
+        "sodio": {
+        "ppm": 12,
+        "cmol_kg": 12,
+        "promedio": {
+            "valor": 12
+        }
+        }
+    }
+    },
+    "micros": {
+        "1": {
+            "IdLab": "87163",
+            "nombre_Elemento": "asaa",
+            "ppm": 12,
+            "mg_kg": 12,
+            "promedio": {
+            "valor": 12
+            }
+        }
+    }
+}

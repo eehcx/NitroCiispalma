@@ -1,30 +1,42 @@
 // Componentes necesarios
 import React, { useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from '../utils/firebase/firebase';
-
+// Firebase dependencias e importaciones
+import { app } from '../firebase/firebaseInit';
+import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
-import buttonStyles from '../styles/buttonStyles';
-import InputForms from '../styles/InputForms';
+import buttonStyles from '../../styles/buttonStyles';
+import InputForms from '../../styles/InputForms';
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 
-//<TextInput style={InputForms.input} placeholder="Confirmar contraseña"  maxLength={20} secureTextEntry={true} />
-const SignipScreen = ({ navigateToScreen }) => {
+const SignipScreen = () => {
+  // React Navigation
+  const navigation = useNavigation();
+  // Firebase
+  const auth = getAuth(app);
+  // Estados de los inputs
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  const [displayName, setDisplayName] = useState('');
+  const [phone, setPhone] = useState('');
+  // Funciones de navegación
+  const handleNavigateToLogIn = () => {
+    navigation.navigate('login');
+  };
 
   const handleCreateAccount = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log('Usuario creado');
         const user = userCredential.user;
-        //console.log(user);
-        // Realiza la navegación a la siguiente pantalla
-        navigateToScreen('login');
+        updateProfile(user, { displayName: displayName })
+          .then(() => {
+            console.log(user);
+            navigation.navigate('login');
+          })
+          .catch((error) => {
+            console.log('Error al guardar el displayName:', error);
+          });
       })
       .catch((error) => {
         console.log('Error al crear usuario:', error);
@@ -41,15 +53,15 @@ const SignipScreen = ({ navigateToScreen }) => {
         <View style={InputForms.container}>
           <View style={InputForms.formContainer}>
             <Text style={InputForms.formTitle}>Crear cuenta</Text>
-            <TextInput style={InputForms.input} placeholder="Nombre" maxLength={90} />
+            <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} placeholder="Nombre" maxLength={90} />
             <TextInput style={InputForms.input} value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Correo Electrónico" maxLength={90} />
-            <TextInput style={InputForms.input} value={password} onChangeText={setPassword} placeholder="Contraseña" maxLength={10} keyboardType="default" secureTextEntry={true} />
+            <TextInput style={InputForms.input} value={password} onChangeText={setPassword} placeholder="Contraseña" maxLength={90} keyboardType="default" secureTextEntry={true} />
             <TouchableOpacity style={buttonStyles.formButton} onPress={handleCreateAccount}>
-              <Text style={buttonStyles.buttonText_Black}>SIGN IN</Text>
+              <Text style={buttonStyles.buttonText_Black}>SIGN UP</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Text style={InputForms.signInText} onPress={() => navigateToScreen('login')} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
-          </TouchableOpacity>
+              <Text style={InputForms.signInText} onPress={handleNavigateToLogIn} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ImageBackground>

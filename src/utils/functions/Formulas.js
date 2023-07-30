@@ -3,50 +3,40 @@
 
 //CE
 //Convierte CE us/cm a dsm^-1
-function CE_Cm_Dsm(Ce_uscm)
-
-{  dsm=((Ce_uscm*0.000001)/0.1)*100;
-    
-return dsm.toFixed(3);
+export function CE_Cm_Dsm(Ce_uscm) {
+    const dsm=((Ce_uscm*0.000001)/0.1)*100;
+    return dsm.toFixed(3);
 }
 //H-AL
 //Convierte ml NaOH(acidez) a cmol
-function mlNaOH_cmol(mlNaOH,N_NaOH)
-
-{  NaOHCmol=((mlNaOH-0.025)/5*((N_NaOH*100)));
-    
-return NaOHCmol.toFixed(2);
+export function mlNaOH_cmol(mlNaOH,N_NaOH){  
+    const NaOHCmol=((mlNaOH-0.025)/5*((N_NaOH*100)));
+    return NaOHCmol.toFixed(2);
 }
 //Convierte ml HCl(aluminio) a cmol
-function mlHCl_cmol(mlHCl,N_HCl)
-
-{  HClCmol=(((mlHCl-0.025)*(N_HCl)*(100))/5);
-
-return HClCmol.toFixed(2);
+export function mlHCl_cmol(mlHCl,N_HCl){  
+    const HClCmol=(((mlHCl-0.025)*(N_HCl)*(100))/5);
+    return HClCmol.toFixed(2);
 }
+
 //MO
 //Convierte mL_FeSO4 a Mo
-function mL_FeSO4_Mo(mlFeSO4)
-
-{ FeSO4_Mo=(1-mlFeSO4/20.2)*13.4;
-
-return FeSO4_Mo.toFixed(2);
+export function mL_FeSO4_Mo(mlFeSO4){ 
+    const FeSO4_Mo=(1-mlFeSO4/20.2)*13.4;
+    return FeSO4_Mo.toFixed(2);
 }
 
 //Micros
 //funcion global para todas las micros
 //convierte el elemento ppm a mg kg^-1 , p_elemento es el promedio
-function elemento_ppm_mgkg(elemento_ppm,p_Elemento)
-
-{   elemento_mgkg=(elemento_ppm-p_Elemento);
-
-return elemento_mgkg.toFixed(3);
+export function elemento_ppm_mgkg(elemento_ppm,p_Elemento){   
+    const elemento_mgkg=(elemento_ppm-p_Elemento);
+    return elemento_mgkg.toFixed(3);
 }
-
 
 //Bases Intercambiables
 //convierte el Ca ppm a Ca cmol kg
-function Ca_ppm_cmol_kg(Ca_ppm,p_Ca)
+export function Ca_ppm_cmol_kg(Ca_ppm,p_Ca)
 
 {    Ca_cmol_kg=(Ca_ppm-p_Ca)/200.4;
 
@@ -54,7 +44,7 @@ return Ca_cmol_kg.toFixed(4);
 }
 
 //convierte el K ppm a K cmol kg
-function K_ppm_cmol_kg(K_ppm,p_K)
+export function K_ppm_cmol_kg(K_ppm,p_K)
 
 {    K_cmol_kg=(K_ppm-p_K)/391;
 
@@ -62,7 +52,7 @@ return K_cmol_kg.toFixed(2);
 }
 
 //convierte el Mg ppm a Mg cmol kg
-function Mg_ppm_cmol_kg(Mg_ppm,p_Mg)
+export function Mg_ppm_cmol_kg(Mg_ppm,p_Mg)
 
 {   Mg_cmol_kg=(Mg_ppm-p_Mg)/121.6;
 
@@ -70,7 +60,7 @@ return Mg_cmol_kg.toFixed(2);
 }
 
 //convierte el Na ppm a Na cmol kg
-function Na_ppm_cmol_kg(Na_ppm,p_Na)
+export function Na_ppm_cmol_kg(Na_ppm,p_Na)
 
 {    Na_cmol_kg=(Na_ppm-p_Na)/230;
 

@@ -4,6 +4,8 @@ import InputForms from '../styles/InputForms';
 //REACT NATIVE Y TAILWIND CSS
 import { StyleSheet, SafeAreaView, StatusBar, Alert, ImageBackground, View } from 'react-native';
 import { useTheme, Text, Button, TouchableRipple,  } from 'react-native-paper';
+// React Navigation
+import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
     safeArea: {
@@ -51,16 +53,26 @@ const styles = StyleSheet.create({
     }
 });
 
-const InputScreen = ({ navigateToScreen }) => {
+const InputScreen = () => {
+    const navigation = useNavigation();
     const theme = useTheme();
+
+    const handleNavigateToSignIn = () => {
+        navigation.navigate('signin');
+    };
+
+    const handleNavigateToLogIn = () => {
+        navigation.navigate('login');
+    };
+
     return (
         <View style={{ flex: 1 }}>
-            <StatusBar backgroundColor="white" barStyle="dark-content" />
 
             <ImageBackground
                 source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} 
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
+                <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>
@@ -71,10 +83,10 @@ const InputScreen = ({ navigateToScreen }) => {
                 </View>
                 <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
-                        <TouchableRipple style={[buttonStyles.button, { marginRight: 10 }]} onPress={() => navigateToScreen('login')}>
+                        <TouchableRipple style={[buttonStyles.button, { marginRight: 10 }]} onPress={handleNavigateToLogIn}>
                             <Text variant='titleSmall' style={buttonStyles.buttonText}>LOG IN</Text>
                         </TouchableRipple>
-                        <TouchableRipple style={buttonStyles.button_signup} onPress={() => navigateToScreen('signin')}>
+                        <TouchableRipple style={buttonStyles.button_signup} onPress={handleNavigateToSignIn}>
                             <Text variant='titleSmall' style={buttonStyles.buttonText_signup}>SIGN UP</Text>
                         </TouchableRipple>
                     </View>
