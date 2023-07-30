@@ -122,7 +122,7 @@ export default function App() {
         <Stack.Screen 
         name="calculator" 
         component={CalculatorScreen} 
-        options={{ title: 'Calculadora', }}/>
+        options={{ title: 'Calculadora', headerShown: false}}/>
         <Stack.Screen
         name="history"
         component={HistoryScreen}

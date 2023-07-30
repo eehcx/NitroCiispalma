@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Button, Text, BottomNavigation, Card, TouchableRipple, Searchbar } from 'react-native-paper';
+import { Button, Text, BottomNavigation, Avatar, Card, TouchableRipple, Searchbar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Color, Border, FontSize } from "../styles/GlobalStyles";
@@ -69,19 +69,25 @@ const HomeScreen = () => {
   return (
     <View style={styles.mainscreen}>
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
+
+      {/* Entrada de la app */}
+
       <View style={styles.entrace}>
         <View style={styles.fondo} />
-        <Text style={styles.aurora}>{displayName}</Text>
-        <View style={[styles.holaAuroraParent, styles.aviIconPosition]}>
-          <Text style={[styles.holaAurora, styles.quVasAPosition]}>
+          <Text style={styles.txtTitle}>{displayName}</Text>
+        <View style={[styles.ContainerStateTitle]}>
+          <Text variant='titleMedium' style={[styles.txtState, { fontSize: 20}]}>
             Hola {displayName},         
           </Text>
-          <Text style={[styles.quVasA, styles.quVasAPosition]}>
+          <Text variant='titleSmall' style={[styles.txtState, { top: 31, fontSize: 16, letterSpacing: 0.3 }]}>
             ¿Qué vas a hacer hoy?
           </Text>
+          <Avatar.Text size={50} label={displayName.toUpperCase().substring(0, 1)} style={styles.avatar} />
         </View>
       </View>
-      <View style={[styles.search, styles.searchLayout]}>
+
+      {/* Barra de búsqueda */}
+      <View style={[styles.search]}>
         <Searchbar
           style={styles.input}
           placeholder="Search for pages"
@@ -90,42 +96,9 @@ const HomeScreen = () => {
         />
       </View>
 
-      {/* Filtro de herramientas */}
-      <Text variant="titleLarge" style={[styles.herramientas, styles.herramientasTypo]}>
-        Herramientas
-      </Text>
-      <View style={styles.containerTools}>
-        <TouchableOpacity onPress={handleNavigateToCalc} style={styles.groupItem}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fcalculator.png?alt=media&token=40ac4df3-24dc-4190-804e-f6c1d6c6561d' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 170 }]}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fview.png?alt=media&token=ef261487-db31-4be4-8264-038163d028cf' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity> 
-      </View>
-
-      {/* Filtro de historial */}
-      
-      <Text variant="titleLarge" style={[styles.informesHechos, styles.herramientasTypo]}>
-        Historial de clientes
-      </Text>
-
-      <TouchableOpacity onPress={handleNavigateToHistory} style={[styles.groupLayout, { marginTop: 600, marginLeft:65 }]}>
-        <View style={styles.containerIco}>
-          <Octicons style={styles.iconContent} name="history" size={35} color='#ccc' />
-        </View>
-      </TouchableOpacity>
-
       {/* Filtro de secciones */}
       <View style={styles.secciones}>
-        <TouchableOpacity style={[ styles.groupChildLayout]}>
+        <TouchableOpacity style={[ styles.groupChildLayout, { backgroundColor: "#41525C"}]}>
           <View style={styles.containerIco}>
             <Image
             source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fnews.png?alt=media&token=6c919a3d-ced0-4bc0-8ca3-df49705214c5' }} 
@@ -150,15 +123,81 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
 
+      {/* Filtro de herramientas */}
+      <Text variant="titleLarge" style={[styles.herramientas, styles.herramientasTypo]}>
+        Herramientas
+      </Text>
+      <View style={styles.containerTools}>
+        <TouchableOpacity onPress={handleNavigateToCalc} style={styles.groupItem}>
+          <View style={[styles.containerIco]}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fcalculator.png?alt=media&token=40ac4df3-24dc-4190-804e-f6c1d6c6561d' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 190 }]}>
+          <View style={styles.containerIco}>
+            <Image
+            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fview.png?alt=media&token=ef261487-db31-4be4-8264-038163d028cf' }} 
+            style={styles.Icon3d}/>
+          </View>
+        </TouchableOpacity> 
+      </View>
+
+      {/* Filtro de historial */}
+      
+      <Text variant="titleLarge" style={[styles.informesHechos, styles.herramientasTypo]}>
+        Historial de clientes
+      </Text>
+
+      <TouchableOpacity onPress={handleNavigateToHistory} style={[styles.groupLayout, { marginTop: 600, marginLeft:50 }]}>
+        <View style={styles.containerIco}>
+          <Octicons style={styles.iconContent} name="history" size={35} color='#ccc' />
+        </View>
+      </TouchableOpacity>
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // ENTRADA DE LA APP
+  entrace: {
+    left: -50,
+    width: 2000,
+    height: 240,
+    position: "absolute",
+  },
+  fondo: {
+    backgroundColor: "#58b06d",
+    width: "100%",
+    height: 186,
+    position: "absolute",
+  },
+  txtTitle: {
+    fontSize: 200,
+    fontWeight: "700",
+    color: "rgba(130, 196, 145, 0.5)",
+    textAlign: "left",
+    top: -50,
+    position: "absolute",
+  },
+  ContainerStateTitle: {
+    top: 35,
+    left: 100,
+    width: 150,
+    height: "100%",
+  },
+  txtState:{
+    color: "rgba(255,255,255,1)",
+    textAlign: "left",
+    position: "absolute",
+  },
+  // DEMAS 
   secciones: {
     flexDirection: 'row',
     top: 250,
-    left: 65,
+    left: 50,
     position: "absolute",
   },
   groupChildLayout: {
@@ -169,10 +208,10 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   rectangleGroup: {
-    left: 105,
+    left: 115,
   },
   rectangleParent1: {
-    left: 210,
+    left: 230,
   },
   // DEMAS ESTILOS
   containerIco:{
@@ -196,7 +235,7 @@ const styles = StyleSheet.create({
   },
   groupLayout: {
     height: 55,
-    width: 298,
+    width: 315,
     position: "absolute",
     top: 0,
     backgroundColor: Color.whitesmoke,
@@ -205,27 +244,15 @@ const styles = StyleSheet.create({
   },
   containerTools:{
     flex: 1,
-    left: 65,
+    left: 50,
     top: 350,
   },
   groupItem: {
     height: 125,
     width: 125,
     position: "absolute",
-    top: 0,
     backgroundColor: "#ececec",
     borderRadius: Border.br_smi,
-    left: 0,
-  },
-  aviIconPosition: {
-    top: 36,
-    position: "absolute",
-  },
-  quVasAPosition: {
-    color: Color.white,
-    textAlign: "left",
-    left: 0,
-    position: "absolute",
   },
   iconLayout: {
     height: 34,
@@ -240,52 +267,14 @@ const styles = StyleSheet.create({
     color: "#000",
     alignItems: "center",
     display: "flex",
-    left: 65,
+    left: 50,
     textAlign: "left",
     position: "absolute",
-  },
-  fondo: {
-    top: 9,
-    left: 49,
-    backgroundColor: "#58b06d",
-    width: 428,
-    height: 186,
-    position: "absolute",
-  },
-  aurora: {
-    fontSize: 200,
-    fontWeight: "700",
-    color: "rgba(130, 196, 145, 0.5)",
-    textAlign: "left",
-    left: 10,
-    top: -40,
-    position: "absolute",
-  },
-  holaAurora: {
-    fontSize: 21,
-    fontWeight: "600",
-    top: 0,
-  },
-  quVasA: {
-    top: 32,
-    fontSize: 16,
-  },
-  holaAuroraParent: {
-    left: 93,
-    width: 171,
-    height: 51,
   },
   aviIcon: {
     left: 393,
     width: 40,
     height: 40,
-  },
-  entrace: {
-    top: -9,
-    left: -49,
-    width: 669,
-    height: 242,
-    position: "absolute",
   },
   ellipseIcon: {
     left: 1,
@@ -294,21 +283,12 @@ const styles = StyleSheet.create({
     top: 0,
     position: "absolute",
   },
-  searchForPages: {
-    fontSize: 14,
-    color: Color.lightgray,
-    width: 121,
-    left: 26,
-    textAlign: "left",
-    top: 0,
-    position: "absolute",
-  },
   search: {
     top: 160,
-    left: 44,
+    left: 35,
   },
   mainscreenInner: {
-    left: 65,
+    left: 50,
     top: 404,
     width: 125,
   },
@@ -320,24 +300,6 @@ const styles = StyleSheet.create({
     left: 238,
     top: 404,
     width: 125,
-  },
-  vectorIcon: {
-    height: "30.68%",
-    width: "40.91%",
-    top: "26.14%",
-    right: "29.55%",
-    bottom: "43.18%",
-    left: "29.55%",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    position: "absolute",
-    overflow: "hidden",
-  },
-  phonelandscapeIcon: {
-    top: 20,
-  },
-  tabletIcon: {
-    top: 17,
   },
   herramientas: {
     top: 362,
@@ -353,13 +315,18 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   input: {
-    width: '75%',
+    width: '80%',
     borderWidth: 1,
     backgroundColor: '#ECECEC',
     borderColor: '#ECECEC',
     marginLeft: 10,
     paddingHorizontal: 10,
-},
+  },
+  avatar: {
+    backgroundColor: '#ECECEC', 
+    marginLeft: 270,
+    borderColor: '#ccc',
+  }
 });
 
 export default HomeScreen;

@@ -72,6 +72,7 @@ const InputScreen = () => {
                 source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} 
                 style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}
             >
+                <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>

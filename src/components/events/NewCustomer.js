@@ -133,6 +133,26 @@ export default RegisterCustomer = () => {
 
                 {formularioActual === 4 && (
                     <View style={InputForms.formContainer}>
+                        <Text style={InputForms.formTitle}>Elije un paquete</Text>
+                        <View style={[styles.BoxContainer, { marginBottom: 120 }]}>
+                            <View style={[styles.row]}>
+                                <TouchableOpacity style={[styles.box]}>
+                                    <View style={[ styles.txtContainer]}>
+                                        <Text variant='labelLarge' >
+                                            Completo
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.box, { marginLeft: 30 }]}>
+                                    <View style={[ styles.txtContainer]}>
+                                        <Text variant='labelLarge' >
+                                            Medio
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
 
                         <Button icon="chevron-right"
                             buttonColor="#C7FBD7"
@@ -142,10 +162,17 @@ export default RegisterCustomer = () => {
                             onPress={handleSiguiente}>
                             Siguiente Página
                         </Button>
+
+                        
                     </View>
                 )}
                 {formularioActual === 5 && (
                     <View style={InputForms.formContainer}>
+                        <Text style={InputForms.formTitle}>Análisis Adicionales</Text>
+                        <TextInput style={[InputForms.  input, { marginBottom: 20, height: 41, paddingLeft: 25  }]}
+                        placeholder="Ingresa un análisis adicionales (opcional)"
+                        maxLength={100}
+                        />
 
                         <Button icon="chevron-right"
                             buttonColor="#C7FBD7"
@@ -183,4 +210,25 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         padding: 10,
     },
+    BoxContainer: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'space-around',
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    box: {
+        backgroundColor: '#ECECEC',
+        width: 110,
+        height: 110,
+        borderRadius: 25
+    },
+    txtContainer:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });
