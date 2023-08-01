@@ -21,11 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#fafafa"
-      }
+      },
+      "package": "com.eehcx.NitroCiispalma"
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "84a36e26-9b0c-404b-ae31-03516c924c0f"
+      }
     }
   }
 }
-

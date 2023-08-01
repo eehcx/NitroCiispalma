@@ -1,6 +1,6 @@
 //React Native y React Native Paper: TouchableNativeFeedback no funciona en iOS
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, TouchableOpacity, TouchableNativeFeedback, Alert, Button, TextInput, View } from 'react-native';
+import { StyleSheet, StatusBar, TouchableHighlight, TextInput, View } from 'react-native';
 import { Text, Appbar } from 'react-native-paper';
 // Iconos
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,16 +8,17 @@ import { Octicons } from '@expo/vector-icons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Formulas: 9
-import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol, elemento_ppm_mgkg, Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg } from '../utils/functions/Formulas';
+import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/functions/Formulas';
+// Firebase
+import { app } from '../utils/firebase/firebaseInit';
+import firebase from 'firebase/app';
+import { getDatabase, ref, onValue, off } from 'firebase/database';
 // CE: CE_Cm_Dsm
 // MO: mL_FeSO4_Mo
-
 // H-AL: mlNaOH_cmol, mlHCl_cmol
+
 // Micros: elemento_ppm_mgkg
 // Bases Intercambiables: Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg
-
-// uso del touchable
-const TouchableComponent = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 
 const CalculatorScreen = () => {
     // React Navigation
@@ -73,8 +74,6 @@ const CalculatorScreen = () => {
             const inputValueH_Al = convertToFloat(TextH_Al);
             if (isNaN(inputValue)) {
                 throw new Error('El valor ingresado no es un número válido');
-            } else if (isNaN(inputValueH_Al)) {
-                throw new Error('El valor ingresado no es un número válido');
             }
 
             let resultado;
@@ -83,20 +82,12 @@ const CalculatorScreen = () => {
             } else if (selectedFunction === 'MO') {
                 resultado = mL_FeSO4_Mo(inputValue);
             } else if (selectedFunction === 'H-Al (HCl)'){
-                /*
-                export function mlHCl_cmol(mlHCl,N_HCl){  
-                    const HClCmol=(((mlHCl-0.025)*(N_HCl)*(100))/5);
-                    return HClCmol.toFixed(2);
-                }
-                */
                 // mlHcl = inputValue
                 // N_HCl = inputValueH_Al
                 resultado = mlHCl_cmol(inputValue, inputValueH_Al);
             } else if (selectedFunction === 'H-Al (NaOH)'){
                 resultado = mlNaOH_cmol(inputValue, inputValueH_Al);
             }
-
-            console.log(resultado); // .toString()
             setResultValue(resultado);
         } catch (error) {
             console.error('Error al calcular el resultado:', error);
@@ -105,6 +96,11 @@ const CalculatorScreen = () => {
 
     // setIsButtonEnabled(false);
 
+    const handleKeyboardChange = (type, functionKey) => {
+        setKeyboardType(type);
+        setSelectedFunction(functionKey);
+        setIsButtonEnabled(type !== 'Normal');
+    };
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
@@ -136,7 +132,10 @@ const CalculatorScreen = () => {
 
             <View style={styles.keyboardContainer}>
                 <View style={styles.row}>
-                    <TouchableComponent
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#d7dfe4"
                     disabled={!isButtonEnabled}
                     onPress={() => {setKeyboardType('HCl'); setSelectedFunction('H-Al (HCl)');}}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
@@ -144,8 +143,11 @@ const CalculatorScreen = () => {
                                 <Text style={{ color: "#000" }} variant='labelLarge'>HCl</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#d7dfe4"
                     disabled={!isButtonEnabled}
                     onPress={() => {setKeyboardType('NaOH'); setSelectedFunction('H-Al (NaOH)');}}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
@@ -153,110 +155,160 @@ const CalculatorScreen = () => {
                                 <Text style={{ color: "#000" }} variant='labelLarge'>NaOH</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent 
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#d7dfe4"
                     onPress={() => {setKeyboardType('Normal'); setIsButtonEnabled(false);}}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
                             <View style={styles.Keycontainer}>
-                                <Octicons style={styles.iconContent} name="number" size={30} color='#000' />
+                                <Octicons style={styles.iconContent} name="number" size={25} color='#000' />
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#82c491"
                     onPress={handleBackspace}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
                             <View style={styles.Keycontainer}>
                                 <MaterialIcons style={styles.iconContent} name="backspace" size={35} color='#fff' />
                             </View> 
                         </View> 
-                    </TouchableComponent>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('7')}>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('7')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>7</Text>
                             </View>
-                        </View>                        
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('8')}>
+                        </View>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('8')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>8</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent 
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
                     onPress={() => handleNumberPress('9')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>9</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#82c491"
                     onPress={() => {setSelectedFunction('CE'); setIsButtonEnabled(false);}}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text style={{ color: "#fff" }} variant='headlineMedium'>CE</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('4')}>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('4')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>4</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('5')}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('5')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>5</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('6')}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('6')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>6</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#82c491"
                     onPress={() => {setSelectedFunction('MO'); setIsButtonEnabled(false);}}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text style={{ color: "#fff" }} variant='headlineMedium'>MO</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('1')}>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('1')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>1</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('2')}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('2')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>2</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('3')}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('3')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>3</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#82c491"
                     onPress={() => {
                         setSelectedFunction('H-AI');
                         setIsButtonEnabled(true);
@@ -266,40 +318,55 @@ const CalculatorScreen = () => {
                                 <Text style={{ color: "#fff" }} variant='headlineMedium'>H-Al</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
+                    </TouchableHighlight>
                 </View>
                 <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('.')}>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('.')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>.</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('0')}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={() => handleNumberPress('0')}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text variant='displaySmall'>0</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={handleEquals}>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#fff"
+                    onPress={handleEquals}>
                         <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
                             <View style={styles.Keycontainer}>
                                 <Text style={{ color: "#000" }} variant='displaySmall'>=</Text>
                             </View>
                         </View>
-                    </TouchableComponent>
-                    <TouchableComponent>
+                    </TouchableHighlight>
+                    <TouchableHighlight
+                    style={{ borderRadius: 25 }}
+                    activeOpacity={0}
+                    underlayColor="#82c491"
+                    >
                         <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
                             <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#fff" }} variant='headlineMedium'>MC</Text>
+                                <Text style={{ color: "#fff" }} variant='headlineMedium'></Text>
                             </View>
                         </View>
-                    </TouchableComponent>
+                    </TouchableHighlight>
                 </View>
             </View>
-
         </View>
     );
 };

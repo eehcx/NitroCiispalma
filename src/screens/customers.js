@@ -61,8 +61,8 @@ const CustomersScreen = ({
     
         // Limpia la suscripción cuando el componente se desmonta
         return () => {
-          // Detén la escucha de cambios en la referencia
-          off(clientesRef, 'value', onClientesValue);
+            // Detén la escucha de cambios en la referencia
+            off(clientesRef, 'value', onClientesValue);
         };
     }, []);
     // Animación del FAB

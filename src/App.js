@@ -28,6 +28,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 // Pantallas de la aplicación
+import LoadingScreen from './utils/auth/redirect';
 import InputScreen from './screens/entrace';
 import LoginScreen from './utils/auth/login';
 import MainScreen from './screens/main'
@@ -68,33 +69,15 @@ const navigationRef = React.createRef();
 
 // Funcion principal de la aplicación
 export default function App() {
-  useEffect(() => {
-    checkLoginState();
-  }, []);
-
-  const checkLoginState = async () => {
-    try {
-      const user = await AsyncStorage.getItem('user');
-      if (user) {
-        // Si el usuario está logueado, navegamos a la pantalla "home"
-        navigationRef.current?.navigate('main');
-      } else {
-        // Si el usuario no está logueado, navegamos a la pantalla "entrace"
-        navigationRef.current?.navigate('entrace');
-      }
-    } catch (error) {
-      console.log('Error al verificar el estado de inicio de sesión:', error);
-    }
-  };
-
-  const navigateToScreen = (screen) => {
-    // Navegar a la pantalla especificada utilizando React Navigation
-    navigationRef.current?.navigate(screen);
-  };
 
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
+        <Stack.Screen
+          name="loading"
+          component={LoadingScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen 
         name="entrace" 
         component={InputScreen} 

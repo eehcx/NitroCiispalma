@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Button, Text, BottomNavigation, Avatar, Card, TouchableRipple, Searchbar } from 'react-native-paper';
+import { View, StatusBar, TextInput, TouchableOpacity, StyleSheet, Image, TouchableHighlight, ImageBackground } from 'react-native';
+import { Text, BottomNavigation, Avatar, Card, TouchableRipple, Searchbar, AnimatedFAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 import { Color, Border, FontSize } from "../styles/GlobalStyles";
@@ -8,6 +8,7 @@ import { Color, Border, FontSize } from "../styles/GlobalStyles";
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
+  // Navegación entre páginas
   const navigation = useNavigation();
   // Hooks para el estado de la aplicación
   const [email, setEmail] = useState('');
@@ -48,7 +49,7 @@ const HomeScreen = () => {
         const { displayName } = user;
 
         // Obtener el primer nombre antes del espacio
-        const firstName = getFirstName(displayName);
+        const firstName = getFirstName(displayName); 
 
         // Guardar el valor en el estado
         setDisplayName(firstName);
@@ -68,93 +69,102 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.mainscreen}>
-      <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
+      <StatusBar backgroundColor='#ececec' barStyle="dark-content" />
 
-      {/* Entrada de la app */}
-
-      <View style={styles.entrace}>
-        <View style={styles.fondo} />
-          <Text style={styles.txtTitle}>{displayName}</Text>
-        <View style={[styles.ContainerStateTitle]}>
-          <Text variant='titleMedium' style={[styles.txtState, { fontSize: 20}]}>
-            Hola {displayName},         
-          </Text>
-          <Text variant='titleSmall' style={[styles.txtState, { top: 31, fontSize: 16, letterSpacing: 0.3 }]}>
-            ¿Qué vas a hacer hoy?
-          </Text>
-          <Avatar.Text size={50} label={displayName.toUpperCase().substring(0, 1)} style={styles.avatar} />
+        <View style={styles.entrace}>
+          <View style={styles.fondo} />
+            <Text style={styles.txtTitle}>{displayName}</Text>
+          <View style={[styles.ContainerStateTitle]}>
+            <Text variant='titleMedium' style={[styles.txtState, { fontSize: 20}]}>
+              Hola {displayName},         
+            </Text>
+            <Text variant='titleSmall' style={[styles.txtState, { top: 31, fontSize: 16, letterSpacing: 0.3 }]}>
+              ¿Qué vas a hacer hoy?
+            </Text>
+            <Avatar.Text size={50} label={displayName.toUpperCase().substring(0, 1)} style={styles.avatar} />
+          </View>
         </View>
-      </View>
 
-      {/* Barra de búsqueda */}
-      <View style={[styles.search]}>
-        <Searchbar
-          style={styles.input}
-          placeholder="Search for pages"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-        />
-      </View>
-
-      {/* Filtro de secciones */}
-      <View style={styles.secciones}>
-        <TouchableOpacity style={[ styles.groupChildLayout, { backgroundColor: "#41525C"}]}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fnews.png?alt=media&token=6c919a3d-ced0-4bc0-8ca3-df49705214c5' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[ styles.groupChildLayout, styles.rectangleGroup]}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ftools.png?alt=media&token=799bc63d-8183-474a-a386-10e4341c1a31' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={[styles.rectangleParent1, styles.groupChildLayout]}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity>
-      </View>
-
-      {/* Filtro de herramientas */}
-      <Text variant="titleLarge" style={[styles.herramientas, styles.herramientasTypo]}>
-        Herramientas
-      </Text>
-      <View style={styles.containerTools}>
-        <TouchableOpacity onPress={handleNavigateToCalc} style={styles.groupItem}>
-          <View style={[styles.containerIco]}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fcalculator.png?alt=media&token=40ac4df3-24dc-4190-804e-f6c1d6c6561d' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 190 }]}>
-          <View style={styles.containerIco}>
-            <Image
-            source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fview.png?alt=media&token=ef261487-db31-4be4-8264-038163d028cf' }} 
-            style={styles.Icon3d}/>
-          </View>
-        </TouchableOpacity> 
-      </View>
-
-      {/* Filtro de historial */}
-      
-      <Text variant="titleLarge" style={[styles.informesHechos, styles.herramientasTypo]}>
-        Historial de clientes
-      </Text>
-
-      <TouchableOpacity onPress={handleNavigateToHistory} style={[styles.groupLayout, { marginTop: 600, marginLeft:50 }]}>
-        <View style={styles.containerIco}>
-          <Octicons style={styles.iconContent} name="history" size={35} color='#ccc' />
+        <View style={[styles.search]}>
+          <Searchbar
+            style={styles.input}
+            placeholder="Search for pages"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+          />
         </View>
-      </TouchableOpacity>
+
+        <View style={styles.secciones}>
+          <TouchableOpacity style={[ styles.groupChildLayout, { backgroundColor: "#333"}]}>
+            <View style={styles.containerIco}>
+              <View style={styles.FilterContainer}>
+                <Octicons name="apps" size={32} color="white" style={styles.Icon3d}/>
+                <Text variant='titleSmall' style={[styles.txtIcon, { color: "white", fontSize: 11 }]}>Todo</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[ styles.groupChildLayout, styles.rectangleGroup]}>
+            <View style={styles.containerIco}>
+              <View style={styles.FilterContainer}>
+                <Octicons name="workflow" size={32} color="#333" style={styles.Icon3d}/>
+                <Text variant="titleSmall"  style={[styles.txtIcon,{ fontSize: 11 }]}>Flujos</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.rectangleParent1, styles.groupChildLayout]}>
+            <View style={styles.containerIco}>
+              <View style={styles.FilterContainer}>
+                <Octicons name="database" size={32} color="#333" style={styles.Icon3d}/>
+                <Text variant="titleSmall" style={[styles.txtIcon,{ fontSize: 11 }]}>Historial</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        {
+          /*
+          <Text variant="titleLarge" style={[styles.herramientas, styles.herramientasTypo]}>
+          Flujos de trabajo
+          </Text>
+          */
+        }
+        <View style={styles.containerTools}>
+          <TouchableOpacity onPress={handleNavigateToCalc} style={styles.groupItem}>
+            <View style={[styles.containerIco]}>
+              <Image 
+              source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.png?alt=media&token=a2cab502-0b0a-44b4-a071-c9dea74a1c2d' }} 
+              style={styles.imagesTools}/>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 190 }]}>
+            <View style={styles.containerIco}>
+              <Image
+              source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/inf.png?alt=media&token=03bedbd6-a3f2-4062-8d83-4661c3698860' }} 
+              style={styles.imagesTools}/>
+            </View>
+          </TouchableOpacity> 
+        </View>
+    
+        {
+          /*
+          <Text variant="titleLarge" style={[styles.informesHechos, styles.herramientasTypo]}>
+          Historial de clientes
+          </Text>
+          */
+        }
+
+        <TouchableOpacity onPress={handleNavigateToHistory} style={[styles.groupLayout, { marginTop: 590, marginLeft:50, borderRadius: 25 }]}>
+          <ImageBackground
+                source={{ uri: 'https://cdn.pixabay.com/photo/2020/06/09/19/09/shares-5279686_1280.jpg' }} 
+                style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center', borderRadius: 10, overflow: 'hidden', }}
+            >
+              <View style={styles.containerIco}>
+                <Octicons style={styles.iconContent} name="history" size={35} color='#333' />
+              </View>
+          </ImageBackground>
+        </TouchableOpacity>
 
     </View>
   );
@@ -201,9 +211,9 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   groupChildLayout: {
-    width: 88,
-    height: 88,
-    backgroundColor: "#ececec",
+    width: 90,
+    height: 90,
+    backgroundColor: "#ECECEC",
     borderRadius: Border.br_smi,
     position: "absolute",
   },
@@ -220,13 +230,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  FilterContainer:{
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   iconContent:{
     justifyContent: 'center',
     alignItems: 'center',
   },
   Icon3d:{
-    width: 35,
-    height: 35,
+    marginBottom: 5,
+  },
+  txtIcon: {
+    textAlign: 'center', // Centra el texto horizontalmente
+  },
+  imagesTools: {
+    borderRadius: Border.br_smi,
+    width: "100%",
+    height: "100%",
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -238,14 +259,14 @@ const styles = StyleSheet.create({
     width: 315,
     position: "absolute",
     top: 0,
-    backgroundColor: Color.whitesmoke,
+    backgroundColor: "#ececec",
     borderRadius: Border.br_smi,
     left: 0,
   },
   containerTools:{
     flex: 1,
     left: 50,
-    top: 350,
+    top: 340,
   },
   groupItem: {
     height: 125,
