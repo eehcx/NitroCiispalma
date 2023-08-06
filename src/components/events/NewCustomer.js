@@ -20,8 +20,7 @@ export default RegisterCustomer = () => {
     };
 
     return (
-        <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
-            <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
+        <View style={{ flex: 1, justifyContent: 'center'}}>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
                     <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} value={name} onChangeText={setName} placeholder="Nombre de la empresa" maxLength={100}/>

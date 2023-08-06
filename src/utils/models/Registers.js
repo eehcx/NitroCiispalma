@@ -86,9 +86,9 @@ export const saveClient = async (nombre, telefono) => {
     }
 };
 
-export const saveCE = async (IdLab, us_cm, dms) =>{
+export const saveCE = async (IdCalc, IdLab, us_cm, dms) =>{
     const database = getDatabase(app);
-    const newCERef = push(ref(database, 'calculos/CE'));
+    const newCERef = push(ref(database, 'calculos/' + IdCalc + '/CE'));
 
     const newCEId = newCERef.key;
     const newCEData = {
@@ -97,13 +97,13 @@ export const saveCE = async (IdLab, us_cm, dms) =>{
         us_cm: us_cm,
         dms: dms
     };
-    await set(ref(database, `calculos/MO/${newCEId}`),newCEData);
-    console.log('Client Saved!' + newCEId);
+    await set(ref(database, `calculos/CE/${newCEId}`),newCEData);
+    console.log('CE Saved!' + newCEId);
 };
 
-export const saveMO = async (IdLab, mL_FeSO4, porcentaje) =>{
+export const saveMO = async (IdCalc, IdLab, mL_FeSO4, porcentaje) =>{
     const database = getDatabase(app);
-    const newMORef = push(ref(database, 'calculos/MO'));
+    const newMORef = push(ref(database, 'calculos/' + IdCalc + '/MO'));
 
     const newMOId = newMORef.key;
     const newMOData = {
@@ -113,13 +113,13 @@ export const saveMO = async (IdLab, mL_FeSO4, porcentaje) =>{
         porcentaje: porcentaje
     };
     await set(ref(database, `calculos/MO/${newMOId}`),newMOData);
-    console.log('Client Saved!' + newMOId);
+    console.log('MO Saved!' + newMOId);
 };
 
 // Funciones de H-Al 
-export const saveHAl = async (IdLab, N_HCl, N_NaOH, cmol, ml_HCl, ml_NaOH, promedio) =>{
+export const saveHAl = async (IdCalc, IdLab, N_HCl, N_NaOH, cmol, ml_HCl, ml_NaOH, promedio) =>{
     const db = getDatabase(app)
-    const newHAlRef = push(ref(db, 'calculos/H-Al'));
+    const newHAlRef = push(ref(db, 'calculos/' + IdCalc + '/H-Al'));
 
     const newHAlId = newHAlRef.key;
     const newHAlData = {

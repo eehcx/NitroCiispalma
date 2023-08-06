@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
-import { Text } from 'react-native-paper';
+import Loading from '../../components/interface/loading';
 
 export default LoadingScreen = ({ navigation }) => {
 
@@ -24,17 +23,8 @@ export default LoadingScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={[styles.container, { backgroundColor: "#fafafa" }]}>
-            <ActivityIndicator size="large" color="#82c491" />
-            <Text style={{ marginTop: 4 }} variant='titleSmall' >Cargando...</Text>
-        </View>
+        <>
+            <Loading />
+        </>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});

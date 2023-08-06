@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DateTimePicker from '@react-native-community/datetimepicker';
 // React Native Paper
 import { Button, Text } from 'react-native-paper';
-// React Native Vector Icons
-import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Estilos globales
@@ -87,7 +85,6 @@ export default RegisterInform = () => {
 
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
-            <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
             <View style={InputForms.container}>
                 {formularioActual === 1 && (
                     <View style={InputForms.formContainer}>

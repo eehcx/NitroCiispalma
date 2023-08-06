@@ -15,6 +15,7 @@ import HistoryScreen from './screens/history';
 import CustomersScreen from './screens/customers';
 import RegisterCustomer from './components/events/NewCustomer';
 import RegisterInform from './components/events/NewInform';
+import ResultsScreen from './components/events/results';
 
 const Stack = createStackNavigator();
 const navigationRef = React.createRef();
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="customers" component={CustomersScreen} options={{ title: 'Clientes', headerStyle: { backgroundColor: '#fafafa' } }}/>
         <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
         <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
+        <Stack.Screen name="results" component={ResultsScreen} options={{ title: 'Resultados', headerStyle: { backgroundColor: '#fafafa' },}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

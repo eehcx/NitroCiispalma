@@ -12,7 +12,7 @@ const InputScreen = () => {
     const handleNavigateToLogIn = () => { navigation.navigate('login'); };
     return (
         <View style={{ flex: 1 }}>
-            <ImageBackground source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo2.jpg?alt=media&token=5a3a5a50-c341-4d22-8161-cf6a28e47337' }} style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}>
+            <ImageBackground source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo.jpg?alt=media&token=b861ad71-5831-490f-aacd-985e67e69d00' }} style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}>
                 <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
