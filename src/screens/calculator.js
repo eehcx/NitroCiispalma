@@ -41,7 +41,6 @@ const CalculatorScreen = () => {
             } else{
                 setTextH_Al(TextH_Al + number);
             }
-
         } catch (error) {
             console.error('Error mandar el número:', error);
         }

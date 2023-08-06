@@ -18,7 +18,9 @@ import RegisterInform from './components/events/NewInform';
 
 const Stack = createStackNavigator();
 const navigationRef = React.createRef();
-
+/*
+<Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }} />
+*/
 // Funcion principal de la aplicación
 export default function App() {
   return (
@@ -30,7 +32,7 @@ export default function App() {
         <Stack.Screen name="home" component={HomeScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="signin" component={SignipScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="profile" component={ProfileScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="profile" component={ProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="calculator" component={CalculatorScreen} options={{ title: 'Calculadora', headerShown: false}}/>
         <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos' }}/>
         <Stack.Screen name="customers" component={CustomersScreen} options={{ title: 'Clientes', headerStyle: { backgroundColor: '#fafafa' } }}/>

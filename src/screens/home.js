@@ -14,7 +14,7 @@ const WorkFlowContent = () => {
   const handleNavigateToCustomers = () => { navigation.navigate('customers'); };
 
   return (
-      <View style={[styles.containerTools, { marginHorizontal:50, marginTop: 160 }]}>
+      <View style={[styles.containerTools, { marginHorizontal:50, marginTop: 150 }]}>
           <TouchableHighlight activeOpacity={0.7} underlayColor="#ccc" onPress={handleNavigateToCalc} style={styles.groupItem}>
               <View style={[styles.containerIco]}>
                 <Image  source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.png?alt=media&token=a2cab502-0b0a-44b4-a071-c9dea74a1c2d' }} style={styles.imagesTools}/>
@@ -117,7 +117,7 @@ const HomeScreen = () => {
         <>
           {selectedOption === "Todo" && (
             <>
-              <HistoryContent marginTop={590} />
+              <HistoryContent marginTop={570} />
               <WorkFlowContent />
             </>
           )}
