@@ -12,7 +12,7 @@ import { app } from '../utils/firebase/firebaseInit';
 // Componentes
 import CalculatorRows from '../components/interface/calcRows';
 
-const CalculatorScreen = () => {
+export default CalculatorScreen = () => {
     // React Navigation
     const navigation = useNavigation();
     const handleGoBack = () => { navigation.goBack(); };
@@ -195,5 +195,3 @@ const styles = StyleSheet.create({
     SubtitleTextScreen:{ textAlign: 'right', paddingRight: 40, marginTop: 60, fontSize: 27, color: '#999' },
     keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' }
 });
-
-export default CalculatorScreen;

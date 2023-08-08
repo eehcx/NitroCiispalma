@@ -17,14 +17,29 @@ const WorkFlowContent = () => {
       <View style={[styles.containerTools, { marginHorizontal:50, marginTop: 150 }]}>
           <TouchableHighlight activeOpacity={0.7} underlayColor="#ccc" onPress={handleNavigateToCalc} style={styles.groupItem}>
               <View style={[styles.containerIco]}>
-                <Image  source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.png?alt=media&token=a2cab502-0b0a-44b4-a071-c9dea74a1c2d' }} style={styles.imagesTools}/>
+                <Image  source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }} style={styles.imagesTools}/>
               </View>
           </TouchableHighlight>
           <TouchableHighlight activeOpacity={0.7} underlayColor="#ccc" onPress={handleNavigateToCustomers} style={[styles.groupItem, { marginLeft: 190 }]}>
               <View style={styles.containerIco}>
-                <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/inf.png?alt=media&token=03bedbd6-a3f2-4062-8d83-4661c3698860' }} style={styles.imagesTools}/>
+                <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/inf.jpg?alt=media&token=033c1318-38a0-4152-bebc-c1c619789fcf' }} style={styles.imagesTools}/>
               </View>
           </TouchableHighlight> 
+      </View>
+  );
+}
+
+const WorkFlowButtonContent = () => {
+  const navigation = useNavigation();
+  const handleNavigateToStats = () => { navigation.navigate('stats'); };
+
+  return (
+      <View style={[styles.containerTools, { marginHorizontal:50, marginTop: 160 }]}>
+          <TouchableHighlight activeOpacity={0.7} underlayColor="#ccc" onPress={handleNavigateToStats} style={styles.groupItem}>
+              <View style={[styles.containerIco]}>
+                <Image  source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/stats.jpg?alt=media&token=07a79821-3ed1-4681-9970-72895919dc22' }} style={styles.imagesTools}/>
+              </View>
+          </TouchableHighlight>
       </View>
   );
 }
@@ -62,21 +77,17 @@ const HomeScreen = () => {
   // Función para obtener los datos del usuario desde AsyncStorage
   const getUserDataFromAsyncStorage = async () => {
     try {
-      // Obtener el objeto del usuario almacenado en AsyncStorage
+      // Obtener objeto de AsyncStorage
       const userJson = await AsyncStorage.getItem('user');
 
       if (userJson) {
         // Convertir el JSON a un objeto de JavaScript
         const user = JSON.parse(userJson);
 
-        // Obtener el displayName del usuario
         const { displayName } = user;
-
-        // Obtener el primer nombre antes del espacio
         const firstName = getFirstName(displayName); 
-
-        // Guardar el valor en el estado
         setDisplayName(firstName);
+
       } else {
         console.log('No hay un usuario');
       }
@@ -85,10 +96,9 @@ const HomeScreen = () => {
     }
   };
 
-  // Ejecutar la función para obtener los datos del usuario cuando el componente se monte
   useEffect(() => {
     getUserDataFromAsyncStorage();
-  }, []); // El segundo argumento (un array vacío) asegura que se ejecute solo una vez al montar el componente
+  }, []);
 
   return (
     <View style={[styles.mainscreen]}>
@@ -121,7 +131,12 @@ const HomeScreen = () => {
               <WorkFlowContent />
             </>
           )}
-          {selectedOption === "Flujos" && <WorkFlowContent />}
+          {selectedOption === "Flujos" && (
+            <>
+              <WorkFlowContent />
+              <WorkFlowButtonContent />
+            </>
+          ) }
           {selectedOption === "Historial" && <HistoryContent marginTop={420} />}
         </>
 

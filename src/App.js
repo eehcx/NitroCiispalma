@@ -16,12 +16,15 @@ import CustomersScreen from './screens/customers';
 import RegisterCustomer from './components/events/NewCustomer';
 import RegisterInform from './components/events/NewInform';
 import ResultsScreen from './components/events/results';
+import StatsScreen from './components/events/stats';
 
 const Stack = createStackNavigator();
 const navigationRef = React.createRef();
+
 /*
 <Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }} />
 */
+
 // Funcion principal de la aplicación
 export default function App() {
   return (
@@ -40,6 +43,7 @@ export default function App() {
         <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
         <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
         <Stack.Screen name="results" component={ResultsScreen} options={{ title: 'Resultados', headerStyle: { backgroundColor: '#fafafa' },}}/>
+        <Stack.Screen name="stats" component={StatsScreen} options={{ title: 'Estadísticas', headerStyle: { backgroundColor: '#fafafa' },}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

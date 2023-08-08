@@ -5,15 +5,19 @@ import { View, StyleSheet, StatusBar } from 'react-native';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
+// Firebase Auth
+import { getAuth, signOut } from "firebase/auth";
 
 const CardInfo = () => {
     const navigation = useNavigation();
 
     //LOGOUT
     const handleLogout = async () => {
+        const auth = getAuth(app);
         try {
             await AsyncStorage.removeItem('user');
             console.log('Usuario deslogueado');
+            await signOut(auth);
             navigation.navigate('entrace');
         } catch (error) {
             console.log('Error al cerrar sesión:', error);

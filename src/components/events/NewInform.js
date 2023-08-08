@@ -203,7 +203,7 @@ export default RegisterInform = () => {
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos requeridos</Text>
                         <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
                         placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
-                        maxLength={100}
+                        maxLength={100} keyboardType="numeric"
                         />
                         <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
                         placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}

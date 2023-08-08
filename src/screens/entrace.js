@@ -6,6 +6,13 @@ import { Text, TouchableRipple  } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 
+/*
+"calculos": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+},
+*/
+
 const InputScreen = () => {
     const navigation = useNavigation();
     const handleNavigateToSignIn = () => { navigation.navigate('signin'); };
