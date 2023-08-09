@@ -1,14 +1,14 @@
 import { initializeApp } from "firebase/app";
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDzmWkV3iCeK4_Mg8m-Mtrx7W3zOS6mCJ0",
-    authDomain: "ciispalmaapp.firebaseapp.com",
-    databaseURL: "https://ciispalmaapp-default-rtdb.firebaseio.com",
-    projectId: "ciispalmaapp",
-    storageBucket: "ciispalmaapp.appspot.com",
-    messagingSenderId: "351676747017",
-    appId: "1:351676747017:web:4e4c24cbd2d37bf5f357d8",
-    measurementId: "G-55Z39KEJ82"
+    apiKey: "AIzaSyAPdfLScvpqllSdvglAj1qWWseRQd69A-Q",
+    authDomain: "nitrociispalma.firebaseapp.com",
+    databaseURL: "https://nitrociispalma-default-rtdb.firebaseio.com",
+    projectId: "nitrociispalma",
+    storageBucket: "nitrociispalma.appspot.com",
+    messagingSenderId: "346776110503",
+    appId: "1:346776110503:web:9633b2125b836d4f726282",
+    measurementId: "G-GNPQHR2YE1"
 };
 
 const app = initializeApp(firebaseConfig);

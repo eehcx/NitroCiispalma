@@ -14,15 +14,11 @@ import InputForms from '../../styles/InputForms';
 const LoginScreen = () => {
   // Firebase
   const auth = getAuth(app);
-  // React Navigation
   const navigation = useNavigation();
-  // Estados de los inputs
+  const handleNavigateToSignIn = () => { navigation.navigate('signin'); };
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const handleNavigateToSignIn = () => {
-    navigation.navigate('signin');
-  };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)

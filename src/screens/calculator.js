@@ -1,30 +1,22 @@
-//React Native y React Native Paper: TouchableNativeFeedback no funciona en iOS
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, TouchableOpacity, TouchableNativeFeedback, Alert, Button, TextInput, View } from 'react-native';
-import { Text, Appbar } from 'react-native-paper';
-// Iconos
-import { MaterialIcons } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
+import { StyleSheet, StatusBar, TextInput, View } from 'react-native';
+import { Button, Text, Appbar } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
-// Formulas: 9
-import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol, elemento_ppm_mgkg, Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg } from '../utils/functions/Formulas';
-// CE: CE_Cm_Dsm
-// MO: mL_FeSO4_Mo
+// Formulas: 4 en uso
+import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/functions/Formulas';
+import { saveCE, saveMO } from '../utils/models/Registers'
+// Firebase
+import { getDatabase, ref, onValue, off, get } from 'firebase/database';
+import { app } from '../utils/firebase/firebaseInit';
+// Componentes
+import CalculatorRows from '../components/interface/calcRows';
 
-// H-AL: mlNaOH_cmol, mlHCl_cmol
-// Micros: elemento_ppm_mgkg
-// Bases Intercambiables: Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg
-
-// uso del touchable
-const TouchableComponent = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-
-const CalculatorScreen = () => {
+export default CalculatorScreen = () => {
     // React Navigation
     const navigation = useNavigation();
-    const handleGoBack = () => {
-        navigation.goBack();
-    };
+    const handleGoBack = () => { navigation.goBack(); };
+    const handleNavigateToVarious = () => { navigation.navigate('results'); };
     // Seleccion de la funcion
     const [selectedFunction, setSelectedFunction] = useState('CE');
     // Selecionar un tipo de keyboard
@@ -32,14 +24,16 @@ const CalculatorScreen = () => {
     // Valores de los inputs (texto)
     const [textScreen, setTextScreen] = useState('');
     const [resultValue, setResultValue] = useState("");
+    const [IdLab, setIdLab] = useState('B')
     // Valores de los inputs (datos alternos)
     const [TextH_Al, setTextH_Al] = useState('');
+    //
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-
+    const [uid, setUid] = useState('');
+    const [formularioActual, setFormularioActual] = useState(1);
+    const [calculoId, setCalculoId] = useState('');
     // Convertir string a float
-    const convertToFloat = (value) => {
-        return parseFloat(value);
-    };
+    const convertToFloat = (value) => { return parseFloat(value); };
 
     // Tipos de teclado
     const handleNumberPress = (number) => {
@@ -49,7 +43,6 @@ const CalculatorScreen = () => {
             } else{
                 setTextH_Al(TextH_Al + number);
             }
-
         } catch (error) {
             console.error('Error mandar el número:', error);
         }
@@ -57,11 +50,9 @@ const CalculatorScreen = () => {
 
     // Btn de backspace (borrar)
     const handleBackspace = () => {
-        if (keyboardType === 'Normal'){
-            const newValue = textScreen.slice(0, -1);
+        if (keyboardType === 'Normal'){ const newValue = textScreen.slice(0, -1);
             setTextScreen(newValue);
-        } else {
-            const newValueH_Al = TextH_Al.slice(0, -1);
+        } else { const newValueH_Al = TextH_Al.slice(0, -1);
             setTextH_Al(newValueH_Al);
         }
     };
@@ -73,275 +64,137 @@ const CalculatorScreen = () => {
             const inputValueH_Al = convertToFloat(TextH_Al);
             if (isNaN(inputValue)) {
                 throw new Error('El valor ingresado no es un número válido');
-            } else if (isNaN(inputValueH_Al)) {
-                throw new Error('El valor ingresado no es un número válido');
             }
-
             let resultado;
-            if (selectedFunction === 'CE') {
-                resultado = CE_Cm_Dsm(inputValue);
-            } else if (selectedFunction === 'MO') {
-                resultado = mL_FeSO4_Mo(inputValue);
+            if (selectedFunction === 'CE') { resultado = CE_Cm_Dsm(inputValue);
+                saveCE(calculoId,IdLab,inputValue.toString(),resultado.toString());
+            } else if (selectedFunction === 'MO') { resultado = mL_FeSO4_Mo(inputValue);
+                saveMO(calculoId,IdLab,inputValue.toString(),resultado.toString())
             } else if (selectedFunction === 'H-Al (HCl)'){
-                /*
-                export function mlHCl_cmol(mlHCl,N_HCl){  
-                    const HClCmol=(((mlHCl-0.025)*(N_HCl)*(100))/5);
-                    return HClCmol.toFixed(2);
-                }
-                */
-                // mlHcl = inputValue
-                // N_HCl = inputValueH_Al
                 resultado = mlHCl_cmol(inputValue, inputValueH_Al);
             } else if (selectedFunction === 'H-Al (NaOH)'){
                 resultado = mlNaOH_cmol(inputValue, inputValueH_Al);
             }
-
-            console.log(resultado); // .toString()
             setResultValue(resultado);
+
         } catch (error) {
             console.error('Error al calcular el resultado:', error);
         }
     };
 
-    // setIsButtonEnabled(false);
+    const handleKeyboardChange = ({ type, functionKey }) => {
+        setKeyboardType(type);
+        setIsButtonEnabled(type !== 'Normal');
+        if (functionKey) {
+            setSelectedFunction(functionKey);
+        }
+    };
 
+    const rows = [
+        [
+            { label: 'HCl', onPress: () => handleKeyboardChange({ type: 'H-Al', functionKey: 'H-Al (HCl)' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
+            { label: 'NaOH', onPress: () => handleKeyboardChange({ type: 'H-Al', functionKey: 'H-Al (NaOH)' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
+            { label: '1234', onPress: () => handleKeyboardChange({ type: 'Normal' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
+            { label: '⌫', onPress: handleBackspace, backgroundColor: '#82c491', borderRadius: 25 },
+        ],[
+            { label: '7', onPress: () => handleNumberPress('7'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '8', onPress: () => handleNumberPress('8'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '9', onPress: () => handleNumberPress('9'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: 'CE', onPress: () => handleKeyboardChange({ type: 'Normal', functionKey: 'CE' }), backgroundColor: '#82c491', borderRadius: 25 },
+        ],[
+            { label: '4', onPress: () => handleNumberPress('4'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '5', onPress: () => handleNumberPress('5'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '6', onPress: () => handleNumberPress('6'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: 'MO', onPress: () => handleKeyboardChange({ type: 'Normal', functionKey: 'MO' }), backgroundColor: '#82c491', borderRadius: 25 },
+        ],[
+            { label: '1', onPress: () => handleNumberPress('1'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '2', onPress: () => handleNumberPress('2'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '3', onPress: () => handleNumberPress('3'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: 'μs', onPress: handleNavigateToVarious, backgroundColor: '#82c491', borderRadius: 25 },
+        ],[
+            { label: '.', onPress: () => handleNumberPress('.'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '0', onPress: () => handleNumberPress('0'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '=', onPress: () => handleEquals(), backgroundColor: '#fff', borderRadius: 25 },
+            { label: 'BIC', onPress: handleNavigateToVarious, backgroundColor: '#82c491', borderRadius: 25 },
+        ]
+    ];
+
+    const handleConsultation = () => {
+        const db = getDatabase(app);
+        const informesRef = ref(db, `clientes/${uid}/informes`);
+        onValue(informesRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                // Convertir el objeto de informes en un array de informes
+                const informesArray = Object.keys(data).map((informeKey) => ({
+                    id: informeKey,
+                    ...data[informeKey],
+                }));
+
+                // Obtener el último ID de informe
+                const lastInformeKey = informesArray[informesArray.length - 1].id;
+                //console.log(lastInformeKey);
+
+                const informeResultadosRef = ref(db, `clientes/${uid}/informes/${lastInformeKey}/informe_resultados`);
+                onValue(informeResultadosRef, (resultadosSnapshot) => {
+                    const resultadosData = resultadosSnapshot.val();
+                    setCalculoId(resultadosData.uid);
+                    //console.log(resultadosData.uid);
+                    if (resultadosData) {
+                        console.log(resultadosData);
+            
+                        // Acceder al primer registro de informe_resultados
+                        if (Array.isArray(resultadosData) && resultadosData.length > 0) {
+                            const primerRegistro = resultadosData[0];
+                            const primerUid = primerRegistro.uid;
+                            //console.log(primerRegistro.uid);
+                            //console.log(primerUid);
+                            setCalculoId(primerUid);
+                        }
+                    }
+                });
+
+                setFormularioActual(formularioActual + 1);
+            } else {
+                navigation.goBack();
+            }
+        });
+    };
+    console.log(calculoId);
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
             <StatusBar backgroundColor='#f1f2f3' barStyle="dark-content" />
-
             <Appbar.Header style={{ backgroundColor: '#f1f2f3' }}>
                 <Appbar.BackAction onPress={handleGoBack} />
                 <Appbar.Content title={'Calculadora : ' + selectedFunction} />
-                <Appbar.Action icon="dots-vertical" onPress={() => {}} />
             </Appbar.Header>
 
-            <View style={[styles.ScreenCalculator]}>
-                <Text variant='labelLarge' style={{ color:'#b3babe', paddingLeft: 40, marginTop:10 }}>
-                    H-Al: {TextH_Al}
-                </Text>
-                <TextInput 
-                style={[styles.SubtitleTextScreen]}
-                placeholder="Escribe un número"
-                value={textScreen}
-                editable={false}
-                />
-                <TextInput 
-                style={[styles.ScreenText]} 
-                editable={false}
-                placeholder='00000000'
-                value={resultValue}
-                />
-            </View>
+            {formularioActual === 1 && (
+                <AssignClient value={uid} onChangeText={setUid} formTitle='ID Cliente' formSubtitle='Asigna un cliente para esta sección' onPressButton={() => handleConsultation(uid)} backgroundImageUri="https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/background.jpg?alt=media&token=4434d6b7-f072-481d-ab33-58f87e3e018e" />
+            )}
+            {formularioActual === 2 && (
+                <>
+                    <View style={[styles.ScreenCalculator]}>
+                        <Text variant='labelLarge' style={{ color:'#b3babe', paddingLeft: 40, marginTop:10 }}>H-Al: {TextH_Al}</Text>
+                        <Text style={[styles.SubtitleTextScreen]}>{textScreen}</Text>
+                        <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
+                    </View>
 
-            <View style={styles.keyboardContainer}>
-                <View style={styles.row}>
-                    <TouchableComponent
-                    disabled={!isButtonEnabled}
-                    onPress={() => {setKeyboardType('HCl'); setSelectedFunction('H-Al (HCl)');}}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#000" }} variant='labelLarge'>HCl</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent
-                    disabled={!isButtonEnabled}
-                    onPress={() => {setKeyboardType('NaOH'); setSelectedFunction('H-Al (NaOH)');}}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#000" }} variant='labelLarge'>NaOH</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent 
-                    onPress={() => {setKeyboardType('Normal'); setIsButtonEnabled(false);}}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#d7dfe4" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Octicons style={styles.iconContent} name="number" size={30} color='#000' />
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent
-                    onPress={handleBackspace}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
-                            <View style={styles.Keycontainer}>
-                                <MaterialIcons style={styles.iconContent} name="backspace" size={35} color='#fff' />
-                            </View> 
-                        </View> 
-                    </TouchableComponent>
-                </View>
-                <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('7')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>7</Text>
-                            </View>
-                        </View>                        
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('8')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>8</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent 
-                    onPress={() => handleNumberPress('9')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>9</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent
-                    onPress={() => {setSelectedFunction('CE'); setIsButtonEnabled(false);}}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#fff" }} variant='headlineMedium'>CE</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                </View>
-                <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('4')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>4</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('5')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>5</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('6')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>6</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent
-                    onPress={() => {setSelectedFunction('MO'); setIsButtonEnabled(false);}}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#fff" }} variant='headlineMedium'>MO</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                </View>
-                <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('1')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>1</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('2')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>2</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('3')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>3</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent
-                    onPress={() => {
-                        setSelectedFunction('H-AI');
-                        setIsButtonEnabled(true);
-                    }}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#fff" }} variant='headlineMedium'>H-Al</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                </View>
-                <View style={styles.row}>
-                    <TouchableComponent onPress={() => handleNumberPress('.')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>.</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={() => handleNumberPress('0')}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text variant='displaySmall'>0</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent onPress={handleEquals}>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#fff" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#000" }} variant='displaySmall'>=</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                    <TouchableComponent>
-                        <View style={[styles.btnCalculator, { backgroundColor: "#82c491" }]}>
-                            <View style={styles.Keycontainer}>
-                                <Text style={{ color: "#fff" }} variant='headlineMedium'>MC</Text>
-                            </View>
-                        </View>
-                    </TouchableComponent>
-                </View>
-            </View>
-
+                    <View style={styles.keyboardContainer}>
+                        {rows.map((buttons, index) => (
+                            <CalculatorRows key={index} buttons={buttons} />
+                        ))}
+                    </View>
+                </>
+            )} 
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    ScreenCalculator:{
-        height: 220,
-        width: "100%",
-        backgroundColor: '#f1f2f3', //f1f2f3
-    },
-    ScreenText:{
-        textAlign: 'right',
-        paddingRight: 40,
-        marginTop: 0,
-        fontSize: 67,
-    },
-    SubtitleTextScreen:{
-        textAlign: 'right',
-        paddingRight: 40,
-        marginTop: 60,
-        fontSize: 27,
-    },
-    keyboardContainer: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'space-around',
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    btnCalculator: {
-        width: 78,
-        height: 78,
-        borderRadius: 25
-    },
-    Keycontainer:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+    ScreenCalculator:{ height: 220, width: "100%", backgroundColor: '#f1f2f3' },
+    ScreenText:{ textAlign: 'right', paddingRight: 40, marginTop: 0, fontSize: 67 },
+    SubtitleTextScreen:{ textAlign: 'right', paddingRight: 40, marginTop: 60, fontSize: 27, color: '#999' },
+    keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' }
 });
-
-export default CalculatorScreen;
