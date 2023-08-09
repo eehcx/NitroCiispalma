@@ -97,7 +97,7 @@ export const saveCE = async (IdCalc, IdLab, us_cm, dms) =>{
         us_cm: us_cm,
         dms: dms
     };
-    await set(ref(database, `calculos/CE/${newCEId}`),newCEData);
+    await set(ref(database, `calculos/${IdCalc}/CE/${newCEId}`),newCEData);
     console.log('CE Saved!' + newCEId);
 };
 
@@ -112,7 +112,7 @@ export const saveMO = async (IdCalc, IdLab, mL_FeSO4, porcentaje) =>{
         mL_FeSO4: mL_FeSO4,
         porcentaje: porcentaje
     };
-    await set(ref(database, `calculos/MO/${newMOId}`),newMOData);
+    await set(ref(database, `calculos/${IdCalc}/MO/${newMOId}`),newMOData);
     console.log('MO Saved!' + newMOId);
 };
 
@@ -140,5 +140,26 @@ export const saveHAl = async (IdCalc, IdLab, N_HCl, N_NaOH, cmol, ml_HCl, ml_NaO
         ml,ml_NaOH,
         promedio: promedio
     }
-    await set(ref((db, `calculos/H-Al/${newHAlId}`)), newHAlData);
+    await set(ref((db, `calculos/${IdCalc}/H-Al/${newHAlId}`)), newHAlData);
+};
+
+// Micros
+
+export const saveRegistersMicros = async (calculoId, registrosActualizados, elementos) => {
+    const db = getDatabase(app);
+    const microsRef = ref(db, `calculos/${calculoId}/Micros`);
+    const nuevoMicrosRef = push(microsRef);
+    const microsUid = nuevoMicrosRef.key;
+
+    for (const elemento of elementos) {
+        for (const registro of registrosActualizados) {
+            if (registro.elemento === elemento) {
+                const sampleId = registro.sampleId;
+                const registrosRef = ref(db, `calculos/${calculoId}/Micros/${microsUid}/${elemento}/${sampleId}`);
+                await set(registrosRef, registro);
+            }
+        }
+    }
+
+    console.log('Registros de Micros guardados exitosamente.');
 };

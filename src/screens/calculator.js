@@ -133,11 +133,13 @@ export default CalculatorScreen = () => {
 
                 // Obtener el último ID de informe
                 const lastInformeKey = informesArray[informesArray.length - 1].id;
-                console.log(lastInformeKey);
+                //console.log(lastInformeKey);
 
                 const informeResultadosRef = ref(db, `clientes/${uid}/informes/${lastInformeKey}/informe_resultados`);
                 onValue(informeResultadosRef, (resultadosSnapshot) => {
                     const resultadosData = resultadosSnapshot.val();
+                    setCalculoId(resultadosData.uid);
+                    //console.log(resultadosData.uid);
                     if (resultadosData) {
                         console.log(resultadosData);
             
@@ -145,7 +147,8 @@ export default CalculatorScreen = () => {
                         if (Array.isArray(resultadosData) && resultadosData.length > 0) {
                             const primerRegistro = resultadosData[0];
                             const primerUid = primerRegistro.uid;
-                            console.log(primerUid);
+                            //console.log(primerRegistro.uid);
+                            //console.log(primerUid);
                             setCalculoId(primerUid);
                         }
                     }

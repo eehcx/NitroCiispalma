@@ -6,6 +6,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase Auth
+import { app } from '../utils/firebase/firebaseInit';
 import { getAuth, signOut } from "firebase/auth";
 
 const CardInfo = () => {
