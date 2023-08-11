@@ -77,7 +77,7 @@ const CustomersScreen = () => {
                         {clientes.slice().reverse().map((cliente, index) => (
                             <View key={index}>
                                 <Card.Title style={styles.cardList} title={cliente.nombre} subtitle={`ID: ${cliente.uid}`}
-                                left={(props) => <Avatar.Text style={{backgroundColor: "#82c491"}} size={48} label={cliente.nombre.toUpperCase().substring(0, 1)} /> }
+                                left={(props) => <Avatar.Text style={{backgroundColor: "#82c491"}} size={48} label={cliente.nombre.substring(0, 1)} /> }
                                 right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => onToggleSnackBar(cliente)} />} 
                                 />
                                 <Divider style={styles.cardList} />

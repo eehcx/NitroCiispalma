@@ -60,6 +60,8 @@ const HistoryContent = ({ marginTop }) => {
 
 const HomeScreen = () => {
   // Navegación entre páginas
+  const navigation = useNavigation();
+
   const [selectedOption, setSelectedOption] = useState("Todo");
   // Hooks para el estado de la aplicación
   const [displayName, setDisplayName] = useState('');
@@ -71,28 +73,25 @@ const HomeScreen = () => {
     return names[0];
   };
 
-  // Función para filtrar el contenido según el botón seleccionado
   const filterContent = (option) => { setSelectedOption(option); };
 
-  // Función para obtener los datos del usuario desde AsyncStorage
   const getUserDataFromAsyncStorage = async () => {
     try {
       // Obtener objeto de AsyncStorage
       const userJson = await AsyncStorage.getItem('user');
 
       if (userJson) {
-        // Convertir el JSON a un objeto de JavaScript
         const user = JSON.parse(userJson);
-
         const { displayName } = user;
         const firstName = getFirstName(displayName); 
         setDisplayName(firstName);
-
       } else {
         console.log('No hay un usuario');
+        navigation.navigate('login')
       }
     } catch (error) {
       console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
+      navigation.navigate('login')
     }
   };
 

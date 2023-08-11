@@ -16,14 +16,17 @@ const CardInfo = () => {
     const handleLogout = async () => {
         const auth = getAuth(app);
         try {
+            console.log(AsyncStorage.getItem('user'));
             await AsyncStorage.removeItem('user');
-            console.log('Usuario deslogueado');
+            console.log(AsyncStorage.getItem('user'));
             await signOut(auth);
             navigation.navigate('entrace');
+            //await AsyncStorage.clear();
+            console.log('Usuario deslogueado');
         } catch (error) {
             console.log('Error al cerrar sesión:', error);
         }
-    };
+    };    
 
     return(
         <>
@@ -71,7 +74,6 @@ export default ProfileScreen = () => {
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
 
-    // Función para obtener los datos del usuario desde AsyncStorage
     const getUserDataFromAsyncStorage = async () => {
         try {
         const userJson = await AsyncStorage.getItem('user');
