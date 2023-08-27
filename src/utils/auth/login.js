@@ -10,6 +10,7 @@ import { app } from '../firebase/firebaseInit';
 // Estilos de la pantalla
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
+import Fonts from '../../styles/Fonts';
 
 const LoginScreen = () => {
   // Firebase
@@ -41,6 +42,8 @@ const LoginScreen = () => {
           console.log('Done.')
         };
         saveLoginState(user);
+        setEmail('');
+        setPassword('');
         console.log(userId + ' ' + userEmail + ' ' + userDisplayName);
         navigation.navigate('main');
       })
@@ -52,7 +55,7 @@ const LoginScreen = () => {
   return (
     <View style={InputForms.container}>
       <View style={InputForms.formContainer}>
-          <Text style={InputForms.formTitle}>Iniciar sesión</Text>
+          <Text style={[InputForms.formTitle, Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Iniciar sesión</Text>
           <TextInput style={[InputForms.input, { marginBottom: 30 }]}
           placeholder="Correo electrónico" 
           keyboardType="email-address" 
@@ -68,7 +71,7 @@ const LoginScreen = () => {
           onChangeText={setPassword}
           />
           <TouchableOpacity style={[buttonStyles.formButton, { marginTop: 19 }]} onPress={handleLogin} >
-            <Text style={buttonStyles.buttonText_Black}>LOG IN</Text>
+            <Text style={[Fonts.buttonTitle, {textAlign: 'center', color: '#2F363B'}]}>LOG IN</Text>
           </TouchableOpacity>
           <TouchableOpacity >
             <Text onPress={handleNavigateToSignIn} style={InputForms.signInText}>¿No estás registrado? <Text style={InputForms.signInLink}>SIGN IN</Text></Text>

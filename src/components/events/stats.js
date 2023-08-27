@@ -3,6 +3,7 @@ import { View, StatusBar, TextInput, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 // Estilos globales
 import InputForms from '../../styles/InputForms';
+import Fonts from '../../styles/Fonts'; 
 // Firebase
 import { getDatabase, ref, onValue, off, get, push, set, child } from 'firebase/database';
 import { app } from '../../utils/firebase/firebaseInit';
@@ -16,7 +17,7 @@ const Micros = ({ SampleId, setSampleId, NoMuestras, Elemento, ppm, setppm, onPr
     return(
         <>
             <View style={InputForms.formContainer}>
-                <Text style={InputForms.formTitle}>Micros: {Elemento}</Text>
+                <Text style={[Fonts.formTitle]}>Micros: {Elemento}</Text>
                 <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los datos de Micros ({NoMuestras} Muestras faltantes)</Text>
                 <TextInput style={[InputForms.input, { marginBottom: 20, height: 41, paddingLeft: 25  }]}
                 placeholder="Sample ID" maxLength={10} value={SampleId} onChangeText={setSampleId} keyboardType="numeric" />
@@ -36,7 +37,7 @@ const BasesInterc = ({SampleId, setSampleId, NoMuestras, Elemento, ppm, setppm, 
     return(
         <>
             <View style={InputForms.formContainer}>
-                <Text style={InputForms.formTitle}>Bases Intercambiables: {Elemento}</Text>
+                <Text style={[Fonts.formTitle]}>Bases Intercambiables: {Elemento}</Text>
                 <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los datos de Bases Intercambiables ({NoMuestras} Muestras faltantes)</Text>
                 <TextInput style={[InputForms.input, { marginBottom: 20, height: 41, paddingLeft: 25  }]}
                 placeholder="Sample ID" maxLength={10} value={SampleId} onChangeText={setSampleId} keyboardType="numeric" />
@@ -247,7 +248,7 @@ export default StatsScreen = () => {
             <StatusBar backgroundColor="#fafafa" barStyle="dark-content" />
                 {formularioActual === 1 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Análisis</Text>
+                        <Text style={[Fonts.formTitle]}>Análisis</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Selecciona un tipo de Análisis</Text>
                         <View style={[styles.BoxContainer, { marginBottom: 120 }]}>
                             <View style={[styles.row]}>
@@ -267,7 +268,7 @@ export default StatsScreen = () => {
                 )}
                 {formularioActual === 2 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>ID Cliente</Text>
+                        <Text style={[Fonts.formTitle]}>ID Cliente</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa el ID de tu Cliente</Text>
                         <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="ID único del cliente" value={uid} onChangeText={setUid} maxLength={50}/>
                         <Button icon="chevron-right" buttonColor="#C7FBD7" mode="contained-tonal"  contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }} labelStyle={{ marginRight: 23 }} onPress={handleConsultation}>

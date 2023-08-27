@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, ImageBackground, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, ImageBackground, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import DateTimePicker from '@react-native-community/datetimepicker';
 // React Native Paper
 import { Button, Text } from 'react-native-paper';
 // React Navigation
@@ -9,12 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 // Estilos globales
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
-// Firebase
-import { app } from '../../utils/firebase/firebaseInit';
-import firebase from 'firebase/app';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
-//
-import FilterButton from '../interface/filterButton'
+import Fonts from '../../styles/Fonts'; 
+
+import FilterButton from '../interface/filterButton';
+import DatePickerComponent from '../interface/Forms/DatePicker';
+import Dropdown from '../interface/Forms/DropDown';
 import { savePackage, saveInformeResultados, saveInform } from '../../utils/models/Registers';
 
 const Tab = createBottomTabNavigator();
@@ -29,7 +27,6 @@ export default RegisterInform = () => {
     ];
     // Formulario
     const [formularioActual, setFormularioActual] = useState(1);
-    const [visible, setVisible] = React.useState(false);
     const handleSiguiente = () => { setFormularioActual(formularioActual + 1); };
     // Datos del informe
     const [selectedOption, setSelectedOption] = useState("Completo"); // Nombre Paquetes
@@ -37,25 +34,28 @@ export default RegisterInform = () => {
     const [adicional, setAdicional] = useState('')
     const [numMuestras, setNumMuestras] = useState('')
     const [numSolicitud, setNumSolicitud] = useState('26')
-    const [metodoUsado, setMetodoUsado] = useState('Calle')
+    const [metodoUsado, setMetodoUsado] = useState('')
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')
     const [Observaciones, setObservaciones] = useState('')
-    // Fechas
-    const [dateEntrega, setDateEntrega] = useState(new Date());
-    const [showDatePickerEntrega, setShowDatePickerEntrega] = useState(false);
-    const [dateRecepcion, setDateRecepcion] = useState(new Date());
-    const [showDatePickerRecepcion, setShowDatePickerRecepcion] = useState(false);
-
-    const handleDateChangeEntrega = (event, selectedDate) => {
-    const currentDate = selectedDate || dateEntrega;
-        setShowDatePickerEntrega(false);
-        setDateEntrega(currentDate);
+    const [selected, setSelected] = useState(undefined);
+    const handleSelect = (item) => {
+        setSelected(item.label); 
     };
-    const handleDateChangeRecepcion = (event, selectedDate) => {
-    const currentDate = selectedDate || dateRecepcion;
-        setShowDatePickerRecepcion(false);
-        setDateRecepcion(currentDate);
+    const data = [
+        { label: 'Analisis de Suelos', value: '1' },
+        { label: 'Analisis Foliar', value: '2' }
+    ];
+    //console.log(selected);
+    const [FechaEntrega, setFechaEntrega] = useState(new Date());
+    const [dateRecepcion, setDateRecepcion] = useState(new Date());
+
+    const handleDateChange = (newDate) => {
+        setFechaEntrega(newDate);
+    };
+
+    const handleDateChangeRecepcion = (newDate) => {
+        setDateRecepcion(newDate);
     };
 
     const filterContent = (option) => { setSelectedOption(option); };
@@ -70,7 +70,7 @@ export default RegisterInform = () => {
         saveInform(
             id,
             dateRecepcion.toISOString(),
-            dateEntrega.toISOString(),
+            FechaEntrega.toISOString(),
             numMuestras,
             procedencia,
             tipoCultivo,
@@ -78,7 +78,8 @@ export default RegisterInform = () => {
             metodoUsado,
             Observaciones,
             nombrePaquete,
-            analisisDelPaquete
+            analisisDelPaquete,
+            selected
         );
         navigation.goBack();
     };
@@ -86,14 +87,12 @@ export default RegisterInform = () => {
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
             <View style={InputForms.container}>
+
                 {formularioActual === 1 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>ID Cliente</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa el ID del cliente seleccionado</Text>
-                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                        placeholder="ID único del cliente" value={uid} onChangeText={setUid}
-                        maxLength={50}
-                        />
+                        <Text style={[Fonts.formTitle]}>ID Cliente</Text>
+                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa el ID de tu Cliente</Text>
+                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="ID único del cliente" value={uid} onChangeText={setUid} maxLength={50}/>
                         <Button icon="chevron-right"
                         buttonColor="#C7FBD7"
                         mode="contained-tonal" 
@@ -102,49 +101,14 @@ export default RegisterInform = () => {
                         onPress={handleSiguiente}>
                             Siguiente Página
                         </Button>
-                    </View>
+                </View>
                 )}
-
                 {formularioActual === 2 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Fechas</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Selecciona las fechas de los entregables</Text>
-                        <Button  
-                        textColor='#929292'
-                        buttonColor="#ECECEC"
-                        style={{ marginBottom: 20 }}
-                        onPress={() => setShowDatePickerEntrega(true)}
-                        >
-                        Selecciona la Fecha Entrega: {dateEntrega.toLocaleDateString()}
-                        {showDatePickerEntrega && (
-                            <DateTimePicker
-                            testID="dateTimePickerEntrega"
-                            value={dateEntrega}
-                            mode="date"
-                            is24Hour={true}
-                            display="default"
-                            onChange={handleDateChangeEntrega}
-                            />
-                        )}
-                        </Button>
-                        <Button  
-                        textColor='#929292'
-                        buttonColor="#ECECEC"
-                        style={{ marginBottom: 20 }}
-                        onPress={() => setShowDatePickerRecepcion(true)}
-                        >
-                        Selecciona la Fecha Recepción: {dateRecepcion.toLocaleDateString()}
-                        {showDatePickerRecepcion && (
-                            <DateTimePicker
-                            testID="dateTimePickerRecepcion"
-                            value={dateRecepcion}
-                            mode="date" 
-                            is24Hour={true}
-                            display="default"
-                            onChange={handleDateChangeRecepcion}
-                            />
-                        )}
-                        </Button>
+                        <Text style={[Fonts.formTitle]}>Fechas</Text>
+                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Selecciona las fechas</Text>
+                        <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
+                        <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
                         <Button icon="chevron-right"
                         buttonColor="#C7FBD7"
                         mode="contained-tonal" 
@@ -158,8 +122,43 @@ export default RegisterInform = () => {
 
                 {formularioActual === 3 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Paquetes</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Selecciona uno de los paquetes</Text>
+                        <Text style={[Fonts.formTitle]}>Datos del Informe</Text>
+                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos requeridos</Text>
+                        <Dropdown label="Selecciona un Analisis" data={data} onSelect={handleSelect} />
+                        <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]}
+                        placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
+                        maxLength={100} keyboardType="numeric"
+                        />
+                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
+                        placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}
+                        maxLength={100}
+                        />
+                        <TextInput 
+                        style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
+                        placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo}
+                        maxLength={100}
+                        />
+                        <TextInput
+                            multiline={true}
+                            numberOfLines={4}
+                            placeholder="Observaciones generales"
+                            value={Observaciones}  onChangeText={setObservaciones}
+                            style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100}
+                        />
+                        <Button icon="chevron-right"
+                            buttonColor="#C7FBD7"
+                            mode="contained-tonal" 
+                            contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
+                            labelStyle={{ marginRight: 23 }}
+                            onPress={handleSiguiente}>
+                            Siguiente Página
+                        </Button>
+                    </View>
+                )}
+                {formularioActual === 4 && (
+                    <View style={InputForms.formContainer}>
+                        <Text style={[Fonts.formTitle]}>Paquetes</Text>
+                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Por ultimo selecciona un paquete</Text>
                         <View style={[styles.BoxContainer, { marginBottom: 120 }]}>
                             <View style={[styles.row]}>
                                 <FilterButton icon="apps" text="Completo" marginLeft={-100} isSelected={selectedOption === "Completo"} backgroundColor="#ececec" onPress={() => filterContent("Completo")} />
@@ -175,61 +174,21 @@ export default RegisterInform = () => {
                             Siguiente Página
                         </Button>
 
-                        
+                    
                     </View>
                 )}
-                {formularioActual === 4 && (
+                {formularioActual === 5 && (
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Adicionales</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >¿Quieres otros análisis? ¡Ingrésalos!</Text>
+                        <Text style={[Fonts.formTitle]}>Adicionales</Text>
+                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos si se requiere</Text>
                         <TextInput style={[InputForms.  input, { marginBottom: 20, height: 41, paddingLeft: 25  }]}
                         value={adicional} onChangeText={setAdicional}
                         placeholder="Ingresa un análisis adicionales (opcional)"
                         maxLength={100}
                         />
-                        <Button icon="chevron-right"
-                            buttonColor="#C7FBD7"
-                            mode="contained-tonal" 
-                            contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
-                            labelStyle={{ marginRight: 23 }}
-                            onPress={handleSiguiente}>
-                            Siguiente Página
-                        </Button>
-                    </View>
-                )}
-                {formularioActual === 5 && (
-                    <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Informe</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos requeridos</Text>
-                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                        placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
-                        maxLength={100} keyboardType="numeric"
-                        />
-                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                        placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}
-                        maxLength={100}
-                        />
-                        <TextInput 
-                        style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                        placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo}
-                        maxLength={100}
-                        />
-                        <Button icon="chevron-right"
-                            buttonColor="#C7FBD7"
-                            mode="contained-tonal" 
-                            contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
-                            labelStyle={{ marginRight: 23 }}
-                            onPress={handleSiguiente}>
-                            Siguiente Página
-                        </Button>
-                    </View>
-                )}
-                {formularioActual === 6 && (
-                    <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>Datos finales</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Podrás editarlos datos después (App Web)</Text>
-                        <TextInput style={[InputForms.input, { marginBottom: 20, height: 45, paddingLeft: 25  }]}
-                        placeholder="Observaciones generales" value={Observaciones} onChangeText={setObservaciones}
+                        <TextInput style={[InputForms.input, { marginBottom: 20, height: 41, paddingLeft: 25  }]} 
+                        value={metodoUsado} onChangeText={setMetodoUsado} 
+                        placeholder="Ingresa los metodos a usar (opcional)"
                         maxLength={100}
                         />
                         <TouchableOpacity style={buttonStyles.formButton} onPress={handleSaveData} >
@@ -243,12 +202,12 @@ export default RegisterInform = () => {
 };
 
 const styles = StyleSheet.create({
-    datePicker: {
-        width: '100%',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 4,
-        padding: 10,
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
     },
     BoxContainer: {
         flex: 1,

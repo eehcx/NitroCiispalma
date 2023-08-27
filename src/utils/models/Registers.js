@@ -37,7 +37,7 @@ export const saveInformeResultados = async (id, newInformId, idlab) => {
 };
 
 
-export const saveInform = async (id, fecha_recepcion, fecha_entrega, no_muestras, procedencia, tipo_cultivo, no_solicitud, metodo_usado, observaciones, nombrePaquete, analisis) => {
+export const saveInform = async (id, fecha_recepcion, fecha_entrega, no_muestras, procedencia, tipo_cultivo, no_solicitud, metodo_usado, observaciones, nombrePaquete, analisis, tipo_analisis) => {
     const db = getDatabase(app);
     const newInformRef = push(ref(db, `clientes/${id}/informes`));
     const newInformId = newInformRef.key;
@@ -53,6 +53,7 @@ export const saveInform = async (id, fecha_recepcion, fecha_entrega, no_muestras
         no_solicitud: no_solicitud,
         metodo_usado: metodo_usado,
         observaciones: observaciones,
+        tipo_analisis: tipo_analisis,
     }
 
     await set(ref(db, `clientes/${id}/informes/${newInformId}`), informData);
