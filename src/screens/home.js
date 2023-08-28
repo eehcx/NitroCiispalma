@@ -8,67 +8,69 @@ import Octicons from '@expo/vector-icons/Octicons';
 import { useNavigation } from '@react-navigation/native';
 import Fonts from '../styles/Fonts';
 
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setDisplayName } from '../utils/redux/Reducer/userReducer';
+
 import { getCountOfSubcollections } from '../utils/models/queries';
 
 const HomeScreen = () => {
   // Navegación entre páginas
   const navigation = useNavigation();
+  // Stats
+  const [numClientes, SetNumClientes] = useState(0);
+  const [numCalculos, SetNumCalculos] = useState(0);
 
+  // Fechas
   const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Dicembre'];
-
   const currentDate = new Date();
   const dayOfWeek = daysOfWeek[currentDate.getDay()];
   const dayOfMonth = currentDate.getDate();
   const month = months[currentDate.getMonth()];
-
   const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
 
-  const [displayName, setDisplayName] = useState('');
+  // Redux - User
+  const dispatch = useDispatch();
+  const displayName = useSelector(state => state.user.displayName);
   const getFirstName = (displayName) => {
     const names = displayName.split(' ');
     return names[0];
   };
 
-  const getUserDataFromAsyncStorage = async () => {
-    try {
-      const userJson = await AsyncStorage.getItem('user');
-
-      if (userJson) {
-        const user = JSON.parse(userJson);
-        const { displayName } = user;
-        const firstName = getFirstName(displayName);
-        setDisplayName(firstName);
-      } else {
-        console.log('No hay un usuario');
-        navigation.navigate('login');
-      }
-    } catch (error) {
-      console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
-      navigation.navigate('login');
-    }
-  };
-
-  const [numClientes, SetNumClientes] = useState(0);
-  const [numCalculos, SetNumCalculos] = useState(0);
-
   useEffect(() => {
+    const unsubscribe = getCountOfSubcollections('clientes', (count) => { SetNumClientes(count); });
+    const unsubscribe2 = getCountOfSubcollections('calculos', (count) => { SetNumCalculos(count); });
 
-    const unsubscribe = getCountOfSubcollections('clientes', (count) => {
-      SetNumClientes(count);
-    });
-
-    const unsubscribe2 = getCountOfSubcollections('calculos', (count) => {
-      SetNumCalculos(count);
-    });
-
-    getUserDataFromAsyncStorage();
+    getUserDataFromAsyncStorage()
+      .then(user => {
+        const firstName = getFirstName(user.displayName);
+        dispatch(setDisplayName(firstName));
+      })
+      .catch(error => console.log('Error:', error));
 
     return () => {
       unsubscribe();
       unsubscribe2();
     };
   }, []);
+
+  const getUserDataFromAsyncStorage = async () => {
+    try {
+      const userJson = await AsyncStorage.getItem('user');
+      if (userJson) {
+        return JSON.parse(userJson);
+      } else {
+        console.log('No hay un usuario');
+        navigation.navigate('login');
+        return null;
+      }
+    } catch (error) {
+      console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
+      navigation.navigate('login');
+      return null;
+    }
+  };
 
   const renderCalculoItem = ({ item }) => (
     <View>
@@ -96,7 +98,10 @@ const HomeScreen = () => {
               underlayColor="#d7dfe3"
               style={[styles.groupItem]}
             >
-              
+              <Image
+                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }}
+                style={styles.imagesTools}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={()=> navigation.navigate('stats')}
@@ -122,7 +127,7 @@ const HomeScreen = () => {
             <Octicons name="server" size={18} color="#333" />
             <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>Datos Consumidos</Text>
           </View>
-          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>10.55MB Descarga</Text>
+          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>10.88MB Descarga</Text>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

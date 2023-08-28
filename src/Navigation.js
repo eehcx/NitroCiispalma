@@ -45,12 +45,15 @@ const MainBarScreen=()=>{
     return (
         <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#333', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0 } }} >
             <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="home" size={27} color={color} /> }}/>
-            <Tab.Screen name="results" component={ResultsScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="search" size={27} color={color} /> }}/>
             <Tab.Screen name="customers" component={CustomersScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="inbox" size={27} color={color} /> }}/>
             <Tab.Screen name="profile" component={ProfileScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="person" size={27} color={color} /> }}/>
         </Tab.Navigator>
     );
 };
+
+/*
+<Tab.Screen name="results" component={ResultsScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="search" size={27} color={color} /> }}/>
+*/
 
 // Funcion principal de la aplicación
 export default function Navigation() {

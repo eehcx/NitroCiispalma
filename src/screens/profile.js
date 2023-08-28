@@ -8,23 +8,39 @@ import { useNavigation } from '@react-navigation/native';
 // Firebase Auth
 import { app } from '../utils/firebase/firebaseInit';
 import { getAuth, signOut } from "firebase/auth";
-import InputScreen from './entrace';
-
+// Styles
 import Fonts from '../styles/Fonts';
+
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setProfileData, resetProfileState } from '../utils/redux/Reducer/profileSlice';
+import { resetUserState } from '../utils/redux/Reducer/userReducer';
 
 const CardInfo = () => {
     const navigation = useNavigation();
-
     //LOGOUT
     const handleLogout = async () => {
         const auth = getAuth(app);
+        //const dispatch = useDispatch();
+
         try {
-            await AsyncStorage.removeItem('user');
+            await AsyncStorage.removeItem('user', (error) => {
+                if (!error) {
+                    console.log('Usuario eliminado exitosamente');
+                } else {
+                    console.error('Error al eliminar el usuario:', error);
+                }
+            });
             console.log('Usuario deslogueado');
             await signOut(auth);
+
+
+            //dispatch(resetProfileState());
+            //dispatch(resetUserState());
+
             navigation.navigate('auth');
         } catch (error) {
-            console.log('Error al cerrar sesión:', error);
+        console.log('Error al cerrar sesión:', error);
         }
     };
 
@@ -59,7 +75,7 @@ const CardInfo = () => {
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                     </Card.Content>
-                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleLogout}>
+                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleLogout()}>
                         LOGOUT
                     </Button>
                 </View>
@@ -69,38 +85,37 @@ const CardInfo = () => {
 }
 
 export default ProfileScreen = () => {
-    // React Navigation
-    const navigation = useNavigation();
-    const handleNavigateHome = () => { navigation.navigate(InputScreen); };
+    const dispatch = useDispatch();
+    const { displayName, email } = useSelector(state => state.profile);
 
-    const [displayName, setDisplayName] = useState('');
-    const [email, setEmail] = useState('');
+    useEffect(() => { 
+        getUserDataFromAsyncStorage()
+            .then(user => {
+                dispatch(setProfileData({ displayName: user.displayName, email: user.email }));
+            })
+            .catch(error => console.log('Error:', error));
+    }, []);
 
     const getUserDataFromAsyncStorage = async () => {
         try {
-        const userJson = await AsyncStorage.getItem('user');
-        if (userJson) {
-            const user = JSON.parse(userJson);
-
-            setDisplayName(user.displayName);
-            setEmail(user.email);
-
-        } else {
-            navigation.navigate('auth');
-        }
+            const userJson = await AsyncStorage.getItem('user');
+            if (userJson) {
+                return JSON.parse(userJson);
+            } else {
+                navigation.navigate('auth');
+                return null;
+            }
         } catch (error) {
             console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
             navigation.navigate('auth');
+            return null;
         }
     };
-
-    useEffect(() => { getUserDataFromAsyncStorage(); }, []);
 
     return (
         <View style={styles.content}>
             <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
-            <Appbar.Header style={{ backgroundColor: '#fafafa'}}>
-                <Appbar.BackAction onPress={()=> navigation.navigate('home')} />
+            <Appbar.Header style={{ backgroundColor: '#fafafa', marginLeft: 20}}>
                 <Appbar.Content title="Perfil" />
             </Appbar.Header>
 
