@@ -18,3 +18,23 @@ const userSlice = createSlice({
 
 export const { setDisplayName, resetUserState } = userSlice.actions;
 export default userSlice.reducer;
+
+/*
+const initialState = {
+    displayName: '',
+};
+
+const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        setDisplayName: (state, action) => {
+            state.displayName = action.payload;
+        },
+        resetUserState: state => {
+            Object.assign(state, initialState);
+        },
+    },
+});
+
+*/
