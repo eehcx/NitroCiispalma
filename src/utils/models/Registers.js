@@ -23,7 +23,6 @@ export const saveInformeResultados = async (id, newInformId, idlab) => {
     const newCalculoRef = push(ref(db, 'calculos'));
     const newCalculoId = newCalculoRef.key;
 
-
     const informeResultadoData = {
         idlab: idlab,
         uid: newCalculoId
@@ -33,9 +32,8 @@ export const saveInformeResultados = async (id, newInformId, idlab) => {
         fecha_creacion: new Date().toISOString()
     });
 
-    await set(informeResultadosRef, informeResultadoData);
+    await set(informeResultadosRef, [informeResultadoData]);
 };
-
 
 export const saveInform = async (id, fecha_recepcion, fecha_entrega, no_muestras, procedencia, tipo_cultivo, no_solicitud, metodo_usado, observaciones, nombrePaquete, analisis, tipo_analisis) => {
     const db = getDatabase(app);
@@ -46,10 +44,9 @@ export const saveInform = async (id, fecha_recepcion, fecha_entrega, no_muestras
         uid: newInformId,
         fecha_recepcion: fecha_recepcion,
         fecha_entrega: fecha_entrega,
-        no_muestras: no_muestras,
+        no_muestra: no_muestras,
         procedencia: procedencia,
         tipo_cultivo: tipo_cultivo,
-        //
         no_solicitud: no_solicitud,
         metodo_usado: metodo_usado,
         observaciones: observaciones,
