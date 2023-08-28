@@ -33,7 +33,7 @@ export default RegisterInform = () => {
     const [uid, setUid] = useState('')
     const [adicional, setAdicional] = useState('')
     const [numMuestras, setNumMuestras] = useState('')
-    const [numSolicitud, setNumSolicitud] = useState('26')
+    const [numSolicitud, setNumSolicitud] = useState('2')
     const [metodoUsado, setMetodoUsado] = useState('')
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')

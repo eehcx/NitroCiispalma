@@ -33,7 +33,7 @@ const CardInfo = () => {
             <ScrollView>
                 <View style={[styles.CardShadow,{ margin: 4, marginBottom: -10, borderRadius: 16, backgroundColor: '#fafafa' }]}>
                     <Card.Content>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }} onPress={()=> navigation.navigate('user')}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
                             <Octicons name="person" size={24} color='#767983' />
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>Tu perfil</Text>
                         </TouchableOpacity>
@@ -48,12 +48,12 @@ const CardInfo = () => {
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>Historial de cálculos</Text>
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }} onPress={()=> navigation.navigate('appData')}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
                             <Octicons name="shield" size={24} color='#767983' />
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>Politicas de Privacidad</Text>
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }} onPress={()=> navigation.navigate('appData')}>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
                             <Octicons name="report" size={24} color='#767983' />
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>Centro de ayuda</Text>
                         </TouchableOpacity>

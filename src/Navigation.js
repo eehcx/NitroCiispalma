@@ -63,7 +63,7 @@ export default function Navigation() {
                 <Stack.Screen name="user" component={UserScreens} options={{ headerShown: false }} />
 
                 <Stack.Screen name="calculator" component={CalculatorScreen} options={{ title: 'Calculadora', headerShown: false}}/>
-                <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos' }}/>
+                <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos', headerStyle: { backgroundColor: '#fafafa' } }}/>
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="stats" component={StatsScreen} options={{ title: 'Estadísticas', headerStyle: { backgroundColor: '#fafafa' },}}/>

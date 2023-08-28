@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TouchableOpacity, StyleSheet, Image, TouchableHighlight, ImageBackground, Text, ScrollView, SafeAreaView } from 'react-native';
+import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text, FlatList } from 'react-native';
+import { Divider, List } from 'react-native-paper';
+import { ScrollView as GestureScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 import Fonts from '../styles/Fonts';
+
+import { getCountOfSubcollections } from '../utils/models/queries';
 
 const HomeScreen = () => {
   // Navegación entre páginas
@@ -19,9 +23,8 @@ const HomeScreen = () => {
   const month = months[currentDate.getMonth()];
 
   const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
-  // Hooks para el estado de la aplicación
-  const [displayName, setDisplayName] = useState('');
 
+  const [displayName, setDisplayName] = useState('');
   const getFirstName = (displayName) => {
     const names = displayName.split(' ');
     return names[0];
@@ -46,10 +49,32 @@ const HomeScreen = () => {
     }
   };
 
+  const [numClientes, SetNumClientes] = useState(0);
+  const [numCalculos, SetNumCalculos] = useState(0);
+
   useEffect(() => {
-    // Esta función se ejecutará cuando el componente se monte.
+
+    const unsubscribe = getCountOfSubcollections('clientes', (count) => {
+      SetNumClientes(count);
+    });
+
+    const unsubscribe2 = getCountOfSubcollections('calculos', (count) => {
+      SetNumCalculos(count);
+    });
+
     getUserDataFromAsyncStorage();
+
+    return () => {
+      unsubscribe();
+      unsubscribe2();
+    };
   }, []);
+
+  const renderCalculoItem = ({ item }) => (
+    <View>
+      <Text>{item}</Text>
+    </View>
+  );
 
   return (
     <View style={[styles.container]}>
@@ -61,20 +86,21 @@ const HomeScreen = () => {
         </View>
 
         <View style={{ marginTop: 120 }}>
-          <ScrollView horizontal>
+          <GestureScrollView horizontal showsHorizontalScrollIndicator={false}
+          decelerationRate="fast"
+          snapToAlignment="start"
+          snapToInterval={200}
+          >
             <TouchableOpacity
               onPress={()=> navigation.navigate('calculator') }
-              underlayColor="#ccc"
+              underlayColor="#d7dfe3"
               style={[styles.groupItem]}
             >
-              <Image
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }}
-                style={styles.imagesTools}
-              />
+              
             </TouchableOpacity>
             <TouchableOpacity
               onPress={()=> navigation.navigate('stats')}
-              underlayColor="#ccc"
+              underlayColor="#d7dfe3"
               style={[styles.groupItem]}
             >
               <Image
@@ -82,44 +108,65 @@ const HomeScreen = () => {
                 style={styles.imagesTools}
               />
             </TouchableOpacity>
-          </ScrollView>
+          </GestureScrollView>
         </View>
 
         <View style={[styles.secciones, { top: 40 }]}>
-          <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" }]}>Actividad reciente</Text>
-          <TouchableOpacity style={{ marginLeft: "75%" }}>
-            <Text>Ver Todos</Text>
-          </TouchableOpacity>
+          <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" , fontWeight: "bold" }]}>Estadísticas</Text>
+
+        </View>
+
+        <View
+          style={{ backgroundColor: "#f0f0f0", height: 75, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "20%", marginBottom: "10%", marginLeft: "5%" }} >
+          <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
+            <Octicons name="server" size={18} color="#333" />
+            <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>Datos Consumidos</Text>
+          </View>
+          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>10.55MB Descarga</Text>
+        </View>
+
+        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+          <View
+            style={{ backgroundColor: "#565A5D", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
+            <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
+              <Octicons name="hash" size={18} color="#fff" />
+              <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Cálculos</Text>
+            </View>
+            <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numCalculos} Registros</Text>
+          </View>
+
+          <View
+            style={{ backgroundColor: "#82BF53", height: 75, width: "42%", borderRadius: 20, justifyContent: 'flex-start' }} >
+            <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
+              <Octicons name="people" size={18} color="#fff" />
+              <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Clientes</Text>
+            </View>
+            <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numClientes} Registros</Text>
+          </View>
         </View>
 
     </View>
-    
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: { flexGrow: 1, backgroundColor: "#fafafa" },
   txtState:{ color: "#000", textAlign: "left", position: "absolute" },
-  groupChildLayout: {width: 90, height: 90, backgroundColor: "#f7f7f7", borderRadius: 13, position: "absolute"},
   // Estilos de las secciones o filtros
-  secciones: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 50 },
-  iconContent:{ justifyContent: 'center', alignItems: 'center' },
-  containerIco:{ flex: 1, justifyContent: 'center',alignItems: 'center' },
+  secciones: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 50, marginVertical: 1 },
   imagesTools: {
-    borderRadius: 13,
+    borderRadius: 22,
     width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   groupItem: {
-    height: 340,
-    width: 300, // Ajusta este ancho según tus necesidades
-    marginHorizontal: 55, // Margen entre los items
-    backgroundColor: '#ececec',
+    height: 300,
+    width: 350, // Ajusta este ancho según tus necesidades
+    marginHorizontal: 30, // Margen entre los items
+    backgroundColor: '#d7dfe3',
     borderRadius: 22,
-    elevation: 0,
-    shadowOpacity: 0,
   },
 });
 

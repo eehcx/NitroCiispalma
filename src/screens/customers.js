@@ -69,11 +69,11 @@ const CustomersScreen = () => {
     // Asignar color al avatar
     const getRandomColor = () => {
         const greenVariants = [
-          '#82c460', '#82c476', '#82c491'
+        '#82c491'
           // Agrega más variantes de verde aquí si lo deseas
         ];
         return greenVariants[Math.floor(Math.random() * greenVariants.length)];
-      };
+    };
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
