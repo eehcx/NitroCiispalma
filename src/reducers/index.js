@@ -8,4 +8,5 @@ const rootReducer = combineReducers({
     profile: profileSlice,
 });
 
+
 export default rootReducer;
