@@ -10,9 +10,9 @@ import Fonts from '../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayName } from '../utils/redux/Reducer/userReducer';
+import { setDisplayName } from '../reducers/userSlice';
 
-import { getCountOfSubcollections } from '../utils/models/queries';
+import { getCountOfSubcollections } from '../utils/services/queryService';
 
 const HomeScreen = () => {
   // Navegación entre páginas

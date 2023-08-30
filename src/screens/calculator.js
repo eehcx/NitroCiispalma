@@ -4,11 +4,11 @@ import { Appbar } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Formulas: 4 en uso
-import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/functions/Formulas';
-import { saveCE, saveMO } from '../utils/models/Registers'
+import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/helpers';
+import { saveCE, saveMO } from '../utils/services/setService'
 // Firebase
 import { getDatabase, ref, onValue, off, get } from 'firebase/database';
-import { app } from '../utils/firebase/firebaseInit';
+import { app } from '../utils/firebase';
 // Componentes
 import CalculatorRows from '../components/interface/calcRows';
 import Dropdown from '../components/interface/Forms/DropDown';

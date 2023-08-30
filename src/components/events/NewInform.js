@@ -13,7 +13,7 @@ import Fonts from '../../styles/Fonts';
 import FilterButton from '../interface/filterButton';
 import DatePickerComponent from '../interface/Forms/DatePicker';
 import Dropdown from '../interface/Forms/DropDown';
-import { savePackage, saveInformeResultados, saveInform } from '../../utils/models/Registers';
+import { savePackage, saveInformeResultados, saveInform } from '../../utils/services/setService';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +24,7 @@ export default RegisterInform = () => {
         { nombre: 'Azufre (S)', presente: true },
         { nombre: 'Nitrógeno (N)', presente: false },
         { nombre: 'Fósforo (P)', presente: true }
+        
     ];
     // Formulario
     const [formularioActual, setFormularioActual] = useState(1);

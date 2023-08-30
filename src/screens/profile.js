@@ -6,7 +6,7 @@ import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase Auth
-import { app } from '../utils/firebase/firebaseInit';
+import { app } from '../utils/firebase';
 import { getAuth, signOut } from "firebase/auth";
 // Styles
 import Fonts from '../styles/Fonts';
