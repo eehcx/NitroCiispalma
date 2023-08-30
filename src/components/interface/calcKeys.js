@@ -7,12 +7,12 @@ export default CalculatorKeys = ({ label, onPress, backgroundColor, borderRadius
         style={{ borderRadius }}
         activeOpacity={0}
         delayPressIn={500}
-        underlayColor={backgroundColor === '#82c491' ? '#82c491' : '#d7dfe4'}
+        underlayColor={backgroundColor === '#d7dfe3' ? '#d7dfe3' : '#d7dfe4'}
         onPress={onPress}
     >
         <View style={[styles.btnCalculator, { backgroundColor }]}>
             <View style={styles.Keycontainer}>
-                <Text style={{ color: backgroundColor === '#fff' ? '#000' : backgroundColor === '#d7dfe4' ? '#000' : '#fff' }} variant={backgroundColor === '#d7dfe4' ? 'labelLarge' : 'displaySmall'}>
+                <Text style={{ color: backgroundColor === '#fff' ? '#000' : backgroundColor === '#d7dfe4' ? '#000' : '#000' }} variant={backgroundColor === '#d7dfe4' ? 'labelLarge' : 'displaySmall'}>
                     {label}
                 </Text>
             </View>

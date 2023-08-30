@@ -12,7 +12,7 @@ export default LoadingScreen = ({ navigation }) => {
         try {
             const user = await AsyncStorage.getItem('user');
             if (!user) {
-                navigation.replace('entrace');
+                navigation.replace('auth');
             } else {
                 navigation.replace('main');
             }

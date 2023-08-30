@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
 
-export default FilterButton = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected }) => (
+export default FilterButton = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected, SelectedColor }) => (
     <TouchableOpacity style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#333" : backgroundColor, marginLeft, marginRight }]} onPress={onPress}>
         <View style={styles.containerIco}>
             <View style={styles.FilterContainer}>

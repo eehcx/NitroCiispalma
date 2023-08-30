@@ -42,10 +42,10 @@ export default ResultsScreen = () => {
     return (
         <View style={{ flex: 1 }}>
             <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
-            {formularioActual === 1 && (
+            {formularioActual === 2 && (
                 <AssignClient formTitle='ID Cliente' formSubtitle='Asigna un cliente para esta sección' onPressButton={handleSiguiente}/>
             )}
-            {formularioActual === 2 && (
+            {formularioActual === 1 && (
                 <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
                     <List.Section title="Elementos">
                         {/*left={props => <List.Icon {...props} icon="calculator" />} */}

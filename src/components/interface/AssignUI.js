@@ -2,6 +2,7 @@ import { View, TextInput, ImageBackground } from 'react-native';
 import { Text, Button } from 'react-native-paper';
 // Estilos globales
 import InputForms from '../../styles/InputForms';
+import Fonts from '../../styles/Fonts';
 
 export default AssignClient = ({ formTitle, formSubtitle, value, onChangeText, onPressButton, backgroundImageUri }) => {
 
@@ -10,7 +11,7 @@ export default AssignClient = ({ formTitle, formSubtitle, value, onChangeText, o
             <ImageBackground source={{ uri: backgroundImageUri }} style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}>
                 <View style={InputForms.container}>
                     <View style={InputForms.formContainer}>
-                        <Text style={InputForms.formTitle}>{formTitle}</Text>
+                        <Text style={[InputForms.formTitle, Fonts.formTitle]}>{formTitle}</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall'>{formSubtitle}</Text>
                         <TextInput
                             style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}

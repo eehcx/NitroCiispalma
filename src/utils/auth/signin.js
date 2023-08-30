@@ -7,6 +7,8 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebas
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
+import Fonts from '../../styles/Fonts';
+
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 
@@ -52,12 +54,12 @@ const SignipScreen = () => {
         <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
         <View style={InputForms.container}>
           <View style={InputForms.formContainer}>
-            <Text style={InputForms.formTitle}>Crear cuenta</Text>
+            <Text style={[InputForms.formTitle, Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Crear cuenta</Text>
             <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} placeholder="Nombre" maxLength={90} />
             <TextInput style={InputForms.input} value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Correo Electrónico" maxLength={90} />
             <TextInput style={InputForms.input} value={password} onChangeText={setPassword} placeholder="Contraseña" maxLength={90} keyboardType="default" secureTextEntry={true} />
             <TouchableOpacity style={buttonStyles.formButton} onPress={handleCreateAccount}>
-              <Text style={buttonStyles.buttonText_Black}>SIGN UP</Text>
+              <Text style={[Fonts.buttonTitle, {textAlign: 'center', color: '#2F363B'}]}>SIGN UP</Text>
             </TouchableOpacity>
             <TouchableOpacity>
               <Text style={InputForms.signInText} onPress={handleNavigateToLogIn} >¿Ya estas registrado? <Text style={InputForms.signInLink}>LOG IN</Text></Text>

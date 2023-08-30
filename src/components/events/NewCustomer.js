@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Button } from 'react-native-paper';
 import InputForms from '../../styles/InputForms';
 // Real Time Database
-import { saveClient } from '../../utils/models/Registers';
+import { saveClient } from '../../utils/services/setService';
 
 const Tab = createBottomTabNavigator();
 

@@ -7,5 +7,5 @@ export default StyleSheet.create({
     button_signup: { padding: 13, backgroundColor: '#ECECEC', borderRadius: 15, width: 150 },
     buttonText_signup: { color: '#2F363B', fontWeight: 'bold', textAlign: 'center' },
     formButton: { justifyContent: 'center', alignItems: 'center', padding: 8, backgroundColor: '#87ED95', borderRadius: 19, width: 180, height: 40 },
-    buttonText_Black: { color: '#2F363B', fontWeight: 'bold', textAlign: 'center' },
+    //buttonText_Black: { color: '#2F363B', fontWeight: 'bold', textAlign: 'center' },
 });
