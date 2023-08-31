@@ -6,7 +6,7 @@ import { Text, Button   } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../firebase/firebaseInit';
+import { app } from '../firebase';
 // Estilos de la pantalla
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';

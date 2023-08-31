@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TextInput, StyleSheet } from 'react-native';
+import { View, StatusBar, TextInput } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // React Native Paper
 import { Button } from 'react-native-paper';
@@ -18,7 +18,6 @@ export default RegisterCustomer = () => {
         setName('');
         setPhone('');
     };
-
     return (
         <View style={{ flex: 1, justifyContent: 'center'}}>
             <View style={InputForms.container}>
@@ -33,34 +32,3 @@ export default RegisterCustomer = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    datePicker: {
-        width: '100%',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        borderRadius: 4,
-        padding: 10,
-    },
-    BoxContainer: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'space-around',
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    box: {
-        backgroundColor: '#ECECEC',
-        width: 110,
-        height: 110,
-        borderRadius: 25
-    },
-    txtContainer:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
-});

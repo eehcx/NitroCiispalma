@@ -10,7 +10,7 @@ import { app } from '../../utils/firebase';
 // Micros: elemento_ppm_mgkg
 // Bases Intercambiables: Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg
 import { elemento_ppm_mgkg, Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg } from '../../utils/helpers';
-import { saveRegistersMicros, saveMicros } from '../../utils/models/Registers';
+import { saveRegistersMicros, saveMicros } from '../../utils/services/setService';
 
 const Micros = ({ SampleId, setSampleId, NoMuestras, Elemento, ppm, setppm, onPress }) => {
 

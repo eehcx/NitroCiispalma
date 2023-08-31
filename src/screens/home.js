@@ -91,7 +91,7 @@ const HomeScreen = () => {
           <GestureScrollView horizontal showsHorizontalScrollIndicator={false}
           decelerationRate="fast"
           snapToAlignment="start"
-          snapToInterval={200}
+          snapToInterval={700}
           >
             <TouchableOpacity
               onPress={()=> navigation.navigate('calculator') }
@@ -132,7 +132,7 @@ const HomeScreen = () => {
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
           <View
-            style={{ backgroundColor: "#565A5D", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
+            style={{ backgroundColor: "#41525C", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
               <Octicons name="hash" size={18} color="#fff" />
               <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Cálculos</Text>

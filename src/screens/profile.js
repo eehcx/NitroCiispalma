@@ -13,8 +13,8 @@ import Fonts from '../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfileData, resetProfileState } from '../utils/redux/Reducer/profileSlice';
-import { resetUserState } from '../utils/redux/Reducer/userReducer';
+import { setProfileData, resetProfileState } from '../reducers/profileSlice';
+import { resetUserState } from '../reducers/userSlice';
 
 const CardInfo = () => {
     const navigation = useNavigation();
@@ -34,7 +34,6 @@ const CardInfo = () => {
             console.log('Usuario deslogueado');
             await signOut(auth);
 
-
             //dispatch(resetProfileState());
             //dispatch(resetUserState());
 
@@ -49,29 +48,44 @@ const CardInfo = () => {
             <ScrollView>
                 <View style={[styles.CardShadow,{ margin: 4, marginBottom: -10, borderRadius: 16, backgroundColor: '#fafafa' }]}>
                     <Card.Content>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
-                            <Octicons name="person" size={24} color='#767983' />
-                            <Text style={[styles.txtLabels, Fonts.cardsText]}>Tu perfil</Text>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Octicons name="person" size={24} color='#767983' />
+                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Tu perfil</Text>
+                            </View>
+                            <Octicons name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20  }}>
-                            <Octicons name='lock' size={24} color='#767983' />
-                            <Text style={[styles.txtLabels, Fonts.cardsText]}>Seguridad y contraseña</Text>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Octicons name='lock' size={24} color='#767983' />
+                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Seguridad y contraseña</Text>
+                            </View>
+                            <Octicons name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20  }} onPress={()=> navigation.navigate('history')}>
-                            <Octicons name='history' size={24} color='#767983' />
-                            <Text style={[styles.txtLabels, Fonts.cardsText]}>Historial de cálculos</Text>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('history')} >
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Octicons name='history' size={24} color='#767983' />
+                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Historial de cálculos</Text>
+                            </View>
+                            <Octicons name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
-                            <Octicons name="shield" size={24} color='#767983' />
-                            <Text style={[styles.txtLabels, Fonts.cardsText]}>Politicas de Privacidad</Text>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Octicons name='shield' size={24} color='#767983' />
+                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Politicas de privacidad</Text>
+                            </View>
+                            <Octicons name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 20 }}>
-                            <Octicons name="report" size={24} color='#767983' />
-                            <Text style={[styles.txtLabels, Fonts.cardsText]}>Centro de ayuda</Text>
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Octicons name='report' size={24} color='#767983' />
+                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Centro de ayuda</Text>
+                            </View>
+                            <Octicons name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                     </Card.Content>
