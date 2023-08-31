@@ -5,7 +5,7 @@ import InputForms from '../styles/InputForms';
 import { StyleSheet, SafeAreaView, StatusBar, ScrollView, View, TouchableOpacity } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 // React Native Paper
-import { Avatar, IconButton, Card, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, Snackbar, Appbar } from 'react-native-paper';
+import { Avatar, IconButton, Card, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, Snackbar, Appbar, Checkbox, Switch } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase
@@ -66,7 +66,7 @@ const CustomersScreen = () => {
         }
     };
 
-    // Asignar color al avatar
+    // Asignar color al avatar: 82c491
     const getRandomColor = () => {
         const greenVariants = [
         '#82c491'
@@ -74,6 +74,10 @@ const CustomersScreen = () => {
         ];
         return greenVariants[Math.floor(Math.random() * greenVariants.length)];
     };
+
+    const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+
+    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
@@ -91,8 +95,8 @@ const CustomersScreen = () => {
                     <ScrollView onScroll={onScroll}>
                         {clientes.slice().reverse().map((cliente, index) => (
                             <View key={index}>
-                                <Card.Title style={styles.cardList} title={cliente.nombre} subtitle={`ID: ${cliente.uid}`}
-                                left={(props) => <Avatar.Text style={{backgroundColor: getRandomColor()}} size={48} label={cliente.nombre.substring(0, 1)} /> }
+                                <Card.Title style={[styles.cardList]} title={cliente.nombre} subtitle={`ID: ${cliente.uid}`}
+                                left={(props) => <Avatar.Text style={[{backgroundColor: getRandomColor()}]} size={48} label={cliente.nombre.substring(0, 1)} /> }
                                 right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => onToggleSnackBar(cliente)} />} 
                                 />
                                 <Divider style={styles.cardList} />
@@ -102,14 +106,11 @@ const CustomersScreen = () => {
                     )}
                 </SafeAreaView>
                 <Portal>
-                    <FAB.Group
-                    open={open}
-                    visible
-                    icon={open ? 'cog' : 'plus'}
+                    <FAB.Group open={open} color='#fff' visible fabStyle={{ backgroundColor:"#41525C" }} rippleColor="#f1f1f1" icon={open ? 'cog' : 'plus'}
                     actions={[
-                        { icon: 'plus', onPress: () => console.log('Pressed add') },
-                        { icon: 'account-group', label: 'Clientes', onPress: handleNavigateToNewCustomer },
-                        { icon: 'file', label: 'Informes', onPress: handleNavigateToInforms },
+                        { color:'#f1f1f1', icon: 'plus', onPress: () => console.log('Pressed add'), style: { backgroundColor: '#41525C' } },
+                        { color:'#f1f1f1', icon: 'account-group', label: 'Clientes', onPress: handleNavigateToNewCustomer, style: { backgroundColor: '#41525C' } },
+                        { color:'#f1f1f1', icon: 'file', label: 'Informes', onPress: handleNavigateToInforms, style: { backgroundColor: '#41525C' } },
                     ]}
                     onStateChange={onStateChange}
                     onPress={() => {
