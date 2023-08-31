@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setDisplayName } from '../reducers/userSlice';
 
 import { getCountOfSubcollections } from '../utils/services/queryService';
+import { formatDateToString } from '../utils/helpers/dateHelpers'
 
 const HomeScreen = () => {
   // Navegación entre páginas
@@ -20,15 +21,9 @@ const HomeScreen = () => {
   // Stats
   const [numClientes, SetNumClientes] = useState(0);
   const [numCalculos, SetNumCalculos] = useState(0);
-
-  // Fechas
-  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Dicembre'];
+  // Date
   const currentDate = new Date();
-  const dayOfWeek = daysOfWeek[currentDate.getDay()];
-  const dayOfMonth = currentDate.getDate();
-  const month = months[currentDate.getMonth()];
-  const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
+  const formattedDate = formatDateToString(currentDate);
 
   // Redux - User
   const dispatch = useDispatch();
