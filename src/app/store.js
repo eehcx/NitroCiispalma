@@ -1,11 +1,11 @@
 // store.js
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import rootReducer from '../reducers'; // Importa tu combinador de reductores
+import rootReducer from '../reducers';
 
 const store = configureStore({
-    reducer: rootReducer, // Tu combinador de reductores
-    // Otros middleware u opciones
+    reducer: rootReducer,
     middleware: process.env.NODE_ENV === 'production' ? getDefaultMiddleware() : [],
+    // Otros middleware u opciones
 });
 
 export default store;

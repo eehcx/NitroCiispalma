@@ -4,7 +4,7 @@ import { Appbar } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Formulas: 4 en uso
-import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/helpers';
+import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/helpers/calculatorHelpers';
 import { saveCE, saveMO } from '../utils/services/setService'
 // Firebase
 import { getDatabase, ref, onValue, off, get } from 'firebase/database';
