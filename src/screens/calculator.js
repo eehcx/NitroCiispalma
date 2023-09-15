@@ -5,10 +5,10 @@ import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 // Formulas: 4 en uso
 import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/helpers/calculatorHelpers';
-import { saveCE, saveMO } from '../utils/services/setService'
+import { saveCE, saveMO } from '../services/setService'
 // Firebase
 import { getDatabase, ref, onValue, off, get } from 'firebase/database';
-import { app } from '../utils/firebase';
+import { app } from '../app/firebase';
 // Componentes
 import CalculatorRows from '../components/interface/calcRows';
 import Dropdown from '../components/interface/Forms/DropDown';

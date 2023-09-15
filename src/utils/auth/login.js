@@ -6,7 +6,7 @@ import { Text, Button   } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../firebase';
+import { app } from '../../app/firebase';
 // Estilos de la pantalla
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
@@ -24,7 +24,6 @@ const LoginScreen = () => {
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-
         console.log('Usuario loggeado');
         const user = userCredential.user;
         const userId = user.uid;

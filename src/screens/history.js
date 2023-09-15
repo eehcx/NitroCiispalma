@@ -4,7 +4,7 @@ import { StyleSheet, SafeAreaView, StatusBar, View } from 'react-native';
 // React Native Paper
 import { Avatar, Card, Divider, PaperProvider, Text } from 'react-native-paper';
 // Firebase
-import { app } from '../utils/firebase';
+import { app } from '../app/firebase';
 import { getDatabase, ref, onValue, off, get } from 'firebase/database';
 
 const HistoryScreen = () => {
