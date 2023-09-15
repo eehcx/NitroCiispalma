@@ -9,10 +9,11 @@ import { useNavigation } from '@react-navigation/native';
 import Fonts from '../styles/Fonts';
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { setDisplayName } from '../reducers/userSlice';
+//import { useDispatch, useSelector } from 'react-redux';
+//import { setDisplayName } from '../features/user/userSlice';
 
-import { getCountOfSubcollections } from '../utils/services/queryService';
+import { getCountOfSubcollections } from '../services/queryService';
+import { formatDateToString } from '../utils/helpers/dateHelpers'
 
 const HomeScreen = () => {
   // Navegación entre páginas
@@ -20,34 +21,30 @@ const HomeScreen = () => {
   // Stats
   const [numClientes, SetNumClientes] = useState(0);
   const [numCalculos, SetNumCalculos] = useState(0);
-
-  // Fechas
-  const daysOfWeek = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Dicembre'];
+  // Date
   const currentDate = new Date();
-  const dayOfWeek = daysOfWeek[currentDate.getDay()];
-  const dayOfMonth = currentDate.getDate();
-  const month = months[currentDate.getMonth()];
-  const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month}`;
+  const formattedDate = formatDateToString(currentDate);
 
   // Redux - User
+/*
   const dispatch = useDispatch();
   const displayName = useSelector(state => state.user.displayName);
   const getFirstName = (displayName) => {
     const names = displayName.split(' ');
     return names[0];
-  };
+  };*/
 
   useEffect(() => {
     const unsubscribe = getCountOfSubcollections('clientes', (count) => { SetNumClientes(count); });
     const unsubscribe2 = getCountOfSubcollections('calculos', (count) => { SetNumCalculos(count); });
 
+    /*
     getUserDataFromAsyncStorage()
       .then(user => {
         const firstName = getFirstName(user.displayName);
         dispatch(setDisplayName(firstName));
       })
-      .catch(error => console.log('Error:', error));
+      .catch(error => console.log('Error:', error));*/
 
     return () => {
       unsubscribe();
@@ -78,12 +75,13 @@ const HomeScreen = () => {
     </View>
   );
 
+  //  {displayName} 
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
 
       <View style={[{ top: 25, left: 30 }]}>
-          <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {displayName} </Text>
+          <Text style={[styles.txtState, Fonts.formTitle]}> Hola,</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
 

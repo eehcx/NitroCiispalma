@@ -9,7 +9,7 @@ import { Avatar, IconButton, Card, Divider, ActivityIndicator, MD2Colors, FAB, P
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase
-import { app } from '../utils/firebase';
+import { app } from '../app/firebase';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 
 const CustomersScreen = () => {

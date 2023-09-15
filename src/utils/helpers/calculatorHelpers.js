@@ -1,5 +1,3 @@
-// CALCULATOR FUCTIONS
-
 //cosas a considerar el numero de salida depende de los numeros de digitos a mostrar, por lo que se siguio en base a lo mostrado en excel
 //tambien que las entradas estan fixeadas pero al ser una funcion aparte no se incluye esta deberia ser usada al introducir los campos a la base de datos
 
@@ -85,5 +83,3 @@ console.log(Mg_ppm_cmol_kg(589.781,0.346));
 console.log(Na_ppm_cmol_kg(688.997,46.67)); //en este se utilizo el error para mostrar los datos de la tabla,aunque no deberia ser este promedio
 
 */
-
-// DATE FORMETER

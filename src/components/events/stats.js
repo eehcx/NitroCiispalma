@@ -6,11 +6,11 @@ import InputForms from '../../styles/InputForms';
 import Fonts from '../../styles/Fonts'; 
 // Firebase
 import { getDatabase, ref, onValue, off, get, push, set, child } from 'firebase/database';
-import { app } from '../../utils/firebase';
+import { app } from '../../app/firebase';
 // Micros: elemento_ppm_mgkg
 // Bases Intercambiables: Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg
-import { elemento_ppm_mgkg, Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg } from '../../utils/helpers';
-import { saveRegistersMicros, saveMicros } from '../../utils/services/setService';
+import { elemento_ppm_mgkg, Ca_ppm_cmol_kg, K_ppm_cmol_kg, Mg_ppm_cmol_kg, Na_ppm_cmol_kg } from '../../utils/helpers/calculatorHelpers';
+import { saveRegistersMicros, saveMicros } from '../../services/setService';
 
 const Micros = ({ SampleId, setSampleId, NoMuestras, Elemento, ppm, setppm, onPress }) => {
 

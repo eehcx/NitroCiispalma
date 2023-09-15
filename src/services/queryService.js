@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Firebase
-import { app } from '../firebase';
+import { app } from '../app/firebase';
 import { getDatabase, push, set, ref, orderByKey, limitToLast, onValue, off, get } from 'firebase/database';
 
 // Consultar ultimos calculos realizados y obtener el uid de cada uno

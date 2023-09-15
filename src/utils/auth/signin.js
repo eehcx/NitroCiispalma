@@ -1,7 +1,7 @@
 // Componentes necesarios
 import React, { useState } from 'react';
 // Firebase dependencias e importaciones
-import { app } from '../firebase';
+import { app } from '../../app/firebase';
 import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 // Importación de estilos y utileria
 import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
