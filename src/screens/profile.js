@@ -13,15 +13,13 @@ import Fonts from '../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setProfileData, resetProfileState } from '../reducers/profileSlice';
-import { resetUserState } from '../reducers/userSlice';
+import { addUser } from '../features/user/userSlice'
 
 const CardInfo = () => {
     const navigation = useNavigation();
     //LOGOUT
     const handleLogout = async () => {
         const auth = getAuth(app);
-        //const dispatch = useDispatch();
 
         try {
             await AsyncStorage.removeItem('user', (error) => {
@@ -33,9 +31,6 @@ const CardInfo = () => {
             });
             console.log('Usuario deslogueado');
             await signOut(auth);
-
-            //dispatch(resetProfileState());
-            //dispatch(resetUserState());
 
             navigation.navigate('auth');
         } catch (error) {
@@ -100,13 +95,17 @@ const CardInfo = () => {
 
 export default ProfileScreen = () => {
     const dispatch = useDispatch();
-    const { displayName, email } = useSelector(state => state.profile);
+    const user = useSelector(state => state.user);
 
     useEffect(() => { 
         getUserDataFromAsyncStorage()
-            .then(user => {
-                dispatch(setProfileData({ displayName: user.displayName, email: user.email }));
-            })
+        .then(user => {
+            if (user) {
+                dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
+            } else {
+                navigation.navigate('auth');
+            }
+        })
             .catch(error => console.log('Error:', error));
     }, []);
 
@@ -134,11 +133,11 @@ export default ProfileScreen = () => {
             </Appbar.Header>
 
             <View style={[styles.ProfileInfoContent, { marginTop: 5 }]}>
-                <Avatar.Text size={70} label={displayName.toUpperCase().substring(0, 1)} style={[styles.aviIcon, {backgroundColor: "#d7dfe4", borderColor: "#bbb", borderWidth: 1}]} />
-                <Text style={[styles.ProfileName, Fonts.subtitles]}>{displayName}</Text>
+                <Avatar.Text size={70} label={user.displayName.toUpperCase().substring(0, 1)} style={[styles.aviIcon, {backgroundColor: "#d7dfe4", borderColor: "#bbb", borderWidth: 1}]} />
+                <Text style={[styles.ProfileName, Fonts.subtitles]}>{user.displayName}</Text>
                 <View style={{flex:1, alignItems: 'center'}}>
                     <View style={[styles.mailContent, styles.mailChild, styles.mailLayout]}>
-                        <Text style={[Fonts.cardsText]}>{email}</Text>
+                        <Text style={[Fonts.cardsText]}>{ user.email}</Text>
                     </View>
                 </View>
             </View>

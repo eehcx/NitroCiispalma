@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Firebase
-import { app } from '../firebase';
+import { app } from '../app/firebase';
 import { getDatabase, push, set, ref, onValue, off } from 'firebase/database';
 
 // Guardar Informes

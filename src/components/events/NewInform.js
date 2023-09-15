@@ -13,7 +13,7 @@ import Fonts from '../../styles/Fonts';
 import FilterButton from '../interface/filterButton';
 import DatePickerComponent from '../interface/Forms/DatePicker';
 import Dropdown from '../interface/Forms/DropDown';
-import { savePackage, saveInformeResultados, saveInform } from '../../utils/services/setService';
+import { savePackage, saveInformeResultados, saveInform } from '../../services/setService';
 
 const Tab = createBottomTabNavigator();
 
