@@ -6,17 +6,18 @@ import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase Auth
-import { app } from '../utils/firebase';
+import { app } from '../app/firebase';
 import { getAuth, signOut } from "firebase/auth";
 // Styles
 import Fonts from '../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../features/user/userSlice'
+import { addUser, logout } from '../features/user/userSlice';
 
 const CardInfo = () => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     //LOGOUT
     const handleLogout = async () => {
         const auth = getAuth(app);
@@ -31,7 +32,7 @@ const CardInfo = () => {
             });
             console.log('Usuario deslogueado');
             await signOut(auth);
-
+            dispatch(logout());
             navigation.navigate('auth');
         } catch (error) {
         console.log('Error al cerrar sesión:', error);
@@ -99,13 +100,13 @@ export default ProfileScreen = () => {
 
     useEffect(() => { 
         getUserDataFromAsyncStorage()
-        .then(user => {
-            if (user) {
-                dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
-            } else {
-                navigation.navigate('auth');
-            }
-        })
+            .then(user => {
+                if (user) {
+                    dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
+                } else {
+                    navigation.navigate('auth');
+                }
+            })
             .catch(error => console.log('Error:', error));
     }, []);
 

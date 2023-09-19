@@ -9,8 +9,8 @@ import { useNavigation } from '@react-navigation/native';
 import Fonts from '../styles/Fonts';
 
 // Redux
-//import { useDispatch, useSelector } from 'react-redux';
-//import { setDisplayName } from '../features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../features/user/userSlice';
 
 import { getCountOfSubcollections } from '../services/queryService';
 import { formatDateToString } from '../utils/helpers/dateHelpers'
@@ -26,25 +26,22 @@ const HomeScreen = () => {
   const formattedDate = formatDateToString(currentDate);
 
   // Redux - User
-/*
   const dispatch = useDispatch();
-  const displayName = useSelector(state => state.user.displayName);
-  const getFirstName = (displayName) => {
-    const names = displayName.split(' ');
-    return names[0];
-  };*/
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
     const unsubscribe = getCountOfSubcollections('clientes', (count) => { SetNumClientes(count); });
     const unsubscribe2 = getCountOfSubcollections('calculos', (count) => { SetNumCalculos(count); });
 
-    /*
     getUserDataFromAsyncStorage()
       .then(user => {
-        const firstName = getFirstName(user.displayName);
-        dispatch(setDisplayName(firstName));
+          if (user) {
+              dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
+          } else {
+              navigation.navigate('auth');
+          }
       })
-      .catch(error => console.log('Error:', error));*/
+      .catch(error => console.log('Error:', error));
 
     return () => {
       unsubscribe();
@@ -54,18 +51,17 @@ const HomeScreen = () => {
 
   const getUserDataFromAsyncStorage = async () => {
     try {
-      const userJson = await AsyncStorage.getItem('user');
-      if (userJson) {
-        return JSON.parse(userJson);
-      } else {
-        console.log('No hay un usuario');
-        navigation.navigate('login');
-        return null;
-      }
+        const userJson = await AsyncStorage.getItem('user');
+        if (userJson) {
+            return JSON.parse(userJson);
+        } else {
+            navigation.navigate('auth');
+            return null;
+        }
     } catch (error) {
-      console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
-      navigation.navigate('login');
-      return null;
+        console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
+        navigation.navigate('auth');
+        return null;
     }
   };
 
@@ -75,13 +71,13 @@ const HomeScreen = () => {
     </View>
   );
 
-  //  {displayName} 
+  //  {user.displayName.split(' ')}
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
 
       <View style={[{ top: 25, left: 30 }]}>
-          <Text style={[styles.txtState, Fonts.formTitle]}> Hola,</Text> 
+          <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {user.displayName}</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
 
