@@ -6,20 +6,25 @@ import Octicons from '@expo/vector-icons/Octicons';
 
 // Pantallas de la aplicación
 import LoadingScreen from './utils/auth/redirect';
-import InputScreen from './screens/entrace';
+import InputScreen from './screens/initials/entrace';
 import LoginScreen from './utils/auth/login';
-import HomeScreen from './screens/home';
+import HomeScreen from './screens/main/home';
 import SignipScreen from './utils/auth/signin';
-import ProfileScreen from './screens/profile';
+import ProfileScreen from './screens/main/profile';
 import CalculatorScreen from './screens/calculator';
-import HistoryScreen from './screens/history';
-import CustomersScreen from './screens/customers';
-import RegisterCustomer from './components/events/NewCustomer';
-import RegisterInform from './components/events/NewInform';
+import HistoryScreen from './screens/main/profile/history';
+// Customer Screens
+import CustomersScreen from './screens/main/customers';
+import CustomersList from './screens/main/customers/CustomersList';
+import CustomersCalc from './screens/main/customers/CustomersCalc';
+import RegisterCustomer from './screens/main/customers/NewCustomer';
+import RegisterInform from './screens/main/customers/NewInform';
 import ResultsScreen from './components/events/results';
+//
 import StatsScreen from './components/events/stats';
-import UserInformationScreen from './components/events/UserData/UserInfo';
-import ApplicationDataScreen from './components/events/appData/privacity';
+import UserInformationScreen from './screens/main/profile/UserInfo';
+import ApplicationDataScreen from './screens/main/profile/privacity';
+// import secureDataScreen from './screens/main/profile/secureData';
 
 const Stack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -27,6 +32,7 @@ const UserDataStack = createStackNavigator();
 const navigationRef = React.createRef();
 const Tab = createBottomTabNavigator();
 
+// Autentificación 
 const AuthScreens = () => (
     <AuthStack.Navigator>
         <AuthStack.Screen name="entrace" component={InputScreen} options={{ headerShown: false }} />
@@ -37,10 +43,11 @@ const AuthScreens = () => (
 
 const UserScreens = () => (
     <UserDataStack.Navigator>
-        <UserDataStack.Screen name="userData" component={UserInformationScreen} options={{ title: 'Datos de usuario', headerStyle: { backgroundColor: '#fafafa' } }}/>
+        <UserDataStack.Screen name="userData" component={UserInformationScreen} options={{ title: 'Editar Perfil', headerStyle: { backgroundColor: '#fafafa' } }}/>
     </UserDataStack.Navigator>
 );
 
+// Barra de navegación 
 const MainBarScreen=()=>{
     return (
         <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#333', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0 } }} >
@@ -50,10 +57,6 @@ const MainBarScreen=()=>{
         </Tab.Navigator>
     );
 };
-
-/*
-<Tab.Screen name="results" component={ResultsScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Octicons name="search" size={27} color={color} /> }}/>
-*/
 
 // Funcion principal de la aplicación
 export default function Navigation() {
@@ -69,8 +72,12 @@ export default function Navigation() {
                 <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos', headerStyle: { backgroundColor: '#fafafa' } }}/>
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
+                <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>
+                
+                <Stack.Screen name="customerCalc" component={CustomersCalc} options={{ headerShown: false }}/>
+
                 <Stack.Screen name="stats" component={StatsScreen} options={{ title: 'Estadísticas', headerStyle: { backgroundColor: '#fafafa' },}}/>
-                <Stack.Screen name="appData" component={ApplicationDataScreen} options={{ title: 'Politicas y Privacidad', headerStyle: { backgroundColor: '#fafafa' },}}/>
+                <Stack.Screen name="appData" component={ApplicationDataScreen} options={{ title: 'Políticas y Privacidad', headerStyle: { backgroundColor: '#fafafa' },}}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
