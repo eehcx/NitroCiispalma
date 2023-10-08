@@ -21,8 +21,8 @@ export const getClientes = () => {
             }
         })
         .catch((error) => {
-            console.error(error);
-            return error
+            console.error("Error al obtener informes del cliente", error);
+            throw error
         });
 
     return () => {
