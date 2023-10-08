@@ -19,6 +19,7 @@ import CustomersList from './screens/main/customers/CustomersList';
 import CustomersCalc from './screens/main/customers/CustomersCalc';
 import RegisterCustomer from './screens/main/customers/NewCustomer';
 import RegisterInform from './screens/main/customers/NewInform';
+import RegisterPackage from './screens/main/customers/PackageList';
 import ResultsScreen from './components/events/results';
 //
 import StatsScreen from './components/events/stats';
@@ -72,6 +73,7 @@ export default function Navigation() {
                 <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos', headerStyle: { backgroundColor: '#fafafa' } }}/>
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
+                <Stack.Screen name="registerPackage" component={RegisterPackage} options={{ title: 'Agrega un paquete nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>
                 
                 <Stack.Screen name="customerCalc" component={CustomersCalc} options={{ headerShown: false }}/>

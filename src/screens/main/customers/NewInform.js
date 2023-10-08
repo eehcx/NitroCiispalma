@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, ImageBackground, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // React Native Paper
 import { Button, Text } from 'react-native-paper';
@@ -15,9 +15,14 @@ import DatePickerComponent from '../../../components/interface/Forms/DatePicker'
 import Dropdown from '../../../components/interface/Forms/DropDown';
 import { savePackage, saveInformeResultados, saveInform } from '../../../services/setService';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { setClientId } from '../../../features/client/clientSlice';
+
 const Tab = createBottomTabNavigator();
 
 export default RegisterInform = () => {
+    const dispatch = useDispatch();
+    const client = useSelector(state => state.client);
     // React Navigation
     const navigation = useNavigation();
     const analisis = [
@@ -31,7 +36,6 @@ export default RegisterInform = () => {
     const handleSiguiente = () => { setFormularioActual(formularioActual + 1); };
     // Datos del informe
     const [selectedOption, setSelectedOption] = useState("Completo"); // Nombre Paquetes
-    const [uid, setUid] = useState('')
     const [adicional, setAdicional] = useState('')
     const [numMuestras, setNumMuestras] = useState('')
     const [numSolicitud, setNumSolicitud] = useState('2')
@@ -63,9 +67,10 @@ export default RegisterInform = () => {
 
     const handleSaveData = () => {
         // Aquí puedes obtener los valores de las variables que definiste en tu vista
-        const id = uid;
+        const id = client.clientId;
         const nombrePaquete = selectedOption;
         const analisisDelPaquete = analisis.filter(item => item.presente).map(item => item.nombre);
+        //console.log(id)
 
         // Llamamos a la función saveInform y pasamos los valores correspondientes
         saveInform(
@@ -88,23 +93,7 @@ export default RegisterInform = () => {
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
             <View style={InputForms.container}>
-
                 {formularioActual === 1 && (
-                    <View style={InputForms.formContainer}>
-                        <Text style={[Fonts.formTitle]}>ID Cliente</Text>
-                        <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa el ID de tu Cliente</Text>
-                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="ID único del cliente" value={uid} onChangeText={setUid} maxLength={50}/>
-                        <Button icon="chevron-right"
-                        buttonColor="#C7FBD7"
-                        mode="contained-tonal" 
-                        contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
-                        labelStyle={{ marginRight: 23 }}
-                        onPress={handleSiguiente}>
-                            Siguiente Página
-                        </Button>
-                </View>
-                )}
-                {formularioActual === 2 && (
                     <View style={InputForms.formContainer}>
                         <Text style={[Fonts.formTitle]}>Fechas</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Selecciona las fechas</Text>
@@ -121,7 +110,7 @@ export default RegisterInform = () => {
                     </View>
                 )}
 
-                {formularioActual === 3 && (
+                {formularioActual === 2 && (
                     <View style={InputForms.formContainer}>
                         <Text style={[Fonts.formTitle]}>Datos del Informe</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos requeridos</Text>
@@ -156,7 +145,7 @@ export default RegisterInform = () => {
                         </Button>
                     </View>
                 )}
-                {formularioActual === 4 && (
+                {formularioActual === 3 && (
                     <View style={InputForms.formContainer}>
                         <Text style={[Fonts.formTitle]}>Paquetes</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Por ultimo selecciona un paquete</Text>
@@ -176,7 +165,7 @@ export default RegisterInform = () => {
                         </Button>
                     </View>
                 )}
-                {formularioActual === 5 && (
+                {formularioActual === 4 && (
                     <View style={InputForms.formContainer}>
                         <Text style={[Fonts.formTitle]}>Adicionales</Text>
                         <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos si se requiere</Text>

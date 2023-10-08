@@ -11,5 +11,6 @@ export default StyleSheet.create({
     buttonTitle: { fontSize: 15, fontWeight: 'bold' },
     cardsText: { fontSize: 16 },
     modalText: { fontSize: 17, fontWeight: '600', paddingBottom: 6 },
+    addText: { fontSize: 18, fontWeight: '600', paddingBottom: 6 },
     normalText: {fontSize: 18 }
 });
