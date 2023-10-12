@@ -5,15 +5,14 @@ import { StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
 import { Avatar, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, RadioButton } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
-// Firebase
-import { app } from '../../../app/firebase';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
-
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setClientId } from '../../../features/client/clientSlice';
+// Servicio de consulta
+import { getClientes } from '../../../services/clientes';
 
 // Pagina de listado de clientes
 const CustomersList = () => {
@@ -42,24 +41,21 @@ const CustomersList = () => {
     const [clientes, setClientes] = useState([]);
     // Hooks para el estado del componente
     const [isExtended, setIsExtended] = React.useState(false);
-    // 
-    const [visible, setVisible] = React.useState(false);
-    const closeDialog = () => { setVisible(false); };
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
     // Firebase Realtime Database
     useEffect(() => {
-        const database = getDatabase(app);
-        const clientesRef = ref(database, 'clientes');
-        const onClientesValue = onValue(clientesRef, (snapshot) => {
-        const data = snapshot.val();
-        const clientesArray = data ? Object.values(data) : [];
-        setClientes(clientesArray);
+        const obtenerClientes = async () => {
+            try {
+                const clientesData = await getClientes();
+                setClientes(clientesData);
+            } catch (error) {
+                console.error('Error al obtener clientes', error);
+            }
+        };
+
+        obtenerClientes();
         setLoading(false);
-    });
-    return () => {
-        off(clientesRef, 'value', onClientesValue);
-    };
     }, []);
 
     return (

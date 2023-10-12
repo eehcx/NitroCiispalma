@@ -4,7 +4,7 @@ import InputForms from '../../styles/InputForms';
 //React Native
 import { StyleSheet, StatusBar, View, TouchableOpacity, Text } from 'react-native';
 // React Native Paper
-import { Appbar, TouchableRipple } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Components
@@ -14,13 +14,13 @@ import CustomersInform from './customers/CustomersInform';
 
 // Componente de filtros
 const FilterBtn = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected, SelectedColor }) => (
-    <TouchableRipple style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#333" : backgroundColor, marginLeft, marginRight }]} onPress={onPress} >
+    <TouchableOpacity style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#41525C" : backgroundColor, marginLeft, marginRight }]} onPress={onPress} >
         <View style={styles.FilterContainer}>
-            <Text variant='titleSmall' style={[styles.txtIcon, { color: isSelected ? "white" : backgroundColor === "#333" ? "white" : "#000", fontSize: 13 }]}>
+            <Text variant='titleSmall' style={[styles.txtIcon, { color: isSelected ? "white" : backgroundColor === "#41525C" ? "white" : "#000", fontSize: 13 }]}>
                 {text}
             </Text>
         </View>
-    </TouchableRipple>
+    </TouchableOpacity>
 );
 
 // Pagina de listado de clientes

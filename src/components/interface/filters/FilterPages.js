@@ -3,9 +3,9 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 
 export default FilterBtn = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected, SelectedColor }) => (
-    <TouchableOpacity style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#333" : backgroundColor, marginLeft, marginRight }]} onPress={onPress} >
+    <TouchableOpacity style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#41525C" : backgroundColor, marginLeft, marginRight }]} onPress={onPress} >
         <View style={styles.FilterContainer}>
-            <Text variant='titleSmall' style={[styles.txtIcon, { color: isSelected ? "white" : backgroundColor === "#333" ? "white" : "#000", fontSize: 13 }]}>
+            <Text variant='titleSmall' style={[styles.txtIcon, { color: isSelected ? "white" : backgroundColor === "#41525C" ? "white" : "#000", fontSize: 13 }]}>
                 {text}
             </Text>
         </View>

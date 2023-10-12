@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   groupItem: {
     height: 300,
     width: 350, // Ajusta este ancho según tus necesidades
-    marginHorizontal: 30, // Margen entre los items
+    marginHorizontal: 20, // Margen entre los items
     backgroundColor: '#d7dfe3',
     borderRadius: 22,
   },

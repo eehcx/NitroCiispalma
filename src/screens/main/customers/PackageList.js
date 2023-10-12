@@ -136,6 +136,9 @@ const ListFoliarPackage = () => {
 
 // Pagina de listado de clientes
 export default RegisterPackage = () => {
+    // Navegación
+    const navigation = useNavigation();
+    const NavigateToNewPackage = () => { navigation.navigate('newPackage'); };
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
@@ -152,7 +155,7 @@ export default RegisterPackage = () => {
                     <FilterBtn text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
                 </View>
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
+            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={NavigateToNewPackage}>
                 <Octicons name="duplicate" size={24} color='#767983' />
                 <Text style={[styles.txtLabels, Fonts.addText]}>Añadir paquete</Text>
             </TouchableOpacity>
