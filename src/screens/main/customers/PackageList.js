@@ -141,6 +141,7 @@ export default RegisterPackage = () => {
     const NavigateToNewPackage = () => { navigation.navigate('newPackage'); };
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
+    const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
     // Filtro 

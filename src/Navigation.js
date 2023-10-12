@@ -73,7 +73,7 @@ export default function Navigation() {
                 <Stack.Screen name="calculator" component={CalculatorScreen} options={{ title: 'Calculadora', headerShown: false}}/>
                 <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos', headerStyle: { backgroundColor: '#fafafa' } }}/>
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
-                <Stack.Screen name="registerInform" component={RegisterInform} options={{ title: 'Agrega un informe nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
+                <Stack.Screen name="registerInform" component={RegisterInform} options={{ headerShown: false }}/>
                 <Stack.Screen name="registerPackage" component={RegisterPackage} options={{ title: 'Lista de paquetes', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="newPackage" component={NewPackage} options={{ title: 'Agrega un paquete nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // React Native Paper
-import { PaperProvider, Button, Text, Banner, Divider } from 'react-native-paper';
+import { PaperProvider, Button, Text, Banner, Divider, RadioButton, Appbar } from 'react-native-paper';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -13,22 +13,31 @@ import Fonts from '../../../styles/Fonts';
 // Firebase
 import { app } from '../../../app/firebase';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
-// 
+// Componentes
 import FilterBtn from '../../../components/interface/filters/FilterPages';
 import FilterButton from '../../../components/interface/filterButton';
 import DatePickerComponent from '../../../components/interface/Forms/DatePicker';
-import Dropdown from '../../../components/interface/Forms/DropDown';
 import { savePackage, saveInformeResultados, saveInform } from '../../../services/setService';
-
+// Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setClientId } from '../../../features/client/clientSlice';
+import { update, reset, selectCurrentForm, setForm } from '../../../features/forms/ReportSlice';
 
 
 const ListSoilsPackage = () => {
+    const dispatch = useDispatch();
+    const [selectedPackage, setSelectedPackage] = useState('');
+    const packageId = useSelector(state => state.report.uid_package);
+    //
+    const currentForm = useSelector(selectCurrentForm);
     // Paquetes suelos
     const [SoilsPackage, setSoilsPackage] = useState([]);
-    // Estado de Carga de la página
-    const [loading, setLoading] = useState(true);
+
+    const handleRadioButtonPress = (packageId) => {
+        setSelectedPackage(packageId);
+        console.log('Cliente ID seleccionado:', packageId);
+        dispatch(update({ uid_package: packageId }));
+        dispatch(setForm(currentForm + 1));
+    };
 
     useEffect(() => {
         const database = getDatabase(app);
@@ -36,13 +45,8 @@ const ListSoilsPackage = () => {
         const onPaqueteValue = onValue(paquetesRef, (snapshot) => {
             const data = snapshot.val();
             const PaqueteArray = data ? Object.values(data) : [];
-
             const soilsPackages = PaqueteArray.filter((paquete) => paquete.tipo === 'Suelos');
-
             setSoilsPackage(soilsPackages);
-
-        // Carga de lista
-        setLoading(false);
         });
         return () => {
             off(paquetesRef, 'value', onPaqueteValue);
@@ -60,9 +64,12 @@ const ListSoilsPackage = () => {
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
                         </View>
-                        <TouchableOpacity style={{ paddingHorizontal:20 }}>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
-                        </TouchableOpacity>
+                        <RadioButton.Item
+                        color='#167139'
+                        value={packages.uid}
+                        status={packageId === packages.uid ? 'checked' : 'unchecked'}
+                        onPress={() => handleRadioButtonPress(packages.uid)}
+                        />
                     </TouchableOpacity>
                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                 </View>
@@ -72,11 +79,18 @@ const ListSoilsPackage = () => {
 };
 
 const ListFoliarPackage = () => {
+    // 
+    const dispatch = useDispatch();
+    const [selectedPackage, setSelectedPackage] = useState('');
+    const packageId = useSelector(state => state.report.uid_package);
     // Paquetes suelos
     const [foliarPackage, setFoliarPackage] = useState([]);
-    // Estado de Carga de la página
-    const [loading, setLoading] = useState(true);
-    const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
+
+    const handleRadioButtonPress = (packageId) => {
+        setSelectedPackage(packageId);
+        console.log('Cliente ID seleccionado:', packageId);
+        dispatch(update({ uid_package: packageId }));
+    };
 
     useEffect(() => {
         const database = getDatabase(app);
@@ -84,13 +98,8 @@ const ListFoliarPackage = () => {
         const onPaqueteValue = onValue(paquetesRef, (snapshot) => {
             const data = snapshot.val();
             const PaqueteArray = data ? Object.values(data) : [];
-
             const soilsPackages = PaqueteArray.filter((paquete) => paquete.tipo === 'Foliar');
-
             setFoliarPackage(soilsPackages);
-
-        // Carga de lista
-        setLoading(false);
         });
         return () => {
             off(paquetesRef, 'value', onPaqueteValue);
@@ -108,9 +117,12 @@ const ListFoliarPackage = () => {
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
                         </View>
-                        <TouchableOpacity style={{ paddingHorizontal:20 }}>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
-                        </TouchableOpacity>
+                        <RadioButton.Item
+                        color='#167139'
+                        value={packages.uid}
+                        status={packageId === packages.uid ? 'checked' : 'unchecked'}
+                        onPress={() => handleRadioButtonPress(packages.uid)}
+                        />
                     </TouchableOpacity>
                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                 </View>
@@ -122,48 +134,30 @@ const ListFoliarPackage = () => {
 export default RegisterInform = () => {
     const dispatch = useDispatch();
     const client = useSelector(state => state.client);
+    // Form State
+    const currentForm = useSelector(selectCurrentForm);
+    const handleSiguiente = () => { dispatch(setForm(currentForm + 1)); };
     //
     const [visible, setVisible] = React.useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
     // React Navigation
     const navigation = useNavigation();
-    const analisis = [
-        { nombre: 'Azufre (S)', presente: true },
-        { nombre: 'Nitrógeno (N)', presente: false },
-        { nombre: 'Fósforo (P)', presente: true }
-    ];
-    // Formulario
-    const [Form, setForm] = useState(1);
-    const handleSiguiente = () => { setForm(Form + 1); };
     // Datos del informe
-    const [selectedOption, setSelectedOption] = useState("Análisis Suelos"); // Nombre Paquetes
     const [numMuestras, setNumMuestras] = useState('')
     const [numSolicitud, setNumSolicitud] = useState('2')
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')
     const [Observaciones, setObservaciones] = useState('')
     const [selected, setSelected] = useState(undefined);
-    const handleSelect = (item) => {
-        setSelected(item.label); 
-    };
-    const data = [
-        { label: 'Analisis de Suelos', value: '1' },
-        { label: 'Analisis Foliar', value: '2' }
-    ];
-    //console.log(selected);
+    // Fechas 
     const [FechaEntrega, setFechaEntrega] = useState(new Date());
     const [dateRecepcion, setDateRecepcion] = useState(new Date());
-
-    const handleDateChange = (newDate) => {
-        setFechaEntrega(newDate);
-    };
-
-    const handleDateChangeRecepcion = (newDate) => {
-        setDateRecepcion(newDate);
-    };
-
+    const handleDateChange = (newDate) => { setFechaEntrega(newDate); };
+    const handleDateChangeRecepcion = (newDate) => { setDateRecepcion(newDate); };
+    // Filtro
     const filterContent = (option) => { setSelectedOption(option); };
+    const [selectedOption, setSelectedOption] = useState("Análisis Suelos"); // Nombre Paquetes
 
     const handleSaveData = () => {
         // Aquí puedes obtener los valores de las variables que definiste en tu vista
@@ -190,18 +184,25 @@ export default RegisterInform = () => {
         navigation.goBack();
     };
 
+    const handleGoBack = () => { navigation.goBack(); dispatch(reset()); };
+    const NavigateToPackage = () => { navigation.navigate('registerPackage'); };
+
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
+            <Appbar.Header style={{ backgroundColor: '#fafafa' }}>
+                <Appbar.BackAction onPress={handleGoBack} />
+                <Appbar.Content title={'Agrega un informe nuevo' } />
+            </Appbar.Header>
             <PaperProvider>
                 <SafeAreaView>
                     <ScrollView onScroll={onScroll}>
-                        {Form === 1 && (
+                        {currentForm === 1 && (
                             <>
                                 <Banner
                                     theme={{ colors: { primary: 'green' } }}
                                     style={{ backgroundColor: "#fafafa" }}
                                     visible={visible}
-                                    actions={[ { label: 'Ir a paquetes', onPress: () => setVisible(false) }, { label: 'Cerrar', onPress: () => setVisible(false) } ]}
+                                    actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]}
                                     icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1&_gl=1*1kvs9mz*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA2NTkxNi4yNjMuMS4xNjk3MDY3NTQ5LjE2LjAuMA..' }} style={{ width: size, height: size }} /> )}>
                                     <Text style={{ fontSize: 14 }}> 
                                         Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización.
@@ -222,38 +223,48 @@ export default RegisterInform = () => {
                                 {selectedOption === 'Análisis Foliar' && <ListFoliarPackage/>}
                             </>
                         )}
-                        {Form === 2 && (
-                            <View style={InputForms.container}>
-                                <View style={InputForms.formContainer}>
-                                    <Text style={{ marginBottom: 20, textAlign: 'justify', fontSize: 23 }} variant='headlineSmall' >Ingresa los campos requeridos</Text>
-                                    <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
-                                    <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
-                                    <Dropdown label="Selecciona un Analisis" data={data} onSelect={handleSelect} />
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]}
-                                    placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
-                                    maxLength={100} keyboardType="numeric"
-                                    />
-                                    <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                                    placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}
-                                    maxLength={100}
-                                    />
-                                    <TextInput 
-                                    style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                                    placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo}
-                                    maxLength={100}
-                                    />
-                                    <TextInput
-                                        multiline={true}
-                                        numberOfLines={4}
-                                        placeholder="Observaciones generales"
-                                        value={Observaciones}  onChangeText={setObservaciones}
-                                        style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100}
-                                    />
-                                    <TouchableOpacity style={buttonStyles.formButton} onPress={handleSaveData} >
-                                        <Text style={buttonStyles.buttonText_Black}>Enviar</Text>
-                                    </TouchableOpacity>
+                        {currentForm === 2 && (
+                            <>
+                                <Banner
+                                    theme={{ colors: { primary: 'green' } }}
+                                    style={{ backgroundColor: "#fafafa", marginBottom: '6%' }}
+                                    visible={visible}
+                                    actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]}
+                                    icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fsave.png?alt=media&token=87b77d64-997c-4634-8ae5-1faa4c55ea95&_gl=1*15ong9z*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA4MTIwOS4yNjQuMS4xNjk3MDgxMjIxLjQ4LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                    <Text style={{ fontSize: 14 }}> 
+                                        Excelente, ahora procede a completar todos los campos necesarios en el formulario. Recuerda que cada detalle cuenta.
+                                    </Text>
+                                </Banner>
+                                <View style={InputForms.container}>
+                                    <View style={InputForms.formContainer}>
+                                        <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
+                                        <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
+                                        <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]}
+                                        placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
+                                        maxLength={100} keyboardType="numeric"
+                                        />
+                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
+                                        placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}
+                                        maxLength={100}
+                                        />
+                                        <TextInput 
+                                        style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
+                                        placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo}
+                                        maxLength={100}
+                                        />
+                                        <TextInput
+                                            multiline={true}
+                                            numberOfLines={4}
+                                            placeholder="Observaciones generales"
+                                            value={Observaciones}  onChangeText={setObservaciones}
+                                            style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100}
+                                        />
+                                        <TouchableOpacity style={buttonStyles.formButton} onPress={handleSaveData} >
+                                            <Text style={buttonStyles.buttonText_Black}>Enviar</Text>
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                            </View>
+                            </>
                         )}
                     </ScrollView>
                 </SafeAreaView>
