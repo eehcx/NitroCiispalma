@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const informSlice = createSlice({
-    name: 'imform',
+    name: 'inform',
     initialState,
     reducers: {
         setInformId: (state, action) => {
