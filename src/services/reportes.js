@@ -29,7 +29,7 @@ export const getResultados = (idClient, idReport) => {
     const db = getDatabase();
     const resultadosRef = ref(db, 'clientes/' + idClient + '/informes/' + idReport + '/informe_resultados' );
 
-    get(resultadosRef)
+    return get(resultadosRef)
     .then((snapshot) => {
         if (snapshot.exists()) {
             const resultados =snapshot.val();
