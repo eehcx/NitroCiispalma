@@ -37,5 +37,5 @@ export const reportSlice = createSlice({
 });
 
 export const { update, setForm, reset } = reportSlice.actions;
-export const selectCurrentForm = (state) => state.form.currentForm;
+export const selectCurrentForm = (state) => state.report.currentForm;
 export default reportSlice.reducer;
