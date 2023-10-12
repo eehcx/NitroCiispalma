@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    form: 1,
+    currentForm: 1,
     no_solicitud: '',
     uid_package: '',
     fecha_entrega: '',
@@ -16,9 +16,11 @@ export const reportSlice = createSlice({
     name: 'report',
     initialState, 
     reducers: {
+        setForm: (state, action) => {
+            state.currentForm = action.payload;
+        },
         update: (state, action) => {
-            const { form, no_solicitud, uid_package, fecha_entrega, fecha_recepcion, no_muestras, observaciones, procedencia, tipo_cultivo } = action.payload;
-            state.form = form;
+            const { no_solicitud, uid_package, fecha_entrega, fecha_recepcion, no_muestras, observaciones, procedencia, tipo_cultivo } = action.payload;
             state.no_solicitud = no_solicitud;
             state.uid_package = uid_package;
             state.fecha_entrega = fecha_entrega;
@@ -34,5 +36,6 @@ export const reportSlice = createSlice({
     },
 });
 
-export const { update, reset } = reportSlice.actions;
+export const { update, setForm, reset } = reportSlice.actions;
+export const selectCurrentForm = (state) => state.form.currentForm;
 export default reportSlice.reducer;
