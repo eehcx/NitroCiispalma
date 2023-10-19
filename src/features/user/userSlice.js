@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import persistConfig  from  '../../app/persistConfig';
 
 const initialState = {
     uid: '',
@@ -33,4 +34,4 @@ export const userSlice = createSlice({
 });
 
 export const { addUser, logout } = userSlice.actions;
-export default userSlice.reducer;
+export default persistedReducer = persistReducer(persistConfig, userSlice.reducer);

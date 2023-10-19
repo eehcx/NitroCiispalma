@@ -1,5 +1,6 @@
 // store.js
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 import rootReducer from '../features/index';
 
 const store = configureStore({
@@ -8,4 +9,4 @@ const store = configureStore({
     // Otros middleware u opciones
 });
 
-export default store;
+export const persistor = persistStore(store);
