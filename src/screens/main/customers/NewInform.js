@@ -83,6 +83,8 @@ const ListFoliarPackage = () => {
     const dispatch = useDispatch();
     const [selectedPackage, setSelectedPackage] = useState('');
     const packageId = useSelector(state => state.report.uid_package);
+    //
+    const currentForm = useSelector(selectCurrentForm);
     // Paquetes suelos
     const [foliarPackage, setFoliarPackage] = useState([]);
 
@@ -90,6 +92,7 @@ const ListFoliarPackage = () => {
         setSelectedPackage(packageId);
         console.log('Cliente ID seleccionado:', packageId);
         dispatch(update({ uid_package: packageId }));
+        dispatch(setForm(currentForm + 1));
     };
 
     useEffect(() => {
@@ -136,7 +139,9 @@ export default RegisterInform = () => {
     const client = useSelector(state => state.client);
     // Form State
     const currentForm = useSelector(selectCurrentForm);
-    const handleSiguiente = () => { dispatch(setForm(currentForm + 1)); };
+    const handleSiguiente = () => { 
+        dispatch(setForm(currentForm + 1)); 
+    };
     //
     const [visible, setVisible] = React.useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
@@ -202,7 +207,8 @@ export default RegisterInform = () => {
                                     theme={{ colors: { primary: 'green' } }}
                                     style={{ backgroundColor: "#fafafa" }}
                                     visible={visible}
-                                    actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]}
+                                    actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() },
+                                    { label: 'Cerrar', onPress: () => setVisible(false) } ]}
                                     icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1&_gl=1*1kvs9mz*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA2NTkxNi4yNjMuMS4xNjk3MDY3NTQ5LjE2LjAuMA..' }} style={{ width: size, height: size }} /> )}>
                                     <Text style={{ fontSize: 14 }}> 
                                         Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización.

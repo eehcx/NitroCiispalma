@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text, FlatList } from 'react-native';
-import { Divider, List } from 'react-native-paper';
-import { ScrollView as GestureScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
@@ -81,33 +79,17 @@ const HomeScreen = () => {
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
 
-        <View style={{ marginTop: 120 }}>
-          <GestureScrollView horizontal showsHorizontalScrollIndicator={false}
-          decelerationRate="fast"
-          snapToAlignment="start"
-          snapToInterval={700}
+        <View style={{ marginTop: '30%' }}>
+          <TouchableOpacity
+            onPress={()=> navigation.navigate('calculator') }
+            underlayColor="#d7dfe3"
+            style={[styles.groupItem]}
           >
-            <TouchableOpacity
-              onPress={()=> navigation.navigate('calculator') }
-              underlayColor="#d7dfe3"
-              style={[styles.groupItem]}
-            >
-              <Image
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }}
-                style={styles.imagesTools}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={()=> navigation.navigate('stats')}
-              underlayColor="#d7dfe3"
-              style={[styles.groupItem]}
-            >
-              <Image
-                source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/stats.jpg?alt=media&token=07a79821-3ed1-4681-9970-72895919dc22' }}
-                style={styles.imagesTools}
-              />
-            </TouchableOpacity>
-          </GestureScrollView>
+            <Image
+              source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }}
+              style={styles.imagesTools}
+            />
+          </TouchableOpacity>
         </View>
 
         <View style={[styles.secciones, { top: 40 }]}>
@@ -162,8 +144,8 @@ const styles = StyleSheet.create({
   },
   groupItem: {
     height: 300,
-    width: 350, // Ajusta este ancho según tus necesidades
-    marginHorizontal: 20, // Margen entre los items
+    width: 350, 
+    marginHorizontal: 30, 
     backgroundColor: '#d7dfe3',
     borderRadius: 22,
   },

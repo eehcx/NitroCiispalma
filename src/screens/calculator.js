@@ -13,8 +13,14 @@ import { app } from '../app/firebase';
 import CalculatorRows from '../components/interface/calcRows';
 import Dropdown from '../components/interface/Forms/DropDown';
 import Fonts from '../styles/Fonts';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setClientId } from '../features/client/clientSlice';
 
 export default CalculatorScreen = () => {
+    // Redux 
+    const dispatch = useDispatch();
+    const uid = useSelector(state => state.client.clientId);
     // React Navigation
     const navigation = useNavigation();
     // Seleccion de la funcion
@@ -29,8 +35,6 @@ export default CalculatorScreen = () => {
     const [TextH_Al, setTextH_Al] = useState('');
     //
     const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-    const [uid, setUid] = useState('');
-    const [formularioActual, setFormularioActual] = useState(1);
     const [calculoId, setCalculoId] = useState('');
     // Convertir string a float
     const convertToFloat = (value) => { return parseFloat(value); };
@@ -178,29 +182,23 @@ export default CalculatorScreen = () => {
                 <Appbar.BackAction onPress={()=> navigation.goBack()} />
                 <Appbar.Content title={'Calculadora ' } />
             </Appbar.Header>
+            <>
+                <View style={[styles.ScreenCalculator]}>
+                    <Text style={[Fonts.buttonTitle, { color:'#b3babe', paddingLeft: 30, marginTop:10, }]}>H-Al: {TextH_Al}</Text>
+                    <Text style={[styles.SubtitleTextScreen]}>{textScreen}</Text>
+                    <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
+                </View>
 
-            {formularioActual === 1 && (
-                <AssignClient value={uid} onChangeText={setUid} formTitle='ID Cliente' formSubtitle='Asigna un cliente para esta sección' onPressButton={() => handleConsultation(uid)} backgroundImageUri="https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/background.jpg?alt=media&token=4434d6b7-f072-481d-ab33-58f87e3e018e" />
-            )}
-            {formularioActual === 2 && (
-                <>
-                    <View style={[styles.ScreenCalculator]}>
-                        <Text style={[Fonts.buttonTitle, { color:'#b3babe', paddingLeft: 30, marginTop:10, }]}>H-Al: {TextH_Al}</Text>
-                        <Text style={[styles.SubtitleTextScreen]}>{textScreen}</Text>
-                        <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
-                    </View>
+                <View style={{ marginHorizontal:"10%" }}> 
+                    <Dropdown label="Selecciona un cálculo" data={data} onSelect={handleSelect} />
+                </View>
 
-                    <View style={{ marginHorizontal:"10%" }}> 
-                        <Dropdown label="Selecciona un cálculo" data={data} onSelect={handleSelect} />
-                    </View>
-
-                    <View style={styles.keyboardContainer}>
-                        {rows.map((buttons, index) => (
-                            <CalculatorRows key={index} buttons={buttons} />
-                        ))}
-                    </View>
-                </>
-            )} 
+                <View style={styles.keyboardContainer}>
+                    {rows.map((buttons, index) => (
+                        <CalculatorRows key={index} buttons={buttons} />
+                    ))}
+                </View>
+            </>
         </View>
     );
 };

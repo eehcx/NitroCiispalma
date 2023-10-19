@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { app } from '../../app/firebase';
 import { getAuth, createUserWithEmailAndPassword, updateProfile  } from "firebase/auth";
 // Importación de estilos y utileria
-import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, KeyboardAvoidingView , TextInput, Image, Text, View } from 'react-native';
+import { StyleSheet, Button, ImageBackground, StatusBar, TouchableOpacity, TextInput, Image, Text, View } from 'react-native';
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
 import Fonts from '../../styles/Fonts';
@@ -54,7 +54,7 @@ const SignipScreen = () => {
         <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
         <View style={InputForms.container}>
           <View style={InputForms.formContainer}>
-            <Text style={[InputForms.formTitle, Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Crear cuenta</Text>
+            <Text style={[Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Crear cuenta</Text>
             <TextInput style={InputForms.input} value={displayName} onChangeText={setDisplayName} placeholder="Nombre" maxLength={90} />
             <TextInput style={InputForms.input} value={email} onChangeText={setEmail} keyboardType="email-address" placeholder="Correo Electrónico" maxLength={90} />
             <TextInput style={InputForms.input} value={password} onChangeText={setPassword} placeholder="Contraseña" maxLength={90} keyboardType="default" secureTextEntry={true} />
