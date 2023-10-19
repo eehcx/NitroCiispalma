@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import persistConfig  from  '../../app/persistConfig';
 
 const initialState = {
     uid: '',
@@ -10,6 +9,8 @@ const initialState = {
     email: '',
     phoneNumber: '',
     photoURL: '',
+    // Autentificación
+    isAuthenticated: false,
 }
 
 export const userSlice = createSlice({
@@ -25,6 +26,7 @@ export const userSlice = createSlice({
             state.email = email;
             state.phoneNumber = phoneNumber;
             state.photoURL = photoURL;
+            state.isAuthenticated = true;
         },
         logout: state => {
             // Restablece el estado al cerrar sesión
@@ -34,4 +36,3 @@ export const userSlice = createSlice({
 });
 
 export const { addUser, logout } = userSlice.actions;
-export default persistedReducer = persistReducer(persistConfig, userSlice.reducer);
