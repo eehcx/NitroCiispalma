@@ -47,10 +47,10 @@ const SignipScreen = () => {
 
     return (
         <ImageBackground
-        source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/alex-perri-bmM_IdLd1SA-unsplash-min.jpg?alt=media&token=f6511116-03e1-49fd-a340-140d16b44e4d' }} 
-        style={styles.imageBackground}
-        resizeMode="cover"
-      >
+          source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/alex-perri-bmM_IdLd1SA-unsplash-min.jpg?alt=media&token=f6511116-03e1-49fd-a340-140d16b44e4d' }} 
+          style={styles.imageBackground}
+          resizeMode="cover"
+        >
         <StatusBar backgroundColor="#ffff" barStyle="dark-content" />
         <View style={InputForms.container}>
           <View style={InputForms.formContainer}>

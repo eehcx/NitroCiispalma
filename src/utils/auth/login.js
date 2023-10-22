@@ -11,6 +11,8 @@ import { app } from '../../app/firebase';
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
 import Fonts from '../../styles/Fonts';
+// Componentes
+import PasswordInput from '../../components/interface/Forms/PasswordInput';
 
 const LoginScreen = () => {
   // Firebase
@@ -26,6 +28,10 @@ const LoginScreen = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const handlePasswordChange = (text) => {
+    setPassword(text); // Actualiza el valor de la contraseña en tu vista
+  };
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
@@ -58,31 +64,35 @@ const LoginScreen = () => {
   };
 
   return (
-    <View>
-      <View style={InputForms.formContainer}>
-        <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Iniciar sesión</Text>
-        <TextInput style={[InputForms.input, { marginBottom: 30 }]}
-        placeholder="Correo electrónico" 
-        keyboardType="email-address" 
-        maxLength={100} 
-        value={email}
-        onChangeText={setEmail}
+    <ImageBackground
+          source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/ui1.jpg?alt=media&token=23fac606-f1db-4f2a-baa5-35156a06461c&_gl=1*inpi9s*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzkzMDc4MC4yOTYuMS4xNjk3OTMxNzA1LjM2LjAuMA..' }} 
+          style={{ flex: 1, justifyContent: 'center' }}
+          resizeMode="cover"
+    >
+      <View style={InputForms.container}>
+        <View style={InputForms.formContainer}>
+          <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Iniciar sesión</Text>
+          <TextInput style={[InputForms.input, { marginBottom: 30 }]}
+          placeholder="Correo electrónico" 
+          keyboardType="email-address" 
+          maxLength={100} 
+          value={email}
+          onChangeText={setEmail}
+          />
+          <PasswordInput
+          placeholder="Contraseña"
+          onPasswordChange={handlePasswordChange}
+          passwordValue={password}
         />
-        <TextInput style={InputForms.input} 
-        placeholder="Contraseña" 
-        secureTextEntry={true}
-        maxLength={100}
-        value={password}
-        onChangeText={setPassword}
-        />
-        <TouchableOpacity style={[buttonStyles.formButton, { marginTop: 19 }]} onPress={handleLogin} >
-          <Text style={[Fonts.buttonTitle, {textAlign: 'center', color: '#2F363B'}]}>LOG IN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity >
-          <Text onPress={handleNavigateToSignIn} style={InputForms.signInText}>¿No estás registrado? <Text style={InputForms.signInLink}>SIGN IN</Text></Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={[buttonStyles.formButton, { marginTop: 19 }]} onPress={handleLogin} >
+            <Text style={[Fonts.buttonTitle, {textAlign: 'center', color: '#2F363B'}]}>LOG IN</Text>
+          </TouchableOpacity>
+          <TouchableOpacity >
+            <Text onPress={handleNavigateToSignIn} style={InputForms.signInText}>¿No estás registrado? <Text style={InputForms.signInLink}>SIGN IN</Text></Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 

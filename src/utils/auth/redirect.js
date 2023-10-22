@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Loading from '../../components/interface/loading';
+import Loading from '../../components/loading';
 
 export default LoadingScreen = ({ navigation }) => {
 

@@ -17,13 +17,11 @@ import HistoryScreen from './screens/main/profile/history';
 import CustomersScreen from './screens/main/customers';
 import CustomersList from './screens/main/customers/CustomersList';
 import CustomersCalc from './screens/main/customers/CustomersCalc';
-import RegisterCustomer from './screens/main/customers/NewCustomer';
-import RegisterInform from './screens/main/customers/NewInform';
+import RegisterCustomer from './screens/main/customers/forms/NewCustomer';
+import RegisterInform from './screens/main/customers/forms/NewInform';
 import RegisterPackage from './screens/main/customers/PackageList';
 import NewPackage from './screens/main/customers/forms/NewPackage';
-import ResultsScreen from './components/events/results';
 //
-import StatsScreen from './components/events/stats';
 import UserInformationScreen from './screens/main/profile/UserInfo';
 import ApplicationDataScreen from './screens/main/profile/privacity';
 // import secureDataScreen from './screens/main/profile/secureData';
@@ -79,8 +77,6 @@ export default function Navigation() {
                 <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>
                 
                 <Stack.Screen name="customerCalc" component={CustomersCalc} options={{ headerShown: false }}/>
-
-                <Stack.Screen name="stats" component={StatsScreen} options={{ title: 'Estadísticas', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="appData" component={ApplicationDataScreen} options={{ title: 'Políticas y Privacidad', headerStyle: { backgroundColor: '#fafafa' },}}/>
             </Stack.Navigator>
         </NavigationContainer>

@@ -49,7 +49,11 @@ const CustomersInform = () => {
         setLoading(false);
     }, []);
 
-    console.log("INFORMES:", informes)
+    //console.log("INFORMES:", informes)
+    const formatFechaRecepcion = (fechaRecepcion) => {
+        const formattedDate = new Date(fechaRecepcion);
+        return formattedDate.toLocaleString();
+    };
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
@@ -72,7 +76,7 @@ const CustomersInform = () => {
                                         />
                                         <View style={{ flexDirection: 'column', alignItems: 'flex-start', marginRight:'20%' }}>
                                             <Text style={[styles.txtLabels, Fonts.modalText]}>{informe.tipo_analisis}</Text>
-                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{informe.uid}</Text>
+                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{formatFechaRecepcion(informe.fecha_recepcion)}</Text>
                                         </View>
                                         <TouchableOpacity style={{ paddingHorizontal:20 }}>
                                             <Octicons name="chevron-right" size={24} color='#767983' />

@@ -10,7 +10,7 @@ import { saveCE, saveMO } from '../services/setService'
 import { getDatabase, ref, onValue, off, get } from 'firebase/database';
 import { app } from '../app/firebase';
 // Componentes
-import CalculatorRows from '../components/interface/calcRows';
+import CalculatorRows from '../components/calculator/calcRows';
 import Dropdown from '../components/interface/Forms/DropDown';
 import Fonts from '../styles/Fonts';
 // Redux

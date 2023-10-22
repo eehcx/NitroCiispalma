@@ -12,7 +12,7 @@ import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
-import FilterBtn from '../../../components/interface/filters/FilterPages';
+import FilterPagesExtended from '../../../components/interface/filters/FilterPagesExtended';
 
 const ListSoilsPackage = () => {
     // Paquetes suelos
@@ -152,8 +152,8 @@ export default RegisterPackage = () => {
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
             <View style={[styles.BoxContainer, { paddingHorizontal:20, marginVertical:20 }]}>
                 <View style={[styles.row]}>
-                    <FilterBtn text="Análisis Suelos" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Suelos"} onPress={() => filterContent("Análisis Suelos")}/>
-                    <FilterBtn text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
+                    <FilterPagesExtended text="Análisis Suelos" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Suelos"} onPress={() => filterContent("Análisis Suelos")}/>
+                    <FilterPagesExtended text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
                 </View>
             </View>
             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={NavigateToNewPackage}>

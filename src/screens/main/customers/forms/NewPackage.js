@@ -6,7 +6,7 @@ import { PaperProvider, Button, Text, Divider, Appbar } from 'react-native-paper
 import InputForms from '../../../../styles/InputForms';
 import Fonts from '../../../../styles/Fonts';
 // Components
-import FilterButton from '../../../../components/interface/filterButton';
+import FilterButton from '../../../../components/interface/filters/filterButton';
 
 const ListAdd = () => {
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
@@ -35,11 +35,9 @@ export default NewPackage = () => {
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
-                    <Text style={[Fonts.formTitle]}>Paquete</Text>
                     {Form === 1 && (
                         <>
-                            <Text style={{ marginBottom: 20, textAlign: 'center', fontSize: 23 }} variant='headlineSmall' >Nombre del paquete</Text>
-                            <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 45, paddingLeft: 25 }]} keyboardType="default" placeholder="Ingresa un nombre" maxLength={40}/>
+                            <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 45, paddingLeft: 25 }]} keyboardType="default" placeholder="Ingresa un nombre de paquete" maxLength={40}/>
                             <Button icon="chevron-right"
                             buttonColor="#C7FBD7"
                             mode="contained-tonal" 

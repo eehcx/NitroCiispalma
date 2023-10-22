@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-// Estilos globales
-import InputForms from '../../styles/InputForms';
 //React Native
-import { StyleSheet, StatusBar, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 // React Native Paper
 import { Appbar } from 'react-native-paper';
 // React Navigation
@@ -11,20 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import CustomersList from './customers/CustomersList';
 import CustomersCalc from './customers/CustomersCalc';
 import CustomersInform from './customers/CustomersInform';
-
-// Componente de filtros
-const FilterBtn = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected, SelectedColor }) => (
-    <TouchableOpacity style={[styles.groupChildLayout, { backgroundColor: isSelected ? "#41525C" : backgroundColor, marginLeft, marginRight }]} onPress={onPress} >
-        <View style={styles.FilterContainer}>
-            <Text variant='titleSmall' style={[styles.txtIcon, { color: isSelected ? "white" : backgroundColor === "#41525C" ? "white" : "#000", fontSize: 13 }]}>
-                {text}
-            </Text>
-        </View>
-    </TouchableOpacity>
-);
+import FilterPagesReduced from '../../components/interface/filters/FilterPagesReduced';
+// Redux
+import { useSelector } from 'react-redux';
 
 // Pagina de listado de clientes
-const CustomersScreen = () => {
+export default CustomersScreen = () => {
+    const clientId = useSelector(state => state.client.clientId);
+    const informId = useSelector(state => state.inform.informId);
     // Navegación
     const navigation = useNavigation();
     // Filtro 
@@ -39,9 +31,9 @@ const CustomersScreen = () => {
             </Appbar.Header>
             <View style={[styles.BoxContainer, { marginBottom: 30, marginRight: 15 }]}>
                 <View style={[styles.row]}>
-                    <FilterBtn text="Listado" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Listado"} onPress={() => filterContent("Listado")}/>
-                    <FilterBtn text="Informes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Informes"} onPress={() => filterContent("Informes")}/>
-                    <FilterBtn text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Cálculos"} onPress={() => filterContent("Cálculos")}/>
+                    <FilterPagesReduced text="Listado" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Listado"} onPress={() => filterContent("Listado")}/>
+                    <FilterPagesReduced isDisabled={!clientId} text="Informes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Informes"} onPress={() => filterContent("Informes")}/>
+                    <FilterPagesReduced isDisabled={!informId} text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Cálculos"} onPress={() => filterContent("Cálculos")}/>
                 </View>
             </View>
             {selectedOption === 'Listado' && <CustomersList />}
@@ -61,5 +53,3 @@ const styles = StyleSheet.create({
     // Estilos del container
     row: { flexDirection: 'row', justifyContent: 'space-between' },
 });
-
-export default CustomersScreen; 

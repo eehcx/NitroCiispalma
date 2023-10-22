@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView, Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // React Native Paper
 import { PaperProvider, Button, Text, Banner, Divider, RadioButton, Appbar } from 'react-native-paper';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Estilos globales
-import buttonStyles from '../../../styles/buttonStyles';
-import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts'; 
+import buttonStyles from '../../../../styles/buttonStyles';
+import InputForms from '../../../../styles/InputForms';
+import Fonts from '../../../../styles/Fonts'; 
 // Firebase
-import { app } from '../../../app/firebase';
+import { app } from '../../../../app/firebase';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Componentes
-import FilterBtn from '../../../components/interface/filters/FilterPages';
-import FilterButton from '../../../components/interface/filterButton';
-import DatePickerComponent from '../../../components/interface/Forms/DatePicker';
-import { savePackage, saveInformeResultados, saveInform } from '../../../services/setService';
+import FilterPagesExtended from '../../../../components/interface/filters/FilterPagesExtended';
+import DatePickerComponent from '../../../../components/interface/Forms/DatePicker';
+import { savePackage, saveInformeResultados, saveInform } from '../../../../services/setService';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { update, reset, selectCurrentForm, setForm } from '../../../features/forms/ReportSlice';
-
+import { update, reset, selectCurrentForm, setForm } from '../../../../features/forms/ReportSlice';
 
 const ListSoilsPackage = () => {
     const dispatch = useDispatch();
@@ -52,7 +49,6 @@ const ListSoilsPackage = () => {
             off(paquetesRef, 'value', onPaqueteValue);
         };
     }, []);
-
 
     return(
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
@@ -148,8 +144,12 @@ export default RegisterInform = () => {
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
     // React Navigation
     const navigation = useNavigation();
+    // Array de muestras
+    const [muestras, setMuestras] = useState([]);
     // Datos del informe
-    const [numMuestras, setNumMuestras] = useState('')
+    const [numMuestras, setNumMuestras] = useState('');
+    //
+    const [numMuestra, setNumMuestra] = useState('');
     const [numSolicitud, setNumSolicitud] = useState('2')
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')
@@ -192,6 +192,15 @@ export default RegisterInform = () => {
     const handleGoBack = () => { navigation.goBack(); dispatch(reset()); };
     const NavigateToPackage = () => { navigation.navigate('registerPackage'); };
 
+    const agregarMuestra = () => {
+        if (numMuestra && muestras.length < parseInt(numMuestras, 10)) {
+            // Verifica si el número de muestra no está vacío y si no se ha alcanzado el límite
+            setMuestras([...muestras, { IdLab: numMuestra }]);
+            setNumMuestra('');
+            console.log(muestras)
+        }
+    };
+
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
             <Appbar.Header style={{ backgroundColor: '#fafafa' }}>
@@ -216,8 +225,8 @@ export default RegisterInform = () => {
                                 </Banner>
                                 <View style={[styles.BoxContainer, { paddingHorizontal:20, marginVertical:20 }]}>
                                     <View style={[styles.row]}>
-                                        <FilterBtn text="Análisis Suelos" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Suelos"} onPress={() => filterContent("Análisis Suelos")}/>
-                                        <FilterBtn text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
+                                        <FilterPagesExtended text="Análisis Suelos" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Suelos"} onPress={() => filterContent("Análisis Suelos")}/>
+                                        <FilterPagesExtended text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
                                     </View>
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
@@ -243,8 +252,8 @@ export default RegisterInform = () => {
                                 </Banner>
                                 <View style={InputForms.container}>
                                     <View style={InputForms.formContainer}>
-                                        <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
                                         <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
+                                        <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
                                         <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]}
                                         placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
                                         maxLength={100} keyboardType="numeric"
@@ -265,11 +274,63 @@ export default RegisterInform = () => {
                                             value={Observaciones}  onChangeText={setObservaciones}
                                             style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100}
                                         />
-                                        <TouchableOpacity style={buttonStyles.formButton} onPress={handleSaveData} >
-                                            <Text style={buttonStyles.buttonText_Black}>Enviar</Text>
-                                        </TouchableOpacity>
+                                        <Button icon="chevron-right"
+                                        buttonColor="#C7FBD7"
+                                        mode="contained-tonal" 
+                                        contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
+                                        labelStyle={{ marginRight: 23 }}
+                                        onPress={handleSiguiente}>
+                                            Siguiente Página
+                                        </Button>
                                     </View>
                                 </View>
+                            </>
+                        )}
+                        {currentForm === 3 && (
+                            <>
+                                <Banner
+                                    theme={{ colors: { primary: 'green' } }}
+                                    style={{ backgroundColor: "#fafafa", marginBottom: '6%' }}
+                                    visible={visible}
+                                    actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]}
+                                    icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ffinger-pointing-down.png?alt=media&token=883ff7b4-eb7a-4b83-9ba0-003bb542f692&_gl=1*agqgjq*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5Nzc4NDczMS4yODMuMS4xNjk3Nzg1OTI0LjE3LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                    <Text style={{ fontSize: 14 }}> 
+                                        Casi listo, ahora procede a completar los datos de las muestras que ingresaste anteriormente.
+                                    </Text>
+                                </Banner>
+                                <View style={InputForms.container}>
+                                    <View style={{ marginHorizontal:30, width: '85%' }}>
+                                        <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]}
+                                        placeholder="Número de muestra" value={numMuestra} onChangeText={setNumMuestra}
+                                        keyboardType="numeric"
+                                        maxLength={10}
+                                        />
+                                    </View>
+                                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={agregarMuestra} disabled={muestras.length >= parseInt(numMuestras, 10)}>
+                                        <Octicons name="duplicate" size={24} color='#767983' />
+                                        <Text style={[styles.txtLabels, Fonts.addText]}>Añadir muestra</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+
+                                <SafeAreaView>
+                                    {muestras.map((muestra, index) => (
+                                        <View key={index}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
+                                                <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
+                                                <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
+                                                    <Text style={[styles.txtLabels, Fonts.modalText,{ fontWeight: '700' }]}>Elemento</Text>
+                                                    <Text style={[styles.txtLabels, Fonts.cardsText]}>Número de Muestra: {muestra.IdLab}</Text>
+                                                </View>
+                                                <View></View><View></View><View></View>
+                                            </View>
+                                            <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                        </View>
+                                    ))}
+                                </SafeAreaView>
+                                <Button disabled={muestras.length !== parseInt(numMuestras, 10)} mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaveData}>
+                                    ENVIAR
+                                </Button>
                             </>
                         )}
                     </ScrollView>
@@ -296,6 +357,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    cardList:{ marginTop: 5, marginBottom: 5 },
     box: {
         backgroundColor: '#ECECEC',
         width: 110,
@@ -315,4 +377,16 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     txtLabels: { marginLeft: 10, color: '#67757d', fontSize: 15 },
+    //
+    item: {
+        backgroundColor: '#ECECEC',
+        borderRadius:17,
+        padding: 15,
+        marginVertical: 7,
+        marginHorizontal: 16,
+    },
+    title: {
+        fontSize: 20,
+        color: "#67757d"
+    },
 });
