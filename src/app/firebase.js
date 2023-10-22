@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getAuth, setPersistence, initializeAuth, inMemoryPersistence, getReactNativePersistence } from 'firebase/auth';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
     apiKey: "AIzaSyDzmWkV3iCeK4_Mg8m-Mtrx7W3zOS6mCJ0",
@@ -12,5 +14,21 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+//const auth = getAuth(app);
 
-export default app;
+const auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+});
+
+/*
+// Persistencia
+setPersistence(auth, inMemoryPersistence) // Puedes usar 'SESSION', 'LOCAL', o 'NONE'
+    .then(() => {
+        console.log('Persistencia de autenticación configurada con éxito.');
+    })
+    .catch((error) => {
+        console.error('Error al configurar la persistencia de autenticación:', error);
+    });
+*/
+
+export { app, auth };

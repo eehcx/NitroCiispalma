@@ -12,7 +12,9 @@ import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
+//
 import FilterPagesExtended from '../../../components/interface/filters/FilterPagesExtended';
+import ItemListIcon from '../../../components/interface/ItemListIcon';
 
 const ListSoilsPackage = () => {
     // Paquetes suelos
@@ -27,11 +29,8 @@ const ListSoilsPackage = () => {
         const onPaqueteValue = onValue(paquetesRef, (snapshot) => {
             const data = snapshot.val();
             const PaqueteArray = data ? Object.values(data) : [];
-
             const soilsPackages = PaqueteArray.filter((paquete) => paquete.tipo === 'Suelos');
-
             setSoilsPackage(soilsPackages);
-
         // Carga de lista
         setLoading(false);
         });
@@ -53,17 +52,7 @@ const ListSoilsPackage = () => {
                         <ScrollView onScroll={onScroll}>
                             {SoilsPackage.slice().reverse().map((packages, index) => (
                                 <View key={index}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                        <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
-                                        <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
-                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
-                                        </View>
-                                        <TouchableOpacity style={{ paddingHorizontal:20 }}>
-                                            <Octicons name="chevron-right" size={24} color='#767983' />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                    <ItemListIcon icon="package" iconSize={24} title={packages.nombre} content={packages.uid} />
                                 </View>
                             ))}
                         </ScrollView>
@@ -87,11 +76,8 @@ const ListFoliarPackage = () => {
         const onPaqueteValue = onValue(paquetesRef, (snapshot) => {
             const data = snapshot.val();
             const PaqueteArray = data ? Object.values(data) : [];
-
             const soilsPackages = PaqueteArray.filter((paquete) => paquete.tipo === 'Foliar');
-
             setFoliarPackage(soilsPackages);
-
         // Carga de lista
         setLoading(false);
         });
@@ -113,17 +99,7 @@ const ListFoliarPackage = () => {
                         <ScrollView onScroll={onScroll}>
                             {foliarPackage.slice().reverse().map((packages, index) => (
                                 <View key={index}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                        <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
-                                        <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
-                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
-                                        </View>
-                                        <TouchableOpacity style={{ paddingHorizontal:20 }}>
-                                            <Octicons name="chevron-right" size={24} color='#767983' />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                    <ItemListIcon icon="package" iconSize={24} title={packages.nombre} content={packages.uid} />
                                 </View>
                             ))}
                         </ScrollView>

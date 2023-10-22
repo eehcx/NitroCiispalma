@@ -97,34 +97,6 @@ export default ProfileScreen = () => {
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
 
-    useEffect(() => { 
-        getUserDataFromAsyncStorage()
-            .then(user => {
-                if (user) {
-                    dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
-                } else {
-                    navigation.navigate('auth');
-                }
-            })
-            .catch(error => console.log('Error:', error));
-    }, []);
-
-    const getUserDataFromAsyncStorage = async () => {
-        try {
-            const userJson = await AsyncStorage.getItem('user');
-            if (userJson) {
-                return JSON.parse(userJson);
-            } else {
-                navigation.navigate('auth');
-                return null;
-            }
-        } catch (error) {
-            console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
-            navigation.navigate('auth');
-            return null;
-        }
-    };
-
     return (
         <View style={styles.content}>
             <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />

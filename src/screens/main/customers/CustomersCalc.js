@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
+//Componentes
+import ItemListIcon from '../../../components/interface/ItemListIcon';
 // Iconos
 import Octicons from '@expo/vector-icons/Octicons';
 // Redux
@@ -97,17 +99,7 @@ const CustomersCalc = () => {
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                                 {Muestras.map((muestra, index) => (
                                     <View key={index}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                            <Octicons name="project" size={27} color='#767983' style={{ paddingHorizontal:15 }}/>
-                                            <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                                <Text style={[styles.txtLabels, Fonts.modalText]}>Id Laboratorio. {muestra.IdLab}</Text>
-                                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Sin cálculos hechos</Text>
-                                            </View>
-                                            <TouchableOpacity style={{ paddingHorizontal:20 }}>
-                                                <Octicons name="chevron-right" size={24} color='#767983' />
-                                            </TouchableOpacity>
-                                        </View>
-                                        <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                        <ItemListIcon title={"Id Laboratorio. " + muestra.IdLab} content="Sin cálculos hechos" icon="project" iconSize={24} />
                                     </View>
                                 ))}
                                 

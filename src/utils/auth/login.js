@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity,  Alert, View, ImageBackground } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Text, Button   } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
-import { initializeAuth, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { app } from '../../app/firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../app/firebase';
 // Estilos de la pantalla
 import buttonStyles from '../../styles/buttonStyles';
 import InputForms from '../../styles/InputForms';
 import Fonts from '../../styles/Fonts';
 // Componentes
 import PasswordInput from '../../components/interface/Forms/PasswordInput';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../features/user/userSlice';
 
 const LoginScreen = () => {
-  // Firebase
-  const auth = getAuth(app);
-
-  /*
-  const auth = initializeAuth(app, {
-    persistence: getReactNativePersistence(AsyncStorage)
-  });*/
-
   const navigation = useNavigation();
   const handleNavigateToSignIn = () => { navigation.navigate('signin'); };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const handlePasswordChange = (text) => { setPassword(text); };
 
-  const handlePasswordChange = (text) => {
-    setPassword(text); // Actualiza el valor de la contraseña en tu vista
-  };
+  // Redux - User
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        console.log('Usuario loggeado');
         const user = userCredential.user;
         const userId = user.uid;
         const userEmail = user.email;
         const userDisplayName = user.displayName;
 
+        dispatch(addUser(user));
+
+        /*
         // Guardar el estado de la sesión con AsyncStorage
         const saveLoginState = async (user) => {
           try {
@@ -50,9 +47,9 @@ const LoginScreen = () => {
           } catch (error) {
             console.log('Error al guardar el estado de inicio de sesión:', error);
           }
-          console.log('Done.')
         };
         saveLoginState(user);
+        */
         setEmail('');
         setPassword('');
         console.log(userId + ' ' + userEmail + ' ' + userDisplayName);

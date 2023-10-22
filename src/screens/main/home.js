@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../../features/user/userSlice';
 
 import { getCountOfSubcollections } from '../../services/queryService';
-import { formatDateToString } from '../../utils/helpers/dateHelpers'
+import { formatDateToString } from '../../utils/helpers/dateHelpers';
 
 const HomeScreen = () => {
   // Navegación entre páginas
@@ -31,43 +31,11 @@ const HomeScreen = () => {
     const unsubscribe = getCountOfSubcollections('clientes', (count) => { SetNumClientes(count); });
     const unsubscribe2 = getCountOfSubcollections('calculos', (count) => { SetNumCalculos(count); });
 
-    getUserDataFromAsyncStorage()
-      .then(user => {
-          if (user) {
-              dispatch(addUser(user)); // Despacha la acción addUser con los datos del usuario
-          } else {
-              navigation.navigate('auth');
-          }
-      })
-      .catch(error => console.log('Error:', error));
-
     return () => {
       unsubscribe();
       unsubscribe2();
     };
   }, []);
-
-  const getUserDataFromAsyncStorage = async () => {
-    try {
-        const userJson = await AsyncStorage.getItem('user');
-        if (userJson) {
-            return JSON.parse(userJson);
-        } else {
-            navigation.navigate('auth');
-            return null;
-        }
-    } catch (error) {
-        console.log('Error al obtener los datos del usuario desde AsyncStorage:', error);
-        navigation.navigate('auth');
-        return null;
-    }
-  };
-
-  const renderCalculoItem = ({ item }) => (
-    <View>
-      <Text>{item}</Text>
-    </View>
-  );
 
   const firstName = user.displayName ? user.displayName.split(' ')[0] : '';
   return (

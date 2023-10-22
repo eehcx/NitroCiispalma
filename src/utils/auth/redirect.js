@@ -1,12 +1,29 @@
+// redirect.js
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../../components/loading';
 
 export default LoadingScreen = ({ navigation }) => {
+    const [isConnected, setIsConnected] = useState(true);
 
+    /*
     useEffect(() => {
-        checkLoginState();
-    }, []);
+        checkInternetConnection();
+    }, []);    
+
+    const checkInternetConnection = async () => {
+        try {
+            const response = await fetch('https://www.google.com', { method: 'HEAD' });
+            if (response.status === 200) {
+                setIsConnected(true);
+                checkLoginState();
+            } else {
+                setIsConnected(false);
+            }
+        } catch (error) {
+            setIsConnected(false);
+        }
+    };*/
 
     const checkLoginState = async () => {
         try {
@@ -22,9 +39,19 @@ export default LoadingScreen = ({ navigation }) => {
         }
     };
 
+    useEffect(() => {
+        checkLoginState();
+    }, []);
+
     return (
         <>
-            <Loading />
+            {isConnected ? (
+                <Loading />
+            ) : (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text>No hay conexión a Internet. Por favor, conéctese a una red y vuelva a intentarlo.</Text>
+                </View>
+            )}
         </>
     );
 };
