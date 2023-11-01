@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TextInput, TouchableOpacity,  Alert, View, ImageBackground } from 'react-native';
 import { Text, Button   } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase dependencias e importaciones
@@ -36,9 +37,8 @@ const LoginScreen = () => {
         const userEmail = user.email;
         const userDisplayName = user.displayName;
 
-        dispatch(addUser(user));
+        //dispatch(addUser(user));
 
-        /*
         // Guardar el estado de la sesión con AsyncStorage
         const saveLoginState = async (user) => {
           try {
@@ -49,7 +49,7 @@ const LoginScreen = () => {
           }
         };
         saveLoginState(user);
-        */
+
         setEmail('');
         setPassword('');
         console.log(userId + ' ' + userEmail + ' ' + userDisplayName);

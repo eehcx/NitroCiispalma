@@ -2,28 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../../components/loading';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { addUser } from '../../features/user/userSlice';
 
 export default LoadingScreen = ({ navigation }) => {
-    const [isConnected, setIsConnected] = useState(true);
-
-    /*
-    useEffect(() => {
-        checkInternetConnection();
-    }, []);    
-
-    const checkInternetConnection = async () => {
-        try {
-            const response = await fetch('https://www.google.com', { method: 'HEAD' });
-            if (response.status === 200) {
-                setIsConnected(true);
-                checkLoginState();
-            } else {
-                setIsConnected(false);
-            }
-        } catch (error) {
-            setIsConnected(false);
-        }
-    };*/
+    const dispatch = useDispatch();
 
     const checkLoginState = async () => {
         try {
@@ -40,18 +24,28 @@ export default LoadingScreen = ({ navigation }) => {
     };
 
     useEffect(() => {
+        const checkUserInAsyncStorage = async () => {
+            try {
+                const userData = await AsyncStorage.getItem('user');
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    dispatch(addUser(user));
+                }
+                else{
+                    navigation.replace('auth');
+                }
+            } catch (error) {
+                console.error('Error al obtener los datos del usuario desde AsyncStorage:', error);
+            }
+        };
+
+        checkUserInAsyncStorage();
         checkLoginState();
     }, []);
 
     return (
         <>
-            {isConnected ? (
-                <Loading />
-            ) : (
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>No hay conexión a Internet. Por favor, conéctese a una red y vuelva a intentarlo.</Text>
-                </View>
-            )}
+            <Loading />
         </>
     );
 };

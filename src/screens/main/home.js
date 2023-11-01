@@ -43,7 +43,7 @@ const HomeScreen = () => {
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
 
       <View style={[{ top: 25, left: 30 }]}>
-          <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName }</Text> 
+          <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName}</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
 

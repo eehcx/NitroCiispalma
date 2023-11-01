@@ -9,6 +9,7 @@ import Fonts from '../../../../styles/Fonts';
 import FilterButton from '../../../../components/interface/filters/filterButton';
 
 const ListAdd = () => {
+    const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
@@ -30,35 +31,36 @@ export default NewPackage = () => {
     // Filtro 
     const [selectedOption, setSelectedOption] = useState("Suelos");
     const filterContent = (option) => { setSelectedOption(option); };
+    const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
     return (
         <View style={{ backgroundColor: "#fafafa", flex: 1, justifyContent: 'center'}}>
-            <View style={InputForms.container}>
-                <View style={InputForms.formContainer}>
-                    {Form === 1 && (
-                        <>
-                            <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 45, paddingLeft: 25 }]} keyboardType="default" placeholder="Ingresa un nombre de paquete" maxLength={40}/>
-                            <Button icon="chevron-right"
-                            buttonColor="#C7FBD7"
-                            mode="contained-tonal" 
-                            contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
-                            labelStyle={{ marginRight: 23 }}
-                            onPress={handleSiguiente}>
-                                Siguiente Página
-                            </Button>
-                        </>
-                    )}
-                    {Form === 2 && (
-                        <>
-                            <Text style={{ textAlign: 'center', fontSize: 19,fontWeight: '600' }} >Tipos de Análisis del paquete</Text>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 120 }}>
-                                <FilterButton icon="beaker" text="Suelos" isSelected={selectedOption === "Suelos"} backgroundColor="#ececec" onPress={() => filterContent("Suelos")} />
-                                <FilterButton icon="beaker" text="Foliar" isSelected={selectedOption === "Foliar"} backgroundColor="#ececec" onPress={() => filterContent("Foliar")} />
-                            </View>
-                        </>
-                    )}
-                </View>
-            </View>
+            <PaperProvider>
+                <SafeAreaView style={[styles.container]}>
+                    <ScrollView onScroll={onScroll}>
+                        {Form === 1 && (
+                            <>
+                                <View style={{ marginHorizontal:30, width: '85%' }}>
+                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]}
+                                    placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra}
+                                    keyboardType="numeric"
+                                    maxLength={10}
+                                    />
+                                </View>
+                            </>
+                        )}
+                        {Form === 2 && (
+                            <>
+                                <Text style={{ textAlign: 'center', fontSize: 19,fontWeight: '600' }} >Tipos de Análisis del paquete</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 120 }}>
+                                    <FilterButton icon="beaker" text="Suelos" isSelected={selectedOption === "Suelos"} backgroundColor="#ececec" onPress={() => filterContent("Suelos")} />
+                                    <FilterButton icon="beaker" text="Foliar" isSelected={selectedOption === "Foliar"} backgroundColor="#ececec" onPress={() => filterContent("Foliar")} />
+                                </View>
+                            </>
+                        )}
+                    </ScrollView>
+                </SafeAreaView>
+            </PaperProvider>
         </View>
     );
 };
