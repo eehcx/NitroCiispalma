@@ -11,7 +11,7 @@ import { getDatabase, ref, onValue, off, get } from 'firebase/database';
 import { app } from '../app/firebase';
 // Componentes
 import CalculatorRows from '../components/calculator/calcRows';
-import Dropdown from '../components/interface/Forms/DropDown';
+import KeyBoard from '../components/calculator/keyBoard';
 import Fonts from '../styles/Fonts';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -100,23 +100,22 @@ export default CalculatorScreen = () => {
             { label: 'KeyBoard', onPress: () => handleKeyboardChange({ type: 'Normal' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
             { label: 'NaOH', onPress: () => handleKeyboardChange({ type: 'H-Al', functionKey: 'Acidez Intercambiable (NaOH)' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
             { label: 'HCl', onPress: () => handleKeyboardChange({ type: 'H-Al', functionKey: 'Aluminio (HCl)' }), backgroundColor: '#d7dfe4', borderRadius: 25 },
-            { label: '⌫', onPress: handleBackspace, backgroundColor: '#d7dfe3', borderRadius: 25 },
+            { label: '⌫', onPress: handleBackspace, backgroundColor: '#82BF53', borderRadius: 25 },
         ],[
-            { label: '9', onPress: () => handleNumberPress('9'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '8', onPress: () => handleNumberPress('8'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '7', onPress: () => handleNumberPress('7'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '6', onPress: () => handleNumberPress('6'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '8', onPress: () => handleNumberPress('8'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '9', onPress: () => handleNumberPress('9'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '-', onPress: () => handleNumberPress('-'), backgroundColor: '#82BF53', borderRadius: 25 },
         ],[
-            
-            { label: '5', onPress: () => handleNumberPress('5'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '4', onPress: () => handleNumberPress('4'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '3', onPress: () => handleNumberPress('3'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '2', onPress: () => handleNumberPress('2'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '5', onPress: () => handleNumberPress('5'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '6', onPress: () => handleNumberPress('6'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '%', onPress: () => handleNumberPress('%'), backgroundColor: '#82BF53', borderRadius: 25 },
         ],[
             { label: '1', onPress: () => handleNumberPress('1'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '0', onPress: () => handleNumberPress('0'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '.', onPress: () => handleNumberPress('.'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '=', onPress: () => handleEquals(), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '2', onPress: () => handleNumberPress('2'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '3', onPress: () => handleNumberPress('3'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '=', onPress: () => handleEquals(), backgroundColor: '#82BF53', borderRadius: 25 },
         ]
     ];
 
@@ -163,48 +162,25 @@ export default CalculatorScreen = () => {
     };
     console.log(calculoId);
 
-    const handleSelect = (item) => {
-        setSelectedFunction(item.label); 
-    };
-
-    const data = [
-        { label: 'Conductividad Eléctrica', value: '1' },
-        { label: 'Materia Orgánica', value: '2' },
-        { label: 'Aluminio (HCl)', value: '3' },
-        { label: 'Acidez Intercambiable (NaOH)', value: '4' },
-    ];
-    console.log(selectedFunction);
-
     return (
         <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
             <StatusBar backgroundColor='#f1f2f3' barStyle="dark-content" />
-            <Appbar.Header style={{ backgroundColor: '#f1f2f3' }}>
-                <Appbar.BackAction onPress={()=> navigation.goBack()} />
-                <Appbar.Content title={'Calculadora ' } />
-            </Appbar.Header>
             <>
+                {/*PANTALLA DE LA CALCULADORA*/}
                 <View style={[styles.ScreenCalculator]}>
-                    <Text style={[Fonts.buttonTitle, { color:'#b3babe', paddingLeft: 30, marginTop:10, }]}>H-Al: {TextH_Al}</Text>
+                    <Text style={[Fonts.buttonTitle, { color:'#b3babe', backgroundColor:'#333',paddingLeft: 30, marginTop:10, borderRadius:20, marginHorizontal:50, paddingVertical:6 }]}>H-Al: {TextH_Al}</Text>
                     <Text style={[styles.SubtitleTextScreen]}>{textScreen}</Text>
                     <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
                 </View>
 
-                <View style={{ marginHorizontal:"10%" }}> 
-                    <Dropdown label="Selecciona un cálculo" data={data} onSelect={handleSelect} />
-                </View>
-
-                <View style={styles.keyboardContainer}>
-                    {rows.map((buttons, index) => (
-                        <CalculatorRows key={index} buttons={buttons} />
-                    ))}
-                </View>
+                <KeyBoard />
             </>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    ScreenCalculator:{ height: 210, width: "100%", backgroundColor: '#f1f2f3' },
+    ScreenCalculator:{ height: '42%', width: "100%", backgroundColor: '#f1f2f3' }, //f1f2f3
     ScreenText:{ textAlign: 'right', paddingRight: 20, fontSize: 67},
     SubtitleTextScreen:{ textAlign: 'right', paddingRight: 40, marginTop: 60, fontSize: 27, color: '#999' },
     keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' },

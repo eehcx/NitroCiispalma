@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text, FlatList } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 import Octicons from '@expo/vector-icons/Octicons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -8,12 +7,11 @@ import Fonts from '../../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../features/user/userSlice';
 
 import { getCountOfSubcollections } from '../../services/queryService';
 import { formatDateToString } from '../../utils/helpers/dateHelpers';
 
-const HomeScreen = () => {
+export default HomeScreen = () => {
   // Navegación entre páginas
   const navigation = useNavigation();
   // Stats
@@ -41,32 +39,22 @@ const HomeScreen = () => {
   return (
     <View style={[styles.container]}>
       <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
-
       <View style={[{ top: 25, left: 30 }]}>
           <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName}</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
 
         <View style={{ marginTop: '30%' }}>
-          <TouchableOpacity
-            onPress={()=> navigation.navigate('calculator') }
-            underlayColor="#d7dfe3"
-            style={[styles.groupItem]}
-          >
-            <Image
-              source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }}
-              style={styles.imagesTools}
-            />
+          <TouchableOpacity onPress={()=> navigation.navigate('calculator') } underlayColor="#d7dfe3" style={[styles.groupItem]} >
+            <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }} style={styles.imagesTools} />
           </TouchableOpacity>
         </View>
 
         <View style={[styles.secciones, { top: 40 }]}>
           <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" , fontWeight: "bold" }]}>Estadísticas</Text>
-
         </View>
 
-        <View
-          style={{ backgroundColor: "#f0f0f0", height: 75, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "20%", marginBottom: "10%", marginLeft: "5%" }} >
+        <View style={{ backgroundColor: "#f0f0f0", height: 75, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "20%", marginBottom: "10%", marginLeft: "5%" }} >
           <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
             <Octicons name="server" size={18} color="#333" />
             <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>Datos Consumidos</Text>
@@ -103,20 +91,6 @@ const styles = StyleSheet.create({
   txtState:{ color: "#000", textAlign: "left", position: "absolute" },
   // Estilos de las secciones o filtros
   secciones: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 50, marginVertical: 1 },
-  imagesTools: {
-    borderRadius: 22,
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  groupItem: {
-    height: 300,
-    width: 350, 
-    marginHorizontal: 30, 
-    backgroundColor: '#d7dfe3',
-    borderRadius: 22,
-  },
+  imagesTools: { borderRadius: 22, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' },
+  groupItem: { height: 300, width: 350, marginHorizontal: 30, backgroundColor: '#d7dfe3', borderRadius: 22 },
 });
-
-export default HomeScreen;

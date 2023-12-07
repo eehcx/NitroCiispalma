@@ -1,5 +1,5 @@
 //React Native
-import { StyleSheet, StatusBar, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 // Componente de filtros
 export default FilterPagesReduced = ({ icon, text, backgroundColor, marginLeft, marginRight, onPress, isSelected, SelectedColor, isDisabled }) => (

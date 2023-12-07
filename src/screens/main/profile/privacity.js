@@ -1,4 +1,4 @@
-import { StyleSheet, StatusBar, TextInput, View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { StatusBar, View, Text, ScrollView, SafeAreaView } from 'react-native';
 import { Button } from 'react-native-paper';
 import Fonts from '../../../styles/Fonts';
 

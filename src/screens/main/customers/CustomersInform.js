@@ -17,7 +17,8 @@ import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 
 // Pagina de listado de clientes
-const CustomersInform = () => {
+export default CustomersInform = () => {
+    const navigation = useNavigation();
     // ID Informe
     const [selectedInformId, setSelectedInformId] = useState(null);
     const dispatch = useDispatch();
@@ -48,8 +49,7 @@ const CustomersInform = () => {
             });
         setLoading(false);
     }, []);
-
-    //console.log("INFORMES:", informes)
+    console.log("INFORMES:#############################\n", informes)
     const formatFechaRecepcion = (fechaRecepcion) => {
         const formattedDate = new Date(fechaRecepcion);
         return formattedDate.toLocaleString();
@@ -68,17 +68,12 @@ const CustomersInform = () => {
                             {informesArray.slice().reverse().map((informe, index) => (
                                 <View key={index}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                        <RadioButton.Item
-                                        color='#167139'
-                                        value={informe.uid}
-                                        status={informId === informe.uid ? 'checked' : 'unchecked'}
-                                        onPress={() => handleRadioButtonPress(informe.uid)}
-                                        />
+                                        <RadioButton.Item color='#167139' value={informe.uid} status={informId === informe.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(informe.uid)} />
                                         <View style={{ flexDirection: 'column', alignItems: 'flex-start', marginRight:'20%' }}>
                                             <Text style={[styles.txtLabels, Fonts.modalText]}>{informe.tipo_analisis}</Text>
                                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{formatFechaRecepcion(informe.fecha_recepcion)}</Text>
                                         </View>
-                                        <TouchableOpacity style={{ paddingHorizontal:20 }}>
+                                        <TouchableOpacity style={{ paddingHorizontal:20 }} onPress={()=> navigation.navigate('InformDetails')}>
                                             <Octicons name="chevron-right" size={24} color='#767983' />
                                         </TouchableOpacity>
                                     </View>
@@ -98,5 +93,3 @@ const styles = StyleSheet.create({
     cardList:{ marginTop: 5, marginBottom: 5 },
     txtLabels: { marginLeft: 16, color: '#67757d', fontSize: 15 },
 });
-
-export default CustomersInform; 

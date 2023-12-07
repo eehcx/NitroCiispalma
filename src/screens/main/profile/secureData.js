@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //REACT NATIVE Y TAILWIND CSS
-import { StyleSheet, SafeAreaView, StatusBar, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 const SecureDataScreen = () => {
     useEffect(() => {

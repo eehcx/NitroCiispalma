@@ -61,12 +61,7 @@ const ListSoilsPackage = () => {
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
                         </View>
-                        <RadioButton.Item
-                        color='#167139'
-                        value={packages.uid}
-                        status={packageId === packages.uid ? 'checked' : 'unchecked'}
-                        onPress={() => handleRadioButtonPress(packages.uid)}
-                        />
+                        <RadioButton.Item color='#167139' value={packages.uid} status={packageId === packages.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(packages.uid)} />
                     </TouchableOpacity>
                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                 </View>
@@ -117,12 +112,7 @@ const ListFoliarPackage = () => {
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
                         </View>
-                        <RadioButton.Item
-                        color='#167139'
-                        value={packages.uid}
-                        status={packageId === packages.uid ? 'checked' : 'unchecked'}
-                        onPress={() => handleRadioButtonPress(packages.uid)}
-                        />
+                        <RadioButton.Item color='#167139' value={packages.uid} status={packageId === packages.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(packages.uid)} />
                     </TouchableOpacity>
                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                 </View>
@@ -213,13 +203,7 @@ export default RegisterInform = () => {
                     <ScrollView onScroll={onScroll}>
                         {currentForm === 1 && (
                             <>
-                                <Banner
-                                    theme={{ colors: { primary: 'green' } }}
-                                    style={{ backgroundColor: "#fafafa" }}
-                                    visible={visible}
-                                    actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() },
-                                    { label: 'Cerrar', onPress: () => setVisible(false) } ]}
-                                    icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1&_gl=1*1kvs9mz*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA2NTkxNi4yNjMuMS4xNjk3MDY3NTQ5LjE2LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa" }} visible={visible} actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1&_gl=1*1kvs9mz*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA2NTkxNi4yNjMuMS4xNjk3MDY3NTQ5LjE2LjAuMA..' }} style={{ width: size, height: size }} /> )}>
                                     <Text style={{ fontSize: 14 }}> 
                                         Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización.
                                     </Text>
@@ -241,12 +225,7 @@ export default RegisterInform = () => {
                         )}
                         {currentForm === 2 && (
                             <>
-                                <Banner
-                                    theme={{ colors: { primary: 'green' } }}
-                                    style={{ backgroundColor: "#fafafa", marginBottom: '6%' }}
-                                    visible={visible}
-                                    actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]}
-                                    icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fsave.png?alt=media&token=87b77d64-997c-4634-8ae5-1faa4c55ea95&_gl=1*15ong9z*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA4MTIwOS4yNjQuMS4xNjk3MDgxMjIxLjQ4LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fsave.png?alt=media&token=87b77d64-997c-4634-8ae5-1faa4c55ea95&_gl=1*15ong9z*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA4MTIwOS4yNjQuMS4xNjk3MDgxMjIxLjQ4LjAuMA..' }} style={{ width: size, height: size }} /> )}>
                                     <Text style={{ fontSize: 14 }}> 
                                         Excelente, ahora procede a completar todos los campos necesarios en el formulario. Recuerda que cada detalle cuenta.
                                     </Text>
@@ -255,57 +234,25 @@ export default RegisterInform = () => {
                                     <View style={InputForms.formContainer}>
                                         <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
                                         <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
-                                        <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]}
-                                        placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras}
-                                        maxLength={100} keyboardType="numeric"
-                                        />
-                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                                        placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia}
-                                        maxLength={100}
-                                        />
-                                        <TextInput 
-                                        style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]}
-                                        placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo}
-                                        maxLength={100}
-                                        />
-                                        <TextInput
-                                            multiline={true}
-                                            numberOfLines={4}
-                                            placeholder="Observaciones generales"
-                                            value={Observaciones}  onChangeText={setObservaciones}
-                                            style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100}
-                                        />
-                                        <Button icon="chevron-right"
-                                        buttonColor="#C7FBD7"
-                                        mode="contained-tonal" 
-                                        contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}
-                                        labelStyle={{ marginRight: 23 }}
-                                        onPress={handleSiguiente}>
-                                            Siguiente Página
-                                        </Button>
+                                        <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]} placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras} maxLength={100} keyboardType="numeric" />
+                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia} maxLength={100} />
+                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo} maxLength={100} />
+                                        <TextInput multiline={true} numberOfLines={4} placeholder="Observaciones generales" value={Observaciones}  onChangeText={setObservaciones} style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100} />
+                                        <Button icon="chevron-right" buttonColor="#C7FBD7" mode="contained-tonal" contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}labelStyle={{ marginRight: 23 }} onPress={handleSiguiente}> Siguiente Página </Button>
                                     </View>
                                 </View>
                             </>
                         )}
                         {currentForm === 3 && (
                             <>
-                                <Banner
-                                    theme={{ colors: { primary: 'green' } }}
-                                    style={{ backgroundColor: "#fafafa", marginBottom: '6%' }}
-                                    visible={visible}
-                                    actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]}
-                                    icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ffinger-pointing-down.png?alt=media&token=883ff7b4-eb7a-4b83-9ba0-003bb542f692&_gl=1*agqgjq*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5Nzc4NDczMS4yODMuMS4xNjk3Nzg1OTI0LjE3LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ffinger-pointing-down.png?alt=media&token=883ff7b4-eb7a-4b83-9ba0-003bb542f692&_gl=1*agqgjq*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5Nzc4NDczMS4yODMuMS4xNjk3Nzg1OTI0LjE3LjAuMA..' }} style={{ width: size, height: size }} /> )}>
                                     <Text style={{ fontSize: 14 }}> 
                                         Casi listo, ahora procede a completar los datos de las muestras que ingresaste anteriormente.
                                     </Text>
                                 </Banner>
                                 <View style={InputForms.container}>
                                     <View style={{ marginHorizontal:30, width: '85%' }}>
-                                        <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]}
-                                        placeholder="Número de muestra" value={numMuestra} onChangeText={setNumMuestra}
-                                        keyboardType="numeric"
-                                        maxLength={10}
-                                        />
+                                        <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Número de muestra" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
                                     </View>
                                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={agregarMuestra} disabled={muestras.length >= parseInt(numMuestras, 10)}>
                                         <Octicons name="duplicate" size={24} color='#767983' />
@@ -329,9 +276,7 @@ export default RegisterInform = () => {
                                         </View>
                                     ))}
                                 </SafeAreaView>
-                                <Button disabled={muestras.length !== parseInt(numMuestras, 10)} mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaveData}>
-                                    ENVIAR
-                                </Button>
+                                <Button disabled={muestras.length !== parseInt(numMuestras, 10)} mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaveData}> ENVIAR </Button>
                             </>
                         )}
                     </ScrollView>
@@ -342,52 +287,14 @@ export default RegisterInform = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-    },
-    BoxContainer: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'space-around',
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
+    container: { flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' },
+    BoxContainer: { flex: 1, padding: 20, justifyContent: 'space-around' },
+    row: { flexDirection: 'row', justifyContent: 'space-between' },
     cardList:{ marginTop: 5, marginBottom: 5 },
-    box: {
-        backgroundColor: '#ECECEC',
-        width: 110,
-        height: 110,
-        borderRadius: 25
-    },
-    txtContainer:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonContainer: {
-        backgroundColor: "#fafafa",
-        paddingHorizontal: '20%',
-        paddingBottom: 10,
-        position: 'absolute',
-    },
+    box: { backgroundColor: '#ECECEC', width: 110, height: 110, borderRadius: 25 },
+    txtContainer:{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+    buttonContainer: { backgroundColor: "#fafafa", paddingHorizontal: '20%', paddingBottom: 10, position: 'absolute' },
     txtLabels: { marginLeft: 10, color: '#67757d', fontSize: 15 },
-    //
-    item: {
-        backgroundColor: '#ECECEC',
-        borderRadius:17,
-        padding: 15,
-        marginVertical: 7,
-        marginHorizontal: 16,
-    },
-    title: {
-        fontSize: 20,
-        color: "#67757d"
-    },
+    item: { backgroundColor: '#ECECEC', borderRadius:17, padding: 15, marginVertical: 7, marginHorizontal: 16 },
+    title: { fontSize: 20, color: "#67757d" },
 });

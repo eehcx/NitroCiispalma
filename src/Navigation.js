@@ -24,7 +24,9 @@ import NewPackage from './screens/main/customers/forms/NewPackage';
 //
 import UserInformationScreen from './screens/main/profile/UserInfo';
 import ApplicationDataScreen from './screens/main/profile/privacity';
+import InformDetails from './screens/main/customers/InformDetails';
 // import secureDataScreen from './screens/main/profile/secureData';
+// Components
 
 const Stack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -57,25 +59,23 @@ const MainBarScreen=()=>{
         </Tab.Navigator>
     );
 };
-
+// <Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }} />
 // Funcion principal de la aplicación
 export default function Navigation() {
     return (
         <NavigationContainer ref={navigationRef}>
             <Stack.Navigator>
-                <Stack.Screen name="loading" component={LoadingScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="auth" component={AuthScreens} options={{ headerShown: false }} />
                 <Stack.Screen name="main" component={MainBarScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="user" component={UserScreens} options={{ headerShown: false }} />
-
                 <Stack.Screen name="calculator" component={CalculatorScreen} options={{ title: 'Calculadora', headerShown: false}}/>
+                <Stack.Screen name="InformDetails" component={InformDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
                 <Stack.Screen name="history" component={HistoryScreen} options={{ title: 'Historial de cálculos', headerStyle: { backgroundColor: '#fafafa' } }}/>
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ headerShown: false }}/>
                 <Stack.Screen name="registerPackage" component={RegisterPackage} options={{ title: 'Lista de paquetes', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="newPackage" component={NewPackage} options={{ title: 'Agrega un paquete nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>
-                
                 <Stack.Screen name="customerCalc" component={CustomersCalc} options={{ headerShown: false }}/>
                 <Stack.Screen name="appData" component={ApplicationDataScreen} options={{ title: 'Políticas y Privacidad', headerStyle: { backgroundColor: '#fafafa' },}}/>
             </Stack.Navigator>

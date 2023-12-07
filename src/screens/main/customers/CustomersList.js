@@ -15,7 +15,7 @@ import { setClientId } from '../../../features/client/clientSlice';
 import { getClientes } from '../../../services/clientes';
 
 // Pagina de listado de clientes
-const CustomersList = () => {
+export default CustomersList = () => {
     const [selectedClientId, setSelectedClientId] = useState(null);
     const dispatch = useDispatch();
     const clientId = useSelector(state => state.client.clientId);
@@ -71,16 +71,12 @@ const CustomersList = () => {
                             {clientes.slice().reverse().map((cliente, index) => (
                                 <View key={index}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 15, }}>
-                                        <Avatar.Text style={[{backgroundColor: '#d7dfe4', borderColor: "#bbb", borderWidth: 1}]} size={50} label={cliente.nombre.substring(0, 1)} />
+                                        <Avatar.Text style={[{backgroundColor: '#d7dfe4', borderColor: "#bbb", borderWidth: 1}]} size={50} label={cliente.razon_social.substring(0, 1)} />
                                         <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{cliente.nombre}</Text>
+                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{cliente.razon_social}</Text>
                                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{cliente.uid}</Text>
                                         </View>
-                                        <RadioButton.Item
-                                        color='#167139'
-                                        value={cliente.uid}
-                                        status={clientId === cliente.uid ? 'checked' : 'unchecked'}
-                                        onPress={() => handleRadioButtonPress(cliente.uid)}/>
+                                        <RadioButton.Item color='#167139' value={cliente.uid} status={clientId === cliente.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(cliente.uid)}/>
                                     </View>
                                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                                 </View>
@@ -114,5 +110,3 @@ const styles = StyleSheet.create({
     cardList:{ marginTop: 5, marginBottom: 5 },
     txtLabels: { marginLeft: 16, color: '#67757d', fontSize: 15 },
 });
-
-export default CustomersList; 

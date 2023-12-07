@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 // React Native Paper
 import { Divider } from 'react-native-paper';
 import Octicons from '@expo/vector-icons/Octicons';
 // Styles
-import InputForms from '../../styles/InputForms';
 import Fonts from '../../styles/Fonts';
 
 export default ItemListIcon = ({ title, content, icon, iconSize, onPress }) => {

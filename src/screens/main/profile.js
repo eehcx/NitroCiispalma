@@ -13,7 +13,7 @@ import Fonts from '../../styles/Fonts';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser, logout } from '../../features/user/userSlice';
+import { logout } from '../../features/user/userSlice';
 
 const CardInfo = () => {
     const navigation = useNavigation();
@@ -84,9 +84,7 @@ const CardInfo = () => {
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                     </Card.Content>
-                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleLogout()}>
-                        LOGOUT
-                    </Button>
+                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleLogout()}> LOGOUT </Button>
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -45,14 +45,10 @@ export default NewPackage = () => {
                         {Form === 1 && (
                             <>
                                 <View style={{marginHorizontal: 30, marginVertical: 10, width: '85%' }}>
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]}
-                                    placeholder="Ingresa un Análisis" value={Estudio} 
-                                    onChangeText={(text) => {
+                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un Análisis" value={Estudio} onChangeText={(text) => {
                                         setEstudio(text); 
                                         setIsInputEmpty(text.trim() === '');
-                                    }}
-                                    maxLength={90} />
-                                    {/*Aquí va el input de nombre, cuando se agregue un nombre desabilitar el input de nombre*/}
+                                    }} maxLength={90} />
                                 </View>
 
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
@@ -79,9 +75,7 @@ export default NewPackage = () => {
                         )}
                     </ScrollView>
                 </SafeAreaView>
-                <Button mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]}>
-                    ENVIAR
-                </Button>
+                <Button mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]}> ENVIAR </Button>
             </PaperProvider>
         </View>
     );

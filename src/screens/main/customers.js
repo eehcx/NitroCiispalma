@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 //React Native
 import { StyleSheet, StatusBar, View } from 'react-native';
 // React Native Paper
 import { Appbar } from 'react-native-paper';
-// React Navigation
-import { useNavigation } from '@react-navigation/native';
 // Components
 import CustomersList from './customers/CustomersList';
 import CustomersCalc from './customers/CustomersCalc';
@@ -17,8 +15,6 @@ import { useSelector } from 'react-redux';
 export default CustomersScreen = () => {
     const clientId = useSelector(state => state.client.clientId);
     const informId = useSelector(state => state.inform.informId);
-    // Navegación
-    const navigation = useNavigation();
     // Filtro 
     const [selectedOption, setSelectedOption] = useState("Listado");
     const filterContent = (option) => { setSelectedOption(option); };

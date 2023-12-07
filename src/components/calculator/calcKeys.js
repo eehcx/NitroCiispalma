@@ -12,7 +12,8 @@ export default CalculatorKeys = ({ label, onPress, backgroundColor, borderRadius
     >
         <View style={[styles.btnCalculator, { backgroundColor }]}>
             <View style={styles.Keycontainer}>
-                <Text style={{ color: backgroundColor === '#fff' ? '#000' : backgroundColor === '#d7dfe4' ? '#000' : '#000' }} variant={backgroundColor === '#d7dfe4' ? 'labelLarge' : 'displaySmall'}>
+                <Text style={{ color: backgroundColor === '#fff' || backgroundColor === '#d7dfe4' ? '#000' : backgroundColor === '#82BF53' ? '#fff' : '#000', }}
+                variant={backgroundColor === '#d7dfe4' ? 'labelLarge' : 'displaySmall'}>
                     {label}
                 </Text>
             </View>
@@ -21,15 +22,6 @@ export default CalculatorKeys = ({ label, onPress, backgroundColor, borderRadius
 );
 
 const styles = StyleSheet.create({
-    btnCalculator: {
-        width: 78,
-        height: 78,
-        borderRadius: 25
-    },
-    Keycontainer:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    }
+    btnCalculator: { width: 78, height: 78, borderRadius: 25 },
+    Keycontainer:{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }
 });

@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text, ImageBackground, TextInput } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text, TextInput } from 'react-native';
 // React Native Paper
 import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
-// React Navigation
-import { useNavigation } from '@react-navigation/native';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
@@ -23,7 +21,7 @@ import { app } from '../../../app/firebase';
 import { getDatabase, push, set, ref, onValue, off, get } from 'firebase/database';
 
 // Pagina de listado de clientes
-const CustomersCalc = () => {
+export default CustomersCalc = () => {
     const [numMuestra, setNumMuestra] = useState('');
     // Redux:
     const clientId = useSelector(state => state.client.clientId);
@@ -86,11 +84,7 @@ const CustomersCalc = () => {
                         <ScrollView onScroll={onScroll}>
                             <>
                                 <View style={{ marginHorizontal:30, width: '85%' }}>
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]}
-                                    placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra}
-                                    keyboardType="numeric"
-                                    maxLength={10}
-                                    />
+                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
                                     <Octicons name="duplicate" size={24} color='#767983' />
@@ -117,5 +111,3 @@ const styles = StyleSheet.create({
     cardList:{ marginTop: 5, marginBottom: 5 },
     txtLabels: { marginLeft: 10, color: '#67757d', fontSize: 15 },
 });
-
-export default CustomersCalc; 
