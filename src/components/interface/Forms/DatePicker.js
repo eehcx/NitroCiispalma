@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Octicons } from '@expo/vector-icons';
 
 export default DatePickerComponent = ({ onDateChange, Text }) => {
 
@@ -28,6 +27,3 @@ export default DatePickerComponent = ({ onDateChange, Text }) => {
         </>
     );
 };
-const styles = StyleSheet.create({
-    icon: { paddingLeft:40, color: '#333' },
-});

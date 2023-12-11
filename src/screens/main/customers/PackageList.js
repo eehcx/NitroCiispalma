@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 // React Native Paper
 import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase
@@ -17,6 +17,7 @@ import FilterPagesExtended from '../../../components/interface/filters/FilterPag
 import ItemListIcon from '../../../components/interface/ItemListIcon';
 
 const ListSoilsPackage = () => {
+    const navigation = useNavigation();
     // Paquetes suelos
     const [SoilsPackage, setSoilsPackage] = useState([]);
     // Estado de Carga de la página
@@ -52,7 +53,7 @@ const ListSoilsPackage = () => {
                         <ScrollView onScroll={onScroll}>
                             {SoilsPackage.slice().reverse().map((packages, index) => (
                                 <View key={index}>
-                                    <ItemListIcon icon="package" iconSize={24} title={packages.nombre} content={packages.uid} />
+                                    <ItemListIcon icon="landslide" iconSize={24} title={packages.nombre} content={packages.uid} onPress={()=> navigation.navigate('PackageDetails')} />
                                 </View>
                             ))}
                         </ScrollView>
@@ -64,6 +65,7 @@ const ListSoilsPackage = () => {
 };
 
 const ListFoliarPackage = () => {
+    const navigation = useNavigation();
     // Paquetes suelos
     const [foliarPackage, setFoliarPackage] = useState([]);
     // Estado de Carga de la página
@@ -99,7 +101,7 @@ const ListFoliarPackage = () => {
                         <ScrollView onScroll={onScroll}>
                             {foliarPackage.slice().reverse().map((packages, index) => (
                                 <View key={index}>
-                                    <ItemListIcon icon="package" iconSize={24} title={packages.nombre} content={packages.uid} />
+                                    <ItemListIcon icon="yard" iconSize={24} title={packages.nombre} content={packages.uid} onPress={()=> navigation.navigate('PackageDetails')}/>
                                 </View>
                             ))}
                         </ScrollView>
@@ -133,7 +135,7 @@ export default RegisterPackage = () => {
                 </View>
             </View>
             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={NavigateToNewPackage}>
-                <Octicons name="duplicate" size={24} color='#767983' />
+                <Icon name="library-add" size={24} color='#767983' />
                 <Text style={[styles.txtLabels, Fonts.addText]}>Añadir paquete</Text>
             </TouchableOpacity>
             <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />

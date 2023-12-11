@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, Modal, View, } from 'react-native';
-import { Octicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default Dropdown = ({ label, data, onSelect }) => {
     const DropdownButton = useRef();
@@ -49,7 +49,7 @@ export default Dropdown = ({ label, data, onSelect }) => {
             <Text style={styles.buttonText}>
                 {(!!selected && selected.label) || label}
             </Text>
-            <Octicons size={20} style={styles.icon} name="chevron-down" />
+            <Icon size={20} style={styles.icon} name="expand_more" />
         </TouchableOpacity>
     );
 };

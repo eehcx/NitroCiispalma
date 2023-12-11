@@ -3,12 +3,6 @@ import { StyleSheet, StatusBar, TextInput, View, Text, TouchableOpacity, Modal }
 import { Appbar } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
-// Formulas: 4 en uso
-import { CE_Cm_Dsm, mL_FeSO4_Mo, mlNaOH_cmol, mlHCl_cmol } from '../utils/helpers/calculatorHelpers';
-import { saveCE, saveMO } from '../services/setService'
-// Firebase
-import { getDatabase, ref, onValue, off, get } from 'firebase/database';
-import { app } from '../app/firebase';
 // Componentes
 import CalculatorRows from '../components/calculator/calcRows';
 import KeyBoard from '../components/calculator/keyBoard';
@@ -61,31 +55,6 @@ export default CalculatorScreen = () => {
         }
     };
 
-    // Btn de igual (=)
-    const handleEquals = () => {
-        try {
-            const inputValue = convertToFloat(textScreen);
-            const inputValueH_Al = convertToFloat(TextH_Al);
-            if (isNaN(inputValue)) {
-                throw new Error('El valor ingresado no es un número válido');
-            }
-            let resultado;
-            if (selectedFunction === 'Conductividad Eléctrica') { resultado = CE_Cm_Dsm(inputValue);
-                saveCE(calculoId,IdLab,inputValue.toString(),resultado.toString());
-            } else if (selectedFunction === 'Materia Orgánica') { resultado = mL_FeSO4_Mo(inputValue);
-                saveMO(calculoId,IdLab,inputValue.toString(),resultado.toString())
-            } else if (selectedFunction === 'Aluminio (HCl)'){
-                resultado = mlHCl_cmol(inputValue, inputValueH_Al);
-            } else if (selectedFunction === 'Acidez Intercambiable (NaOH)'){
-                resultado = mlNaOH_cmol(inputValue, inputValueH_Al);
-            }
-            setResultValue(resultado);
-
-        } catch (error) {
-            console.error('Error al calcular el resultado:', error);
-        }
-    };
-
     // Cambiar el tipo de teclado
     const handleKeyboardChange = ({ type, functionKey }) => {
         setKeyboardType(type);
@@ -118,49 +87,6 @@ export default CalculatorScreen = () => {
             { label: '=', onPress: () => handleEquals(), backgroundColor: '#82BF53', borderRadius: 25 },
         ]
     ];
-
-    const handleConsultation = () => {
-        const db = getDatabase(app);
-        const informesRef = ref(db, `clientes/${uid}/informes`);
-        onValue(informesRef, (snapshot) => {
-            const data = snapshot.val();
-            if (data) {
-                // Convertir el objeto de informes en un array de informes
-                const informesArray = Object.keys(data).map((informeKey) => ({
-                    id: informeKey,
-                    ...data[informeKey],
-                }));
-
-                // Obtener el último ID de informe
-                const lastInformeKey = informesArray[informesArray.length - 1].id;
-                //console.log(lastInformeKey);
-
-                const informeResultadosRef = ref(db, `clientes/${uid}/informes/${lastInformeKey}/informe_resultados`);
-                onValue(informeResultadosRef, (resultadosSnapshot) => {
-                    const resultadosData = resultadosSnapshot.val();
-                    setCalculoId(resultadosData.uid);
-                    //console.log(resultadosData.uid);
-                    if (resultadosData) {
-                        console.log(resultadosData);
-            
-                        // Acceder al primer registro de informe_resultados
-                        if (Array.isArray(resultadosData) && resultadosData.length > 0) {
-                            const primerRegistro = resultadosData[0];
-                            const primerUid = primerRegistro.uid;
-                            //console.log(primerRegistro.uid);
-                            //console.log(primerUid);
-                            setCalculoId(primerUid);
-                        }
-                    }
-                });
-
-                setFormularioActual(formularioActual + 1);
-            } else {
-                navigation.goBack();
-            }
-        });
-    };
-    console.log(calculoId);
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>

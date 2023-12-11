@@ -5,12 +5,11 @@ import { StyleSheet, ImageBackground, View, Text, TouchableOpacity } from 'react
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 
-const InputScreen = () => {
+export default InputScreen = () => {
     const navigation = useNavigation();
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo.jpg?alt=media&token=b861ad71-5831-490f-aacd-985e67e69d00' }} style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}>
-                
                 <View style={{ flex: 1 }}>
                 <View style={styles.carouselContainer}>
                     <View style={styles.slide}>
@@ -29,8 +28,8 @@ const InputScreen = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ alignItems: 'center', marginBottom: 30 }}>
-                        <Text variant='titleMedium' style={styles.entraceText}>Colabora con 
-                            <Text style={styles.entraceText}> Ciispalma</Text>
+                        <Text style={styles.text} >Colabora con 
+                            <Text style={styles.bold} > CIISPALMA</Text>
                         </Text>
                     </View>
                 </View>
@@ -40,13 +39,11 @@ const InputScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    safeArea: { backgroundColor: 'white' },
     carouselContainer: { position: 'relative', justifyContent: 'flex-end', marginTop: 150, bottom: 0, width: '100%', height: 370 },
     slide: { width: 300, height: 300, padding: 20, marginRight: 100 },
     indicatorContainer: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50 },
     indicator: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#fafafa', marginHorizontal: 4 },
     activeIndicator: { backgroundColor: '#6c9b6d' },
-    entraceText: { color: '#e6e6fa' }
+    text:{ color:'#fafafa' },
+    bold: { fontWeight: '700', letterSpacing: 1.2}
 });
-
-export default InputScreen;

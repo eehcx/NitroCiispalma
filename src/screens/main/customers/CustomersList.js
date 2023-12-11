@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
 // React Native Paper
 import { Avatar, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, RadioButton } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Styles
@@ -15,7 +16,7 @@ import { setClientId } from '../../../features/client/clientSlice';
 import { getClientes } from '../../../services/clientes';
 
 // Pagina de listado de clientes
-export default CustomersList = () => {
+const CustomersList = () => {
     const [selectedClientId, setSelectedClientId] = useState(null);
     const dispatch = useDispatch();
     const clientId = useSelector(state => state.client.clientId);
@@ -85,12 +86,11 @@ export default CustomersList = () => {
                     )}
                 </SafeAreaView>
                 <Portal>
-                    <FAB.Group open={open} color='#fff' visible fabStyle={{ backgroundColor:"#41525C" }} rippleColor="#f1f1f1" icon={open ? 'cog' : 'plus'}
+                    <FAB.Group open={open} color='#fff' visible fabStyle={{ backgroundColor:"#41525C" }} rippleColor="#f1f1f1" icon={open ? 'plus' : 'plus'}
                     actions={[
-                        { color:'#f1f1f1', icon: 'plus', style: { backgroundColor: '#41525C' } },
-                        { color:'#f1f1f1', icon: 'layers', label: 'Paquetes', onPress: handleNavigateToPackage, style: { backgroundColor: '#41525C' } },
-                        { color:'#f1f1f1', icon: 'account-group', label: 'Clientes', onPress: handleNavigateToNewCustomer, style: { backgroundColor: '#41525C' } },
-                        { color:'#f1f1f1', icon: 'file', label: 'Informes', onPress: handleNavigateToInforms, style: { backgroundColor: '#41525C' } },
+                        { color:'#f1f1f1', icon: 'account-cog', label: 'Paquetes', onPress: handleNavigateToPackage, style: { backgroundColor: '#41525C' } },
+                        { color:'#f1f1f1', icon: 'account-cog', label: 'Clientes', onPress: handleNavigateToNewCustomer, style: { backgroundColor: '#41525C' } },
+                        { color:'#f1f1f1', icon: 'account-cog', label: 'Informes', onPress: handleNavigateToInforms, style: { backgroundColor: '#41525C' } },
                     ]}
                     onStateChange={onStateChange}
                     onPress={() => {
@@ -104,6 +104,8 @@ export default CustomersList = () => {
         </View>
     );
 };
+
+export default CustomersList;
 
 const styles = StyleSheet.create({
     container: { flexGrow: 1 },

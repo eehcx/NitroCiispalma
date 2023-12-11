@@ -1,4 +1,5 @@
 import { getDatabase, ref, child, get} from "firebase/database";
+import { app } from '../app/firebase';
 
 export const getClientes = async () => {
     try {

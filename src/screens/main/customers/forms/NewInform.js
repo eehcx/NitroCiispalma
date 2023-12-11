@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView, Image } from 'react-native';
 // React Native Paper
 import { PaperProvider, Button, Text, Banner, Divider, RadioButton, Appbar } from 'react-native-paper';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Estilos globales
@@ -56,7 +56,7 @@ const ListSoilsPackage = () => {
             {SoilsPackage.slice().reverse().map((packages, index) => (
                 <View key={index}>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                        <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
+                        <Icon name="landslide" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
                         <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
@@ -107,7 +107,7 @@ const ListFoliarPackage = () => {
             {foliarPackage.slice().reverse().map((packages, index) => (
                 <View key={index}>
                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                        <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
+                        <Icon name="yard" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
                         <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                             <Text style={[styles.txtLabels, Fonts.modalText]}>{packages.nombre}</Text>
                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{packages.uid}</Text>
@@ -215,7 +215,7 @@ export default RegisterInform = () => {
                                     </View>
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
-                                    <Octicons name="duplicate" size={24} color='#767983' />
+                                    <Icon name="library-add" size={24} color='#767983' />
                                     <Text style={[styles.txtLabels, Fonts.addText]}>Personalizar paquete</Text>
                                 </TouchableOpacity>
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
@@ -255,7 +255,7 @@ export default RegisterInform = () => {
                                         <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Número de muestra" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
                                     </View>
                                     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={agregarMuestra} disabled={muestras.length >= parseInt(numMuestras, 10)}>
-                                        <Octicons name="duplicate" size={24} color='#767983' />
+                                        <Icon name="library-add" size={24} color='#767983' />
                                         <Text style={[styles.txtLabels, Fonts.addText]}>Añadir muestra</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -265,7 +265,7 @@ export default RegisterInform = () => {
                                     {muestras.map((muestra, index) => (
                                         <View key={index}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                                <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
+                                                <Icon name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
                                                 <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                                                     <Text style={[styles.txtLabels, Fonts.modalText,{ fontWeight: '700' }]}>Elemento</Text>
                                                     <Text style={[styles.txtLabels, Fonts.cardsText]}>Número de Muestra: {muestra.IdLab}</Text>

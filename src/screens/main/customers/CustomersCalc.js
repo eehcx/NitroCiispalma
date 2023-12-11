@@ -9,7 +9,7 @@ import Fonts from '../../../styles/Fonts';
 //Componentes
 import ItemListIcon from '../../../components/interface/ItemListIcon';
 // Iconos
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // Redux
 import { useSelector } from 'react-redux';
 import { setClientId } from '../../../features/client/clientSlice';
@@ -87,7 +87,7 @@ export default CustomersCalc = () => {
                                     <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
-                                    <Octicons name="duplicate" size={24} color='#767983' />
+                                    <Icon name="tab_group" size={24} color='#767983' />
                                     <Text style={[styles.txtLabels, Fonts.addText]}>Añadir muestra</Text>
                                 </TouchableOpacity>
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />

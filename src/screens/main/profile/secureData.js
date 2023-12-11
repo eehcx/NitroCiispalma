@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 //REACT NATIVE Y TAILWIND CSS
 import { View, Text } from 'react-native';
 
-const SecureDataScreen = () => {
+export default SecureDataScreen = () => {
     useEffect(() => {
         //
     }, []);
@@ -15,5 +15,3 @@ const SecureDataScreen = () => {
         </View>
     );
 };
-
-export default SecureDataScreen;

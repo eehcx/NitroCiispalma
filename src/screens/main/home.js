@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { tw } from 'nativewind';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 import Fonts from '../../styles/Fonts';
@@ -37,9 +38,10 @@ export default HomeScreen = () => {
 
   const firstName = user.displayName ? user.displayName.split(' ')[0] : '';
   return (
-    <View style={[styles.container]}>
-      <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
-      <View style={[{ top: 25, left: 30 }]}>
+    <>
+      <StatusBar backgroundColor='#fafafa'  barStyle="dark-content" />
+      <View className="flex-1 justify-center items-center" style={{ backgroundColor: '#fafafa'}} >
+        <View style={[{ top: 25, left: 30 }]}>
           <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName}</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
         </View>
@@ -56,38 +58,35 @@ export default HomeScreen = () => {
 
         <View style={{ backgroundColor: "#f0f0f0", height: 75, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "20%", marginBottom: "10%", marginLeft: "5%" }} >
           <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
-            <Octicons name="server" size={18} color="#333" />
+            <Icon name="dns" size={18} color="#333" />
             <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>Datos Consumidos</Text>
           </View>
           <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>10.88MB Descarga</Text>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <View
-            style={{ backgroundColor: "#41525C", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
+          <View style={{ backgroundColor: "#41525C", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
-              <Octicons name="hash" size={18} color="#fff" />
+              <Icon name="tag" size={18} color="#fff" />
               <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Cálculos</Text>
             </View>
             <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numCalculos} Registros</Text>
           </View>
 
-          <View
-            style={{ backgroundColor: "#82BF53", height: 75, width: "42%", borderRadius: 20, justifyContent: 'flex-start' }} >
+          <View style={{ backgroundColor: "#82BF53", height: 75, width: "42%", borderRadius: 20, justifyContent: 'flex-start' }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
-              <Octicons name="people" size={18} color="#fff" />
+              <Icon name="groups" size={18} color="#fff" />
               <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Clientes</Text>
             </View>
             <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numClientes} Registros</Text>
           </View>
         </View>
-
-    </View>
+      </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, backgroundColor: "#fafafa" },
   txtState:{ color: "#000", textAlign: "left", position: "absolute" },
   // Estilos de las secciones o filtros
   secciones: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 50, marginVertical: 1 },

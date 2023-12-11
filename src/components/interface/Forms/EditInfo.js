@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet,TextInput, SafeAreaView, ScrollView, View, TouchableOpacity, Text, StatusBar } from 'react-native';
+import { TextInput, SafeAreaView, ScrollView, View, Text, StatusBar } from 'react-native';
 import { Button } from 'react-native-paper';
-import Octicons from '@expo/vector-icons/Octicons';
 // Componentes
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
-//  style={InputForms.inputContainer}
+
 export default EditInfo = ({ sliceFields }) => {
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
@@ -32,7 +31,6 @@ export default EditInfo = ({ sliceFields }) => {
                     <View style={InputForms.formContainer}>
                         {renderInputs()}
                     </View>
-                    
                 </View>
             </ScrollView>
             <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]}> Actualizar </Button>

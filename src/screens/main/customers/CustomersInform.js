@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text } from 'react-native';
 // React Native Paper
 import { PaperProvider, RadioButton, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Redux
@@ -74,7 +74,7 @@ export default CustomersInform = () => {
                                             <Text style={[styles.txtLabels, Fonts.cardsText]}>{formatFechaRecepcion(informe.fecha_recepcion)}</Text>
                                         </View>
                                         <TouchableOpacity style={{ paddingHorizontal:20 }} onPress={()=> navigation.navigate('InformDetails')}>
-                                            <Octicons name="chevron-right" size={24} color='#767983' />
+                                            <Icon name="chevron-right" size={24} color='#767983' />
                                         </TouchableOpacity>
                                     </View>
                                     <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />

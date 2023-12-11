@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Avatar, Card, Button, Divider, Appbar  } from 'react-native-paper';
 import { View, StyleSheet, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Firebase Auth
@@ -45,42 +45,42 @@ const CardInfo = () => {
                     <Card.Content>
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('user')}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Octicons name="person" size={24} color='#767983' />
+                                <Icon name="person" size={24} color='#767983' />
                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Editar Perfil</Text>
                             </View>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Octicons name='lock' size={24} color='#767983' />
+                                <Icon name='lock' size={24} color='#767983' />
                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Seguridad y contraseña</Text>
                             </View>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('history')} >
+                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} >
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Octicons name='history' size={24} color='#767983' />
+                                <Icon name='schedule' size={24} color='#767983' />
                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Historial de cálculos</Text>
                             </View>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('appData')}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Octicons name='shield' size={24} color='#767983' />
+                                <Icon name='shield' size={24} color='#767983' />
                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Políticas de privacidad</Text>
                             </View>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Octicons name='report' size={24} color='#767983' />
+                                <Icon name='report' size={24} color='#767983' />
                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Centro de ayuda</Text>
                             </View>
-                            <Octicons name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#767983' />
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                     </Card.Content>

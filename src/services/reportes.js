@@ -1,6 +1,5 @@
 import { getDatabase, ref, get } from 'firebase/database';
 
-
 export const getReportes = (idClient) =>{
 
     const db = getDatabase();
@@ -26,7 +25,7 @@ export const getReportes = (idClient) =>{
 
 export const getResultados = (idClient, idReport) => {
     
-    const db = getDatabase();
+    const db = getDatabase(app);
     const resultadosRef = ref(db, 'clientes/' + idClient + '/informes/' + idReport + '/informe_resultados' );
 
     return get(resultadosRef)

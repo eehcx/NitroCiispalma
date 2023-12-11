@@ -6,7 +6,7 @@ import { getDatabase, push, set, ref, orderByKey, limitToLast, onValue, off, get
 // Consultar ultimos calculos realizados y obtener el uid de cada uno
 
 export const getCalculus = (onUpdate) => {
-    const db = getDatabase();
+    const db = getDatabase(app);
     const calculosRef = ref(db, 'calculos');
 
     const handleDataChange = (snapshot) => {
@@ -26,7 +26,7 @@ export const getCalculus = (onUpdate) => {
 };
 
 export const getCountOfSubcollections = (parentCollection, onUpdate) => {
-    const db = getDatabase();
+    const db = getDatabase(app);
     const parentRef = ref(db, parentCollection);
 
     const handleDataChange = (snapshot) => {

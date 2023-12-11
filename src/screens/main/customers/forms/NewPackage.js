@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 // React Native Paper
 import { PaperProvider, Button, Text, Divider, Appbar } from 'react-native-paper';
-import Octicons from '@expo/vector-icons/Octicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // Estilos globales
 import InputForms from '../../../../styles/InputForms';
 import Fonts from '../../../../styles/Fonts';
@@ -53,7 +53,7 @@ export default NewPackage = () => {
 
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={addResearch} disabled={isInputEmpty}>
-                                    <Octicons name="duplicate" size={24} color='#767983' />
+                                    <Icon name="library-add" size={24} color='#767983' />
                                     <Text style={[styles.txtLabels, Fonts.addText]}>Añadir análisis</Text>
                                 </TouchableOpacity>
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
@@ -61,7 +61,7 @@ export default NewPackage = () => {
                                 {analisis.map((estudio, index) => (
                                     <View key={index}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                            <Octicons name="package" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
+                                            <Icon name="view-kanban" size={24} color='#767983' style={{ paddingHorizontal:15 }}/>
                                             <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
                                                 <Text style={[styles.txtLabels, Fonts.modalText,{ fontWeight: '700' }]}>Análisis del paquete</Text>
                                                 <Text style={[styles.txtLabels, Fonts.cardsText]}>Añadido: {estudio}</Text>
