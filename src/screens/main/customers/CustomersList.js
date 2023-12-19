@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
 // React Native Paper
 import { Avatar, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, RadioButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Styles
@@ -11,21 +10,18 @@ import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setClientId } from '../../../features/client/clientSlice';
+import { setNombre, setRazonSocial, setClientId } from '../../../features/client/clientSlice';
 // Servicio de consulta
 import { getClientes } from '../../../services/clientes';
+// Componentes
+import FilterPagesIcon from '../../../components/interface/filters/FilterPagesIcon';
 
 // Pagina de listado de clientes
 const CustomersList = () => {
     const [selectedClientId, setSelectedClientId] = useState(null);
     const dispatch = useDispatch();
     const clientId = useSelector(state => state.client.clientId);
-
-    const handleRadioButtonPress = (clienteId) => {
-        setSelectedClientId(clienteId);
-        console.log('Cliente ID seleccionado:', clienteId); // Añade este log para verificar el ID
-        dispatch(setClientId(clienteId));
-    };
+    //const client = useSelector(state => state.client);
 
     // Navegación
     const navigation = useNavigation();
@@ -43,6 +39,22 @@ const CustomersList = () => {
     // Hooks para el estado del componente
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
+
+    const handleRadioButtonPress = (clienteId, Nombre, RazonSocial) => {
+        setSelectedClientId(clienteId);
+
+        dispatch(setClientId(clienteId));
+        dispatch(setNombre(Nombre));
+        dispatch(setRazonSocial(RazonSocial));
+        console.log('Cliente seleccionado: \n', Nombre, RazonSocial, clienteId);
+    };
+
+    const handleDetails = async (informeId) => {
+        try {
+        } catch (error) {
+            console.error('Error al obtener datos de informes', error);
+        }
+    };
 
     // Firebase Realtime Database
     useEffect(() => {
@@ -71,15 +83,7 @@ const CustomersList = () => {
                         <ScrollView onScroll={onScroll}>
                             {clientes.slice().reverse().map((cliente, index) => (
                                 <View key={index}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 15, }}>
-                                        <Avatar.Text style={[{backgroundColor: '#d7dfe4', borderColor: "#bbb", borderWidth: 1}]} size={50} label={cliente.razon_social.substring(0, 1)} />
-                                        <View style={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{cliente.razon_social}</Text>
-                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{cliente.uid}</Text>
-                                        </View>
-                                        <RadioButton.Item color='#167139' value={cliente.uid} status={clientId === cliente.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(cliente.uid)}/>
-                                    </View>
-                                    <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                    <ItemListRadioButton title={cliente.razon_social} content={cliente.uid} onPress={() => handleRadioButtonPress(cliente.uid, cliente.nombre, cliente.razon_social)} status={ clientId === cliente.uid ? 'checked' : 'unchecked'} value={cliente.uid} details={() => handleDetails()}/>
                                 </View>
                             ))}
                         </ScrollView>

@@ -1,25 +1,32 @@
-import { getDatabase, ref, get, push, set, orderByChild, equalTo, child, query } from 'firebase/database';
+import { getDatabase, ref, get, push, set, orderByChild, equalTo, child, query, where } from 'firebase/database';
 import { updateData } from './services';
+import { app } from '../app/firebase';
 
 //Funcion para traer todos los informes de un cliente especifico
-export const getInformesCliente = async(clientId) =>{ 
-    const db = getDatabase();
-    const informesRef = ref(db, 'informes') 
+export const getInformesCliente = async (clientId) => {
+    try {
+        const db = getDatabase(app);
+        const informesRef = ref(db, 'informes');
 
-    //Este es una consulta para filtrar los informes que tengan el uid del cliente 
-    const informeQuery = query(informesRef, ...[orderByChild("uid"), equalTo(clientId)])
+        const informesSnapshot = await get(informesRef);
+        const informes = [];
 
-    return get(informeQuery).then((snapshot => {
-        if (snapshot.exists()){
-            const informesCliente = snapshot.val();
-            return informesCliente
+        if (informesSnapshot.exists()) {
+            informesSnapshot.forEach((childSnapshot) => {
+                const informe = childSnapshot.val();
+                if (informe && informe.uid_client === clientId) {
+                    informes.push(informe);
+                }
+            });
         }
-        else{
-            return 'No existen informes registrados a ese cliente...'
-        }
-    }))
-    .catch((err) => {throw err} )  
-}
+
+        //console.log('Informes obtenidos de Firebase:', informes);
+        return informes;
+    } catch (error) {
+        console.error('Error al obtener informes del cliente:', error);
+        return []; // Devuelve un array vacío en caso de error
+    }
+};
 
 // Trae los datos de un informe seleccionado
 export const getInforme = async(informeId) => {
@@ -45,7 +52,7 @@ export const getInforme = async(informeId) => {
     )
     .catch((err =>{throw err}))
 }
-    
+
 //Funcion para crear un informe, recibe los parametros de necesarios para crear un informe
 export const setInforme = async({uid_cliente, no_solicitud, fecha_entrega, fecha_recepcion, uid_package, no_muestras, observaciones, procedencia, tipo_cultivo}) => {
     const db = getDatabase() ;

@@ -19,12 +19,15 @@ import CustomersList from './screens/main/customers/CustomersList';
 import RegisterCustomer from './screens/main/customers/forms/NewCustomer';
 import RegisterInform from './screens/main/customers/forms/NewInform';
 import InformDetails from './screens/main/customers/InformDetails';
-import RegisterPackage from './screens/main/customers/PackageList';
-import PackageDetails from './screens/main/customers/PackageDetails';
-import NewPackage from './screens/main/customers/forms/NewPackage';
+import RegisterPackage from './screens/main/packages/PackageList';
+import PackageDetails from './screens/main/packages/PackageDetails';
+import NewPackage from './screens/main/packages/forms/NewPackage';
 
 import UserInformationScreen from './screens/main/profile/UserInfo';
 import ApplicationDataScreen from './screens/main/profile/privacity';
+
+// Calculator
+import BoroDetails from './screens/main/calculator/Details/BoroDetails';
 
 const Stack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -50,7 +53,7 @@ const UserScreens = () => (
 // Barra de navegación 
 const MainBarScreen=()=>{
     return (
-        <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#333', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0 } }} >
+        <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#41525C', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0 } }} >
             <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="home" size={27} color={color} /> }}/>
             <Tab.Screen name="customers" component={CustomersScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="inbox" size={27} color={color} /> }}/>
             <Tab.Screen name="profile" component={ProfileScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="person" size={27} color={color} /> }}/>
@@ -67,7 +70,8 @@ export default function Navigation() {
                 <Stack.Screen name="auth" component={AuthScreens} options={{ headerShown: false }} />
                 <Stack.Screen name="main" component={MainBarScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="user" component={UserScreens} options={{ headerShown: false }} />
-                <Stack.Screen name="calculator" component={CalculatorScreen} options={{ title: 'Calculadora', headerShown: false}}/>
+                <Stack.Screen name="calculator" component={CalculatorScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="boroDetails" component={BoroDetails} options={{ title: 'Ver fórmula', headerStyle: { backgroundColor: '#fafafa' }  }}/>
                 <Stack.Screen name="InformDetails" component={InformDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ headerShown: false }}/>

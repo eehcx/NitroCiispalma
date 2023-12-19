@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
-import { PaperProvider, RadioButton, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setClientId } from '../../../features/client/clientSlice';
 import { setInformId } from '../../../features/client/informSlice';
 // Servicios
-import { getReportes } from '../../../services/reportes';
+import { getInformesCliente } from '../../../services/informes';
 // Styles
 import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
+// Componentes
+import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
 
 // Pagina de listado de clientes
 export default CustomersInform = () => {
@@ -25,31 +24,42 @@ export default CustomersInform = () => {
     const clientId = useSelector(state => state.client.clientId);
     const informId = useSelector(state => state.inform.informId);
     // objeto de Informes
-    const [informes, setInformes] = useState({})
-    const informesArray = Object.values(informes);
+    const [Reportes, setReportes] = useState({})
+    const informesArray = Object.values(Reportes);
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
-    const handleRadioButtonPress = (informId) => {
+    // Radio Button para seleccionar el uid de informe
+    const handleRadioButtonPress = async (informId) => {
         setSelectedInformId(informId);
-        console.log('Informe seleccionado:', informId); // Añade este log para verificar el ID
+        console.log('Informe seleccionado:', informId); 
         dispatch(setInformId(informId));
     };
 
-    //getReportes
+    const handleDetails = async (informeId) => {
+        try {
+            dispatch(setInformId(informeId));
+            navigation.navigate('InformDetails');
+            console.log('Inform: ',informeId);
+        } catch (error) {
+            console.error('Error al obtener datos de informes', error);
+        }
+    };
+
+    // Obtener el listado de informes del cliente
+    const getInformesClienteData = async (clientId) => {
+        const informes = await getInformesCliente(clientId);
+        setReportes(informes);
+    };
+
     useEffect(() => {
-        getReportes(clientId)
-            .then((informesCliente) => {
-                setInformes(informesCliente);
-            })
-            .catch((error) => {
-                console.error('Error al obtener informes del cliente', error);
-            });
+        getInformesClienteData(clientId);
         setLoading(false);
-    }, []);
-    console.log("INFORMES:#############################\n", informes)
+    }, [clientId]);
+
+    // Formateo de fecha
     const formatFechaRecepcion = (fechaRecepcion) => {
         const formattedDate = new Date(fechaRecepcion);
         return formattedDate.toLocaleString();
@@ -67,17 +77,7 @@ export default CustomersInform = () => {
                         <ScrollView onScroll={onScroll}>
                             {informesArray.slice().reverse().map((informe, index) => (
                                 <View key={index}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical:12, }}>
-                                        <RadioButton.Item color='#167139' value={informe.uid} status={informId === informe.uid ? 'checked' : 'unchecked'} onPress={() => handleRadioButtonPress(informe.uid)} />
-                                        <View style={{ flexDirection: 'column', alignItems: 'flex-start', marginRight:'20%' }}>
-                                            <Text style={[styles.txtLabels, Fonts.modalText]}>{informe.tipo_analisis}</Text>
-                                            <Text style={[styles.txtLabels, Fonts.cardsText]}>{formatFechaRecepcion(informe.fecha_recepcion)}</Text>
-                                        </View>
-                                        <TouchableOpacity style={{ paddingHorizontal:20 }} onPress={()=> navigation.navigate('InformDetails')}>
-                                            <Icon name="chevron-right" size={24} color='#767983' />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+                                    <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
                                 </View>
                             ))}
                         </ScrollView>
@@ -90,6 +90,4 @@ export default CustomersInform = () => {
 
 const styles = StyleSheet.create({
     container: { flexGrow: 1 },
-    cardList:{ marginTop: 5, marginBottom: 5 },
-    txtLabels: { marginLeft: 16, color: '#67757d', fontSize: 15 },
 });

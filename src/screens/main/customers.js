@@ -8,6 +8,7 @@ import CustomersList from './customers/CustomersList';
 import CustomersCalc from './customers/CustomersCalc';
 import CustomersInform from './customers/CustomersInform';
 import FilterPagesReduced from '../../components/interface/filters/FilterPagesReduced';
+import FilterPagesIcon from '../../components/interface/filters/FilterPagesIcon';
 // Redux
 import { useSelector } from 'react-redux';
 
@@ -27,9 +28,9 @@ export default CustomersScreen = () => {
             </Appbar.Header>
             <View style={[styles.BoxContainer, { marginBottom: 30, marginRight: 15 }]}>
                 <View style={[styles.row]}>
-                    <FilterPagesReduced text="Listado" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Listado"} onPress={() => filterContent("Listado")}/>
-                    <FilterPagesReduced isDisabled={!clientId} text="Informes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Informes"} onPress={() => filterContent("Informes")}/>
-                    <FilterPagesReduced isDisabled={!informId} text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Cálculos"} onPress={() => filterContent("Cálculos")}/>
+                    <FilterPagesIcon icon='group' iconSize={24} text="Listado" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Listado"} onPress={() => filterContent("Listado")}/>
+                    <FilterPagesIcon isDisabled={!clientId} icon='feed' iconSize={24} text="Informes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Informes"} onPress={() => filterContent("Informes")}/>
+                    <FilterPagesIcon isDisabled={!informId} icon='functions' iconSize={24} text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "Cálculos"} onPress={() => filterContent("Cálculos")}/>
                 </View>
             </View>
             {selectedOption === 'Listado' && <CustomersList />}
@@ -40,12 +41,7 @@ export default CustomersScreen = () => {
 };
 // customerList
 const styles = StyleSheet.create({
-    // Estilos de btn
-    groupChildLayout: {width: 90, height: 40, backgroundColor: "#ECECEC", borderRadius: 20},
-    FilterContainer: {justifyContent: 'center', alignItems: 'center'},
     containerIco: {flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
-    Icon3d: {marginBottom: 5},
-    txtIcon: { textAlign: 'center', paddingTop: 8},
     // Estilos del container
     row: { flexDirection: 'row', justifyContent: 'space-between' },
 });

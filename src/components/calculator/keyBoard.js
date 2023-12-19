@@ -1,86 +1,85 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import CalculatorRows from '../../components/calculator/calcRows';
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setInput, selectCurrentInput, reset } from '../../features/calc/CalculatorSlice';
+// inputValue
+export default KeyBoard = ({ onValueChange, PressRegister }) => {  
+    // Redux 
+    const dispatch = useDispatch();
+    const currentInput = useSelector(selectCurrentInput);
+    // Valores de los inputs (texto)
+    const [valor, setValor] = useState('');
 
-// FALTA AGREGAR ONPRESS PERSONALISADO
-const rows = [
-    [
-        { label: '7', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '8', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '9', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '⌫', backgroundColor: '#82BF53', borderRadius: 25 },
-    ],[
-        { label: '4', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '5', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '6', backgroundColor: '#fff', borderRadius: 25 },
-        { label: 'x', backgroundColor: '#82BF53', borderRadius: 25 },
-    ],[
-        { label: '1', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '2', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '3', backgroundColor: '#fff', borderRadius: 25 },
-        { label: 'R', backgroundColor: '#82BF53', borderRadius: 25 },
-    ],[
-        { label: '.', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '0', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '?', backgroundColor: '#fff', borderRadius: 25 },
-        { label: '=', backgroundColor: '#82BF53', borderRadius: 25 },
-    ]
-];
+    // Btn de backspace (borrar)
+    const handleBackspace = () => {
+        const newValue = valor.slice(0, -1);
+        setValor(newValue);
+        onValueChange(valor);
+        //console.log('Valor restado: ',valor);
+    };
 
-export default KeyBoard = ({}) => (
-
-    /*
-    // Seleccion de la funcion
-    const [selectedFunction, setSelectedFunction] = useState('');
-    // Selecionar un tipo de keyboard
-    const [keyboardType, setKeyboardType] = useState('Normal');
-
-    // Valores de los inputs (datos alternos)
-    const [TextH_Al, setTextH_Al] = useState('');
-    //
-    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-    const [calculoId, setCalculoId] = useState('');
-    // Convertir string a float
-    const convertToFloat = (value) => { return parseFloat(value); };
-    const [IdLab, setIdLab] = useState('B')
-
-    // Tipos de teclado
+    // Funcionamiento del teclado, ir sumando teclas
     const handleNumberPress = (number) => {
         try{
-            if (keyboardType === 'Normal') {
-                setTextScreen(textScreen + number);
-            } else{
-                setTextH_Al(TextH_Al + number);
-            }
+            setValor(valor + number);
+            onValueChange(valor);
+            //console.log('Valor nuevo: ', valor);
         } catch (error) {
             console.error('Error mandar el número:', error);
         }
     };
 
-    // Btn de backspace (borrar)
-    const handleBackspace = () => {
-        if (keyboardType === 'Normal'){ const newValue = textScreen.slice(0, -1);
-            setTextScreen(newValue);
-        } else { const newValueH_Al = TextH_Al.slice(0, -1);
-            setTextH_Al(newValueH_Al);
-        }
+    const handleNext = () => {
+        setValor('')
+        dispatch(setInput(currentInput + 1));
+        console.log('Input actual: ', currentInput)
     };
 
-    // Cambiar el tipo de teclado
-    const handleKeyboardChange = ({ type, functionKey }) => {
-        setKeyboardType(type);
-        setIsButtonEnabled(type !== 'Normal');
-        if (functionKey) {
-            setSelectedFunction(functionKey);
-        }
-    };*/
+    const handleClear = () => {
+        dispatch(reset());
+        console.log('Input actual: ', currentInput)
+    };
 
-    <View style={styles.keyboardContainer}>
-        {rows.map((buttons, index) => (
-            <CalculatorRows key={index} buttons={buttons} />
-        ))}
-    </View>
-);
+    const rows = [
+        [
+            { label: '7', onPress: () => handleNumberPress('7'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '8', onPress: () => handleNumberPress('8'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '9', onPress: () => handleNumberPress('9'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '⌫', onPress: handleBackspace, backgroundColor: '#82BF53', borderRadius: 25 },
+        ],[
+            { label: '4', onPress: () => handleNumberPress('4'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '5', onPress: () => handleNumberPress('5'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '6', onPress: () => handleNumberPress('6'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '↑', onPress: PressRegister, backgroundColor: '#82BF53', borderRadius: 25 },
+        ],[
+            { label: '1', onPress: () => handleNumberPress('1'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '2', onPress: () => handleNumberPress('2'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '3', onPress: () => handleNumberPress('3'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '↓', onPress: handleNext, backgroundColor: '#82BF53', borderRadius: 25 },
+        ],[
+            { label: '0', onPress: () => handleNumberPress('0'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: '.', onPress: () => handleNumberPress('.'), backgroundColor: '#fff', borderRadius: 25 },
+            { label: 'C', onPress: handleClear,backgroundColor: '#fff', borderRadius: 25 },
+            { label: '=', backgroundColor: '#82BF53', borderRadius: 25 },
+        ]
+    ];
+
+    useEffect(() => {
+        onValueChange(valor);
+    }, [valor]);
+
+    return (
+        <>
+            <View style={styles.keyboardContainer}>
+                {rows.map((buttons, index) => (
+                    <CalculatorRows key={index} buttons={buttons} />
+                ))}
+            </View>
+        </>
+    );
+};
 
 const styles = StyleSheet.create({
     keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' },

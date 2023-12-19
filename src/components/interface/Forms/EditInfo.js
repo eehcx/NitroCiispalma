@@ -5,18 +5,22 @@ import { Button } from 'react-native-paper';
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 
-export default EditInfo = ({ sliceFields }) => {
+export default EditInfo = ({ sliceFields, update, onUpdate }) => {
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
+
+    const handleChange = (field, text) => {
+        onUpdate({ ...update, [field]: text });
+    };
 
     const renderInputs = () => {
         return Object.entries(sliceFields).map(([field, value], index) => {
             return (
                 <React.Fragment key={index}>
                     <Text style={[Fonts.modalText, { marginRight: 200 }]}>{field}</Text>
-                    <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder={value} maxLength={50} />
+                    <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder={value} value={update && update[field] !== undefined ? update[field] : ''} onChangeText={(text) => handleChange(field, text)} maxLength={50}  />
                 </React.Fragment>
             );
         });

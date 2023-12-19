@@ -7,70 +7,58 @@ import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-nati
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 //Componentes
-import ItemListIcon from '../../../components/interface/ItemListIcon';
+import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
 // Iconos
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Redux
-import { useSelector } from 'react-redux';
-import { setClientId } from '../../../features/client/clientSlice';
-import { setInformId } from '../../../features/client/informSlice';
-//
-import { getResultados } from '../../../services/reportes';
-// Firebase
-import { app } from '../../../app/firebase';
-import { getDatabase, push, set, ref, onValue, off, get } from 'firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIdLab } from '../../../features/calc/CalculatorSlice';
+// Servicios
+import { getMuestras } from '../../../services/calculos';
 
 // Pagina de listado de clientes
 export default CustomersCalc = () => {
+    // Redux
+    const dispatch = useDispatch();
+    // ID Muestra
+    const [selectedIdLab, setSelectedIdLab] = useState(null);
+    const IdLab = useSelector(state => state.calculator.IdLab);
     const [numMuestra, setNumMuestra] = useState('');
     // Redux:
-    const clientId = useSelector(state => state.client.clientId);
     const informId = useSelector(state => state.inform.informId);
     const [Muestras, setMuestras] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
+    // Radio Button para seleccionar el id de muestra
+    const handleRadioButtonPress = async (IdLaboratorio) => {
+        setSelectedIdLab(IdLaboratorio);
+        console.log('Informe seleccionado:', IdLaboratorio); 
+        dispatch(setIdLab(IdLaboratorio));
+    };
+
+    const handleDetails = async (IdLaboratorio) => {
+        try {
+        } catch (error) {
+            console.error('Error al obtener datos de informes', error);
+        }
+    };
+
     useEffect(() => {
-        getResultados(clientId, informId)
-            .then((resultados) => {
-                if (resultados && resultados.length > 0) {
-                    const informeResultados = resultados[0];
-                    const uidCalc = informeResultados.uid;
+        const fetchMuestras = async () => {
+            try {
+                const muestrasData = await getMuestras(informId);
+                setMuestras(muestrasData || []); 
+            } catch (error) {
+                console.error('Error al obtener las muestras:', error);
+            }
+        };
+        console.log('Muestras: \n',Muestras);
 
-                    if (uidCalc) {
-                        const db = getDatabase(app);
-                        const muestrasRef = ref(db, 'calculos/' + uidCalc + '/muestras');
-
-                        return get(muestrasRef)
-                            .then((snapshot) => {
-                                if (snapshot.exists()) {
-                                    const muestras = snapshot.val();
-                                    console.log('Muestras:', muestras);
-
-                                    // Actualiza el estado de las muestras
-                                    setMuestras(muestras);
-                                } else {
-                                    console.log('No se encontraron muestras en los resultados.');
-                                }
-                            })
-                            .catch((error) => {
-                                console.error('Error al obtener muestras:', error);
-                            });
-                    } else {
-                        console.log('No se encontró un UID de cálculos válido en los resultados.');
-                    }
-                } else {
-                    console.log('No se encontraron resultados.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error al obtener resultados:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []); 
+        fetchMuestras();
+        setLoading(false);
+    }, [informId]);
 
     return (
         <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
@@ -87,16 +75,15 @@ export default CustomersCalc = () => {
                                     <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
                                 </View>
                                 <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
-                                    <Icon name="tab_group" size={24} color='#767983' />
+                                    <Icon name="library-add" size={24} color='#767983' />
                                     <Text style={[styles.txtLabels, Fonts.addText]}>Añadir muestra</Text>
                                 </TouchableOpacity>
                                 <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                                 {Muestras.map((muestra, index) => (
                                     <View key={index}>
-                                        <ItemListIcon title={"Id Laboratorio. " + muestra.IdLab} content="Sin cálculos hechos" icon="project" iconSize={24} />
+                                        <ItemListRadioButton title={"Id Laboratorio. " + muestra.IdLab} content="Sin cálculos hechos" onPress={() => handleRadioButtonPress(muestra.IdLab)} status={IdLab === muestra.IdLab ? 'checked' : 'unchecked'} value={muestra.IdLab} details={() => handleDetails(muestra.IdLab)}/>
                                     </View>
                                 ))}
-                                
                             </>
                             </ScrollView>
                     )}

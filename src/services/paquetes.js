@@ -1,4 +1,4 @@
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, child, get, push, set } from "firebase/database";
 import { updateData } from "./services";
 
 export const getPaquetes = async () => {
@@ -37,7 +37,7 @@ export const setPaquetes = async (nombrePaquete, tipoPaquete, [...elementos]) =>
     fecha_creacion: new Date().toISOString(),
     analisis: elementos
   };
-  await set(ref(database, `paquetes/${nuevoPaqueteId}`), paqueteData);
+  await set(ref(db, `paquetes/${nuevoPaqueteId}`), paqueteData);
   return `Paquete registrado! Ahora esta disponible el paquete: ${nombrePaquete}`
 };
 
