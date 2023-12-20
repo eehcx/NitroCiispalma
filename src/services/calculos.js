@@ -69,32 +69,36 @@ export const setMuestras = async (calculoId, numLab) => {
 };
 
 export const getMuestras = async (informeId) => {
+<<<<<<< HEAD
   
   const informeRef = ref(
     db,
     "informes/" + informeId + "/informe_resultados/0/uid_calculo"
   );
+=======
+  try {
+    const db = getDatabase();
+    const informeRef = ref(db, `informes/${informeId}/informe_resultados/0/uid_calculo`);
+>>>>>>> 924c425199b3c52d1655737a79456a8bba577900
 
-  get(informeRef)
-    .then((calculoIdSnapshot) => {
-      if (calculoIdSnapshot.exists()) {
-        const calculoId = calculoIdSnapshot.val();
+    const calculoIdSnapshot = await get(informeRef);
+    if (calculoIdSnapshot.exists()) {
+      const calculoId = calculoIdSnapshot.val();
+      console.log(calculoId);
 
-        return get(ref(db, "calculos/" + calculoId))
-          .then((snapshot) => {
-            if (snapshot.exists()) {
-              return snapshot.val().muestras;
-            }
-          })
-          .catch((error) => {
-            throw error;
-          });
+      const snapshot = await get(ref(db, `calculos/${calculoId}`));
+      if (snapshot.exists()) {
+        const muestras = snapshot.val().muestras;
+        return muestras || [];
       }
-    })
-    .catch((error) => {
-      throw error;
-    });
+    }
+    return []; // Si no se encuentran datos de muestras, devuelve un array vacío
+  } catch (error) {
+    console.error('Error al obtener las muestras:', error);
+    throw error;
+  }
 };
+
 
 export const updateMuestra = async (muestraId, { ...params }) => {
   updateData(`calculos/muestras/${muestraId}`, { ...params });

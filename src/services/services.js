@@ -1,4 +1,5 @@
 import { getDatabase, ref, get, push, set, update, orderByChild, equalTo, child, query } from 'firebase/database';
+//import { app } from '../app/firebase';
 
 export const updateData = async (mainRoute, {...params}) =>{
     const db = getDatabase();

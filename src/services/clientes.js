@@ -1,4 +1,4 @@
-import { getDatabase, ref, child, get} from "firebase/database";
+import { getDatabase, ref, child, get, push, set } from "firebase/database";
 import { updateData } from "./services";
 
 export const getClientes = async () => {
@@ -23,7 +23,7 @@ export const getClientes = async () => {
     }
 };
 
-export const setCliente = async (nombre, telefono) => {
+export const setCliente = async (nombre, razon_social, telefono) => {
     try {
         // Obtener la referencia a la base de datos
         const db = getDatabase();
@@ -36,11 +36,12 @@ export const setCliente = async (nombre, telefono) => {
         const newClientData = {
             uid: newClientId,
             nombre: nombre,
+            razon_social: razon_social,
             telefono: telefono,
             fecha_creacion: new Date().toISOString(),
         };
         // Guardando el cliente
-        await set(ref(database, `clientes/${newClientId}`), newClientData);
+        await set(ref(db, `clientes/${newClientId}`), newClientData);
         console.log('Client Saved!' + newClientId);
     } catch (error) {
     console.error('Error al guardar el cliente:', error);

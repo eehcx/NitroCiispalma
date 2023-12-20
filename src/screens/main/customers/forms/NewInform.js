@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Estilos globales
-import buttonStyles from '../../../../styles/buttonStyles';
 import InputForms from '../../../../styles/InputForms';
 import Fonts from '../../../../styles/Fonts'; 
 // Firebase
@@ -17,6 +16,7 @@ import FilterPagesExtended from '../../../../components/interface/filters/Filter
 import DatePickerComponent from '../../../../components/interface/Forms/DatePicker';
 // Servicios
 import { savePackage, saveInformeResultados, saveInform } from '../../../../services/setService';
+import { setInforme } from '../../../../services/informes';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { update, reset, selectCurrentForm, setForm } from '../../../../features/forms/ReportSlice';
@@ -163,20 +163,7 @@ export default RegisterInform = () => {
         //console.log(id)
 
         // Llamamos a la función saveInform y pasamos los valores correspondientes
-        saveInform(
-            id,
-            dateRecepcion.toISOString(),
-            FechaEntrega.toISOString(),
-            numMuestras,
-            procedencia,
-            tipoCultivo,
-            numSolicitud,
-            metodoUsado,
-            Observaciones,
-            nombrePaquete,
-            analisisDelPaquete,
-            selected
-        );
+        saveInform( id, dateRecepcion.toISOString(), FechaEntrega.toISOString(), numMuestras, procedencia, tipoCultivo, numSolicitud, metodoUsado, Observaciones, nombrePaquete, analisisDelPaquete, selected );
         navigation.goBack();
     };
 
