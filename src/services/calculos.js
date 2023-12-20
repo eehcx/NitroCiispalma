@@ -69,17 +69,11 @@ export const setMuestras = async (calculoId, numLab) => {
 };
 
 export const getMuestras = async (informeId) => {
-<<<<<<< HEAD
   
   const informeRef = ref(
     db,
     "informes/" + informeId + "/informe_resultados/0/uid_calculo"
   );
-=======
-  try {
-    const db = getDatabase();
-    const informeRef = ref(db, `informes/${informeId}/informe_resultados/0/uid_calculo`);
->>>>>>> 924c425199b3c52d1655737a79456a8bba577900
 
     const calculoIdSnapshot = await get(informeRef);
     if (calculoIdSnapshot.exists()) {
