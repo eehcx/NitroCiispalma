@@ -1,11 +1,10 @@
 // store.js
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'; //getDefaultMiddleware
 import rootReducer from '../features/index';
 
 const store = configureStore({
     reducer: rootReducer,
-    middleware: process.env.NODE_ENV === 'production' ? getDefaultMiddleware() : [],
-    // Otros middleware u opciones
+    //middleware: getDefaultMiddleware(),
 });
 
 export default store;
