@@ -1,36 +1,4 @@
 {
-  "expo": {
-    "name": "NitroCiispalma",
-    "slug": "NitroCiispalma",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#fafafa"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#fafafa"
-      },
-      "package": "com.jeeimkg.NitroCiispalma"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "84a36e26-9b0c-404b-ae31-03516c924c0f"
-      }
-    }
-  }
+  "name": "NitroCalculator",
+  "displayName": "Ciispalma"
 }
