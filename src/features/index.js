@@ -10,6 +10,8 @@ import BoroSlice from './calc/foliar/BoroSlice';
 import azufreSlice from './calc/foliar/azufreSlice';
 import MacronutrientesSlice from './calc/foliar/MacronutrientesSlice';
 import MicronutrientesSlice from './calc/foliar/MicronutrientesSlice';
+import PorcentaJentSlice from './calc/foliar/PorcentaJentSlice';
+import PorcentaJepSlice from './calc/foliar/PorcentaJepSlice';
 
 const rootReducer = combineReducers({
     user: userSlice,
@@ -20,7 +22,9 @@ const rootReducer = combineReducers({
     boro: BoroSlice,
     azufre: azufreSlice,
     macronutrientes: MacronutrientesSlice,
-    micronutrientes: MicronutrientesSlice
+    micronutrientes: MicronutrientesSlice,
+    porcentajent: PorcentaJentSlice,
+    porcentajep: PorcentaJepSlice
 });
 
 export default rootReducer;

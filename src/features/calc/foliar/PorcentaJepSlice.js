@@ -11,8 +11,8 @@ const initialState = {
     resultado: 0.0,    // Resultado del cálculo
 };
 
-export const calcularporcentajepSlice = createSlice({
-    name: 'calcularporcentajep',
+export const PorcentaJepSlice = createSlice({
+    name: 'porcentajep',
     initialState,
     reducers: {
         // Reducer para establecer el valor de AbsM
@@ -51,5 +51,5 @@ export const calcularporcentajepSlice = createSlice({
     },
 });
 
-export const { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, calcularPorcentajeP, clear } = calcularporcentajepSlice.actions;
-export default calcularporcentajepSlice.reducer;
+export const { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, calcularPorcentajeP, clear } = PorcentaJepSlice.actions;
+export default PorcentaJepSlice.reducer;

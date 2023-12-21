@@ -9,6 +9,8 @@ import { BoroCalc } from './calc/BoroCalc';
 import { AzufreCalc } from './calc/AzufreCalc';
 import { MacronutrientesCalc } from './calc/MacronutrientesCalc';
 import { MicronutrientesCalc } from './calc/MicronutrientesCalc';
+import { PorcentaJent } from './calc/PorcentajeJent';
+import { PorcentaJep } from './calc/PorcentajeJep';
 
 const NullScreen = ({}) => {
 
@@ -47,6 +49,8 @@ export const AlternativeScreen = ({ inputValue }) => {
                             {selectedOption === 'Calcular Azufre' && <AzufreCalc TextLabel={inputValue} />}
                             {selectedOption === 'Macronutrientes' && <MacronutrientesCalc TextLabel={inputValue} />}
                             {selectedOption === 'Micronutrientes' && <MicronutrientesCalc TextLabel={inputValue} />}
+                            {selectedOption === 'Porcentaje Jent' && <PorcentaJent TextLabel={inputValue} />}
+                            {selectedOption === 'Porcentaje Jep' && <PorcentaJep TextLabel={inputValue} />}
                         </View>
                     </ScrollView>
                 </SafeAreaView>

@@ -25,6 +25,8 @@ export default HomeScreen = () => {
   // Redux - User
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
+  const client = useSelector(state => state.client);
+  const calculator = useSelector(state => state.calculator);
 
   useEffect(() => {
     const unsubscribe = getCountOfSubcollections('clientes', (count) => { SetNumClientes(count); });
@@ -40,7 +42,7 @@ export default HomeScreen = () => {
   return (
     <>
       <StatusBar backgroundColor='#fafafa'  barStyle="dark-content" />
-      <View className="flex-1 justify-center items-center" style={{ backgroundColor: '#fafafa', paddingBottom: 25 }} >
+      <View className="flex-1 justify-center items-center" style={{ backgroundColor: '#fafafa', paddingBottom: 50 }} >
         <View style={[{ top: 25, left: 30 }]}>
           <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName}</Text> 
           <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
@@ -52,16 +54,16 @@ export default HomeScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.secciones, { top: 40 }]}>
-          <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" , fontWeight: "bold" }]}>Estadísticas</Text>
+        <View style={[styles.secciones, { top: 30 }]}>
+          <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" , fontWeight: "bold" }]}>Cliente</Text>
         </View>
 
-        <View style={{ backgroundColor: "#f0f0f0", height: 75, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "20%", marginBottom: "10%", marginLeft: "5%" }} >
+        <View style={{ backgroundColor: "#f0f0f0", height: 90, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "14%", marginBottom: "7%", marginLeft: "5%" }} >
           <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
             <Icon name="dns" size={18} color="#333" />
-            <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>Datos Consumidos</Text>
+            <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>{client.RazonSocial ? client.RazonSocial : 'Cliente seleccionado'}</Text>
           </View>
-          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>10.88MB Descarga</Text>
+          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{'No. Laboratorio '+calculator.IdLab ? 'No. Laboratorio '+ calculator.IdLab : 'Id Laboratorio'}</Text>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>

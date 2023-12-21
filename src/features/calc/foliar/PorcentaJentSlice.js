@@ -8,8 +8,8 @@ const initialState = {
     resultado: 0.0, // Resultado del cálculo
 };
 
-export const calcularporcentajentSlice = createSlice({
-    name: 'calcularporcentajent',
+export const PorcentaJentSlice = createSlice({
+    name: 'porcentajent',
     initialState,
     reducers: {
         // Reducer para establecer el valor de Vm
@@ -37,5 +37,5 @@ export const calcularporcentajentSlice = createSlice({
     },
 });
 
-export const { setVm, setVb, setN, setP, calcularPorcentajeNt, clear } = calcularporcentajentSlice.actions;
-export default calcularporcentajentSlice.reducer;
+export const { setVm, setVb, setN, setP, calcularPorcentajeNt, clear } = PorcentaJentSlice.actions;
+export default PorcentaJentSlice.reducer;

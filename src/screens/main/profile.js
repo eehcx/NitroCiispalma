@@ -10,6 +10,8 @@ import { app } from '../../app/firebase';
 import { getAuth, signOut } from "firebase/auth";
 // Styles
 import Fonts from '../../styles/Fonts';
+// Componentes
+import ModalAlert from '../../components/interface/ModalAlert';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +20,17 @@ import { logout } from '../../features/user/userSlice';
 const CardInfo = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const [isModalVisible, setModalVisible] = useState(false);
+    const handleModal = async () => {
+        try {
+            setModalVisible(true);
+        } catch (error) {
+        console.log('Error al abir el modal', error);
+        }
+    };
+    const handleClose = async () => {
+        setModalVisible(false);
+    };
     //LOGOUT
     const handleLogout = async () => {
         const auth = getAuth(app);
@@ -40,6 +53,7 @@ const CardInfo = () => {
 
     return(
         <SafeAreaView>
+            {isModalVisible && <ModalAlert visible={isModalVisible} title='Cerrar sesión' message="¿Seguro que desea cerrar sesión?" button='LOGOUT' onPress={()=> handleLogout()} close={handleClose} />}
             <ScrollView>
                 <View style={[styles.CardShadow,{ margin: 4, marginBottom: -10, borderRadius: 16, backgroundColor: '#fafafa' }]}>
                     <Card.Content>
@@ -84,7 +98,7 @@ const CardInfo = () => {
                         </TouchableOpacity>
                         <Divider style={{ backgroundColor: "#e4e5e6"}} />
                     </Card.Content>
-                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleLogout()}> LOGOUT </Button>
+                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleModal()}> LOGOUT </Button>
                 </View>
             </ScrollView>
         </SafeAreaView>

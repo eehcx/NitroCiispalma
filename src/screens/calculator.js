@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, StatusBar, TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, StatusBar, TextInput, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Componentes
@@ -7,6 +7,7 @@ import KeyBoard from '../components/calculator/keyBoard';
 import HistoryScreen from './main/calculator/History';
 import CalculationsList from './main/calculator/CalcList';
 import { AlternativeScreen } from '../components/calculator/AlternativeScreen';
+import ModalAlert from '../components/interface/ModalAlert';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 // React Navigation
@@ -29,6 +30,7 @@ const MainScreen = ({}) => {
 }
 
 export default CalculatorScreen = () => {
+    const [isModalVisible, setModalVisible] = useState(false);
     // Navegación
     const navigation = useNavigation();
     // Redux 
@@ -55,6 +57,7 @@ export default CalculatorScreen = () => {
 
     useEffect(() => {
         if (uidRef.current === null && informIdRef.current === null) {
+            alert('Debes selecionar un cliente e informe primero')
             navigation.goBack();
         }
     }, [uidRef, informIdRef]);

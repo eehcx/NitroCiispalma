@@ -8,12 +8,10 @@ import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-// Servicios
-import { getInforme , updateInforme } from '../../../services/informes';
 
-export default InformDetails = ({}) => {
+export default ClientDetails = ({}) => {
     // Redux
-    const informId = useSelector(state => state.inform.informId);
+    const client = useSelector(state => state.client);
     const [Resultados, setResultados] = useState(null);
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
@@ -25,16 +23,8 @@ export default InformDetails = ({}) => {
     const [procedencia, setProcedencia] = useState('');
     const [tipo_cultivo, setTipoCultivo] = useState('');
 
-    const params = {
-        no_muestras,
-        observaciones,
-        procedencia,
-        tipo_cultivo,
-    };
-
     const handleUpdate = async () => {
         try {
-            updateInforme(informId, params );
             console.log('Informe actualizado...');
         } catch (error) {
             console.error('Error al obtener el informe:', error);
@@ -42,24 +32,7 @@ export default InformDetails = ({}) => {
     };
 
     useEffect(() => {
-        const obtenerDatosInforme = async () => {
-            try {
-                const [informe, resultados] = await getInforme(informId);
-                console.log('Informes \n',informe, '\n Resultados \n',resultados);
-                setResultados({resultados});
 
-                if (resultados) {
-                    setNoMuestras(informe.no_muestras);
-                    setObservaciones(informe.observaciones);
-                    setProcedencia(informe.procedencia);
-                    setTipoCultivo(informe.tipo_cultivo);
-                }
-            } catch (error) {
-                console.error('Error al obtener el informe:', error);
-            }
-        };
-    
-        obtenerDatosInforme();
     }, []);
 
     return (
@@ -69,10 +42,9 @@ export default InformDetails = ({}) => {
                 <ScrollView onScroll={onScroll}>
                     <View style={InputForms.container}>
                         <View style={InputForms.formContainer}>
-                            <InputText backgroundColor='#ECECEC' placeholder='No. Muestras' value={no_muestras} onChange={setNoMuestras} label='No. Muestras' marginRight={170} />
-                            <InputText backgroundColor='#ECECEC' placeholder='Escribir las observaciones' value={observaciones} onChange={setObservaciones} label='Observaciones' marginRight={160} />
-                            <InputText backgroundColor='#ECECEC' placeholder='Escribir una procedencia' value={procedencia} onChange={setProcedencia} label='Procedencia' marginRight={170} />
-                            <InputText backgroundColor='#ECECEC' placeholder='Escribir un Tipo de cultivo' value={tipo_cultivo} onChange={setTipoCultivo} label='Tipo cultivo' marginRight={180} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={client.Nombre} label='Nombre' marginRight={200} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Razón social' value={client.RazonSocial} label='Empresa' marginRight={200} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Número de telefono' value={client.Telefono} label='Telefono' marginRight={200} />
                         </View>
                     </View>
                 </ScrollView>

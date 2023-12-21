@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
-import { Avatar, Divider, ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider, RadioButton } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Styles
 import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setNombre, setRazonSocial, setClientId } from '../../../features/client/clientSlice';
+import { setNombre, setRazonSocial, setClientId, setTelefono } from '../../../features/client/clientSlice';
 // Servicio de consulta
 import { getClientes } from '../../../services/clientes';
-// Componentes
-import FilterPagesIcon from '../../../components/interface/filters/FilterPagesIcon';
 
 // Pagina de listado de clientes
 const CustomersList = () => {
@@ -40,19 +37,28 @@ const CustomersList = () => {
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
-    const handleRadioButtonPress = (clienteId, Nombre, RazonSocial) => {
+    const handleRadioButtonPress = (clienteId, Nombre, RazonSocial, Telefono) => {
         setSelectedClientId(clienteId);
 
         dispatch(setClientId(clienteId));
         dispatch(setNombre(Nombre));
         dispatch(setRazonSocial(RazonSocial));
-        console.log('Cliente seleccionado: \n', Nombre, RazonSocial, clienteId);
+        dispatch(setTelefono(Telefono));
+        console.log('Cliente seleccionado: \n', Nombre, RazonSocial, clienteId, Telefono);
     };
 
-    const handleDetails = async (informeId) => {
+    const handleDetails = async (clienteId, Nombre, RazonSocial, Telefono) => {
         try {
+            setSelectedClientId(clienteId);
+
+            dispatch(setClientId(clienteId));
+            dispatch(setNombre(Nombre));
+            dispatch(setRazonSocial(RazonSocial));
+            dispatch(setTelefono(Telefono));
+
+            navigation.navigate('ClientDetails')
         } catch (error) {
-            console.error('Error al obtener datos de informes', error);
+            console.error('Error al obtener datos de clientes', error);
         }
     };
 
@@ -83,7 +89,7 @@ const CustomersList = () => {
                         <ScrollView onScroll={onScroll}>
                             {clientes.slice().reverse().map((cliente, index) => (
                                 <View key={index}>
-                                    <ItemListRadioButton title={cliente.razon_social} content={cliente.uid} onPress={() => handleRadioButtonPress(cliente.uid, cliente.nombre, cliente.razon_social)} status={ clientId === cliente.uid ? 'checked' : 'unchecked'} value={cliente.uid} details={() => handleDetails()}/>
+                                    <ItemListRadioButton title={cliente.razon_social} content={cliente.uid} onPress={() => handleRadioButtonPress(cliente.uid, cliente.nombre, cliente.razon_social, cliente.telefono)} status={ clientId === cliente.uid ? 'checked' : 'unchecked'} value={cliente.uid} details={() => handleDetails(cliente.uid, cliente.nombre, cliente.razon_social, cliente.telefono)}/>
                                 </View>
                             ))}
                         </ScrollView>

@@ -37,6 +37,12 @@ export default KeyBoard = ({ onValueChange, PressRegister }) => {
         console.log('Input actual: ', currentInput)
     };
 
+    const handleBack = () => {
+        setValor('')
+        dispatch(setInput(currentInput - 1));
+        console.log('Input actual: ', currentInput)
+    };
+
     const handleClear = () => {
         dispatch(reset());
         console.log('Input actual: ', currentInput)
@@ -52,7 +58,7 @@ export default KeyBoard = ({ onValueChange, PressRegister }) => {
             { label: '4', onPress: () => handleNumberPress('4'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '5', onPress: () => handleNumberPress('5'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '6', onPress: () => handleNumberPress('6'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: '↑', onPress: PressRegister, backgroundColor: '#82BF53', borderRadius: 25 },
+            { label: '↑', onPress: handleBack, backgroundColor: '#82BF53', borderRadius: 25 },
         ],[
             { label: '1', onPress: () => handleNumberPress('1'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '2', onPress: () => handleNumberPress('2'), backgroundColor: '#fff', borderRadius: 25 },
@@ -61,8 +67,8 @@ export default KeyBoard = ({ onValueChange, PressRegister }) => {
         ],[
             { label: '0', onPress: () => handleNumberPress('0'), backgroundColor: '#fff', borderRadius: 25 },
             { label: '.', onPress: () => handleNumberPress('.'), backgroundColor: '#fff', borderRadius: 25 },
-            { label: 'C', onPress: handleClear,backgroundColor: '#fff', borderRadius: 25 },
-            { label: '=', backgroundColor: '#82BF53', borderRadius: 25 },
+            { label: 'C', onPress: handleClear, backgroundColor: '#fff', borderRadius: 25 },
+            { label: '=', onPress: PressRegister, backgroundColor: '#82BF53', borderRadius: 25 },
         ]
     ];
 

@@ -19,6 +19,7 @@ import CustomersList from './screens/main/customers/CustomersList';
 import RegisterCustomer from './screens/main/customers/forms/NewCustomer';
 import RegisterInform from './screens/main/customers/forms/NewInform';
 import InformDetails from './screens/main/customers/InformDetails';
+import ClientDetails from './screens/main/customers/Client.Details';
 import RegisterPackage from './screens/main/packages/PackageList';
 import PackageDetails from './screens/main/packages/PackageDetails';
 import NewPackage from './screens/main/packages/forms/NewPackage';
@@ -77,6 +78,7 @@ export default function Navigation() {
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ headerShown: false }}/>
                 <Stack.Screen name="registerPackage" component={RegisterPackage} options={{ title: 'Lista de paquetes', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="PackageDetails" component={PackageDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
+                <Stack.Screen name="ClientDetails" component={ClientDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
                 <Stack.Screen name="newPackage" component={NewPackage} options={{ title: 'Agrega un paquete nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="customerList" component={CustomersList} options={{ headerShown: false }}/>
                 <Stack.Screen name="appData" component={ApplicationDataScreen} options={{ title: 'Políticas y Privacidad', headerStyle: { backgroundColor: '#fafafa' },}}/>

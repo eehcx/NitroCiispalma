@@ -37,11 +37,9 @@ export default CalculationsList = () => {
         { id: 2, nombre: 'Macronutrientes' },
         { id: 3, nombre: 'Calcular Boro' },
         { id: 4, nombre: 'Calcular Azufre' },
-    ];
-    /*
         { id: 5, nombre: 'Porcentaje Jent' },
         { id: 6, nombre: 'Porcentaje Jep' }
-    */
+    ];
 
     // Radio Button para seleccionar el id de muestra
     const handleRadioButtonPress = async (selectedCalcs) => {

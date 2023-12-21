@@ -12,6 +12,7 @@ import InputForms from '../../../../styles/InputForms';
 import Fonts from '../../../../styles/Fonts';
 // Components
 import FilterPagesExtended from '../../../../components/interface/filters/FilterPagesExtended';
+import InputText from '../../../../components/interface/Forms/InputText';
 
 export default NewPackage = () => {
     // React Navigation
@@ -80,11 +81,8 @@ export default NewPackage = () => {
                                     </View>
                                 </View>
                                 <View style={{marginHorizontal: 30, marginVertical: 10, width: '85%' }}>
-                                    <Text style={[Fonts.modalText, { marginLeft: 30, marginVertical:10 }]}>Nombre de paquete</Text>
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un nombre para el paquete" value={Nombre} onChangeText={setNombre} />
-
-                                    <Text style={[Fonts.modalText, { marginLeft: 30, marginVertical:10 }]}> Seleccionado</Text>
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder={selectedOption} editable={false} />
+                                    <InputText backgroundColor='#ECECEC' placeholder='Ingresa un nombre para el paquete' value={Nombre} onChange={setNombre} label='Nombre de paquete' marginLeft={20}/>
+                                    <InputText backgroundColor='#ECECEC' placeholder={selectedOption}label='Seleccionado' marginLeft={20} />
                                 </View>
                             </>
                         )}

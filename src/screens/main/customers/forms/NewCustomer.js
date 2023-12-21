@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text } from 'react-native';
+import { View } from 'react-native';
 // React Native Paper
 import { Button } from 'react-native-paper';
 import Fonts from '../../../../styles/Fonts';
 import InputForms from '../../../../styles/InputForms';
 // Real Time Database
 import { setCliente } from '../../../../services/clientes';
+// Componentes
+import InputText from '../../../../components/interface/Forms/InputText';
 
 export default RegisterCustomer = () => {
     const [name, setName] = useState('');
@@ -23,12 +25,9 @@ export default RegisterCustomer = () => {
         <View style={{ flex: 1, justifyContent: 'center', backgroundColor: "#fafafa" }}>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
-                    <Text style={[Fonts.modalText, { marginRight: 200 }]}>Nombre</Text>
-                    <TextInput style={[InputForms.input, { marginBottom: 25 }, { height: 45, paddingLeft: 25 }]} value={name} onChangeText={setName} placeholder="Nombre del cliente" maxLength={100}/>
-                    <Text style={[Fonts.modalText, { marginRight: 200 }]}>Empresa</Text>
-                    <TextInput style={[InputForms.input, { marginBottom: 25 }, { height: 45, paddingLeft: 25 }]} value={razonSocial} onChangeText={setRazonSocial} placeholder="Razón Social" maxLength={100}/>
-                    <Text style={[Fonts.modalText, { marginRight: 200 }]}>Teléfono</Text>
-                    <TextInput style={[InputForms.input, { marginBottom: 25 }, { height: 45, paddingLeft: 25 }]} value={phone} onChangeText={setPhone} keyboardType="numeric" placeholder="Número de teléfono" maxLength={10}/>
+                    <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={name} onChange={setName}label='Nombre' marginRight={200} />
+                    <InputText backgroundColor='#ECECEC' placeholder='Razón Social' value={razonSocial} onChange={setRazonSocial} label='Empresa' marginRight={200} />
+                    <InputText backgroundColor='#ECECEC' placeholder='Número de teléfono' value={phone} onChange={setPhone} label='Teléfono' marginRight={200} />
                 </View>
             </View>
             <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaved}> GUARDAR </Button>
