@@ -89,8 +89,8 @@ export const getMuestras = async informeId => {
   }
 };
 
-export const updateMuestra = async (muestraId, {...params}) => {
-  updateData(`calculos/muestras/${muestraId}`, {...params});
+export const updateMuestra = async (muestraId, params) => {
+  updateData(`calculos/muestras/${muestraId}`, params);
 };
 
 export const getResultadosMuestra = async (calculoId, numLab) => {

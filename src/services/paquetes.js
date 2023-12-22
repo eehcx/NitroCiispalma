@@ -43,8 +43,8 @@ export const setPaquetes = async (
   return `Paquete registrado! Ahora esta disponible el paquete: ${nombrePaquete}`;
 };
 
-const updatePaquetes = async (idPaquete, {...params}) => {
-  updateData(`paquetes/${idPaquete}`, {...params});
+const updatePaquetes = async (idPaquete, params) => {
+  updateData(`paquetes/${idPaquete}`, params);
 };
 
 export const getPaquetesPerInforme = async informeId => {

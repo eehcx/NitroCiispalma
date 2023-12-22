@@ -98,8 +98,8 @@ export const setInforme = async ({
 };
 
 //Actualizar un informe pasandole un objeto como parametro
-export const updateInforme = async (informeId, {...params}) => {
-  updateData(`informes/${informeId}`, {...params});
+export const updateInforme = async (informeId, params) => {
+  updateData(`informes/${informeId}`, params);
 };
 
 export const setInformeResultados = async (informeId, arrayResultados) => {

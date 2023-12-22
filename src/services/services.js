@@ -22,7 +22,7 @@ export const updateData = async (mainRoute, {...params}) => {
   } catch (error) {
     throw error;
   }
-};``
+};
 
 export const setData = async (mainRoute, {...params}) => {
   const refMain = ref(db, mainRoute);

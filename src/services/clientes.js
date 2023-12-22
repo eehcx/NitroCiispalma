@@ -47,6 +47,6 @@ export const setCliente = async (nombre, razon_social, telefono) => {
   }
 };
 
-export const updateCliente = async (clienteId, {...params}) => {
-  updateData('clientes', clienteId, {...params});
+export const updateCliente = async (clienteId, params) => {
+  updateData('clientes', clienteId, params);
 };
