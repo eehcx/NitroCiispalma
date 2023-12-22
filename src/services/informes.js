@@ -1,159 +1,137 @@
-import { getDatabase, ref, get, push, set, orderByChild, equalTo, child, query } from 'firebase/database';
-import { updateData } from './services';
-
-const db = getDatabase();
+import {
+  getDatabase,
+  ref,
+  get,
+  push,
+  set,
+  orderByChild,
+  equalTo,
+  update,
+  query,
+} from 'firebase/database';
+import {updateData} from './services';
+import {app} from '../app/firebase';
+import { getPaquetesPerInforme } from './paquetes';
+const db = getDatabase(app);
 
 //Funcion para traer todos los informes de un cliente especifico
-export const getInformesCliente = async (clientId) => {
+export const getInformesCliente = async clientId => {
+  const informesRef = ref(db, 'informes');
 
-    const informesRef = ref(db, 'informes')
+  //Este es una consulta para filtrar los informes que tengan el uid del cliente
+  const informeQuery = query(
+    informesRef,
+    ...[orderByChild('uid_client'), equalTo(clientId)],
+  );
 
-    //Este es una consulta para filtrar los informes que tengan el uid del cliente 
-    const informeQuery = query(informesRef, ...[orderByChild("uid"), equalTo(clientId)])
+  const informesCliente = await get(informeQuery)
+    .then(informe => {
+      if (informe.exists()) {
+        const informesData = informe.val();
 
-    return get(informeQuery).then((snapshot => {
-        if (snapshot.exists()) {
-            const informesCliente = snapshot.val();
-            return informesCliente
-        }
-        else {
-            return 'No existen informes registrados a ese cliente...'
-        }
-    }))
-        .catch((err) => { throw err })
-}
+        return informesData;
+      }
+
+      return [];
+    })
+    .catch(err => {
+      throw ('Hubo un error al obtener los informes del cliente: ', err);
+    });
+
+  return informesCliente;
+};
 
 // Trae los datos de un informe seleccionado
-export const getInforme = async (informeId) => {
+export const getInforme = async informeId => {
+  const informeRef = ref(db, 'informes/' + informeId);
 
-    const informeRef = ref(db, 'informes/' + informeId)
-
-    return get(informeRef)
-        .then((async snapshot => {
-            if (snapshot.exists()) {
-
-                const informe = snapshot.val();
-                const resultados = Object.values(informe.informe_resultados[0]);
-
-                //Imprime los resultados del informe y los datos del informe
-                const informeData = [informe, resultados]
-                return informeData;
-
-            } else {
-                console.log('No existe ese informe en la base de datos...')
-                return []
-            }
-        })
-        )
-        .catch((err => { throw err }))
-}
+  try {
+    const snapshot = await get(informeRef);
+  
+    if (snapshot.exists()) {
+      const informe = snapshot.val();
+      const resultados = Object.values(informe.informe_resultados);
+  
+      // Imprime los resultados del informe y los datos del informe
+      const informeData = [informe, resultados];
+      return informeData;
+    } else {
+      console.log('No existe ese informe en la base de datos...');
+      return [];
+    }
+  } catch (error) {
+    console.error('Error al obtener el informe:', error.message);
+    throw new Error('Hubo un error al obtener el informe');
+  }
+};
 
 //Funcion para crear un informe, recibe los parametros de necesarios para crear un informe
-export const setInforme = async ({ uid_cliente, no_solicitud, fecha_entrega, fecha_recepcion, uid_package, no_muestras, observaciones, procedencia, tipo_cultivo, }) => {
+export const setInforme = async ({
+  uid_cliente,
+  no_solicitud,
+  fecha_entrega,
+  fecha_recepcion,
+  uid_package,
+  no_muestras,
+  observaciones,
+  procedencia,
+  tipo_cultivo,
+}) => {
+  const createInforme = await push(ref(db, 'informes'));
+  const currentInformeId = createInforme.key;
 
-    const createInforme = await push(ref(db, 'informes'));
-    const currentInformeId = createInforme.key;
+  const informeParams = {
+    uid: uid_cliente,
+    no_solicitud: no_solicitud,
+    fecha_entrega: fecha_entrega,
+    fecha_recepcion: fecha_recepcion,
+    uid_package: uid_package,
+    no_muestras: no_muestras,
+    observaciones: observaciones,
+    procedencia: procedencia,
+    tipo_cultivo: tipo_cultivo,
+  };
 
-    const informeParams = {
-        uid: uid_cliente,
-        no_solicitud: no_solicitud,
-        fecha_entrega: fecha_entrega,
-        fecha_recepcion: fecha_recepcion,
-        uid_package: uid_package,
-        no_muestras: no_muestras,
-        observaciones: observaciones,
-        procedencia: procedencia,
-        tipo_cultivo: tipo_cultivo
-    }
+  await set(ref(db, `informes/${currentInformeId}`), informeParams);
 
-    await set(ref(db, `informes/${currentInformeId}`), informeParams);
-    //await setInformeResultados(currentInformeId);
-
-    return console.log('Informe registrado exitosamente!')
-}
+  return console.log('Informe registrado exitosamente!');
+};
 
 //Actualizar un informe pasandole un objeto como parametro
-export const updateInforme = async (informeId, { ...params }) => {
-    updateData(`informes/${informeId}`, { ...params });
-}
-
+export const updateInforme = async (informeId, {...params}) => {
+  updateData(`informes/${informeId}`, {...params});
+};
 
 export const setInformeResultados = async (informeId, arrayResultados) => {
-    const informeRef = ref(db, `informes/${informeId}`);
+  
+  try {
+    const paqueteAnalisis = await getPaquetesPerInforme(informeId);
 
-    const informe = await get(informeRef).then(
-        informe => {
+    const resultadosMuestra = arrayResultados.map(muestra => {
+      const elementosPaquete = {};
 
-            const paqueteInforme = informe.val().uid_package
-            const paqueteRef = ref(db, `paquetes/${paqueteInforme}`);
-            
-            const paquete = get(paqueteRef).then(
-                async paquete => {
-                    const paqueteAnalisis = paquete.val().analisis;
-                    const elementosPaquete = {}
+      paqueteAnalisis.forEach(elemento => {
+        const resultadoValue = muestra.resultados[elemento];
+        elementosPaquete[elemento] = resultadoValue;
+      });
 
-                    for (let i = 0; i < paqueteAnalisis.length; i++) {
-                        const elemento = paqueteAnalisis[i];
-                        elementosPaquete[elemento] = '';
-                    }
+      const informeResultados = {
+        idLab: muestra.idLab,
+        resultados: elementosPaquete,
+      };
 
+      return informeResultados;
+    });
 
-                    await set(ref(db, `informes/${informeId}/informe_resultados`), [resultadosParams]);
-                    return console.log('Los datos fueron agregados');
+     await update(
+      ref(db, `informes/${informeId}`),
+      {informe_resultados: resultadosMuestra},
+    ); 
 
-                }
-            )
+    return 'Los datos fueron agregados';
+  } catch (error) {
+    console.error('Error al procesar los datos:', error.message);
+    throw new Error('Hubo un error al procesar los datos del informe');
+  }
+};
 
-        }
-    );
-
-
-}
-
-const setInformeResultados_ = async (informeId, id_lab) => {
-    //Obtener el informe y obtener al paquete que tiene para los elementos
-
-    const informeRef = ref(db, `informes/${informeId}`);
-
-    try {
-        const informeSnap = await get(informeRef)
-
-        if (informeSnap.exists()) {
-            const informeData = informeSnap.val();
-            const informeIdPaquete = informeData.uid_package
-
-            const createCalculo = push(ref(db, `calculos`));
-
-            await set(createCalculo, {
-                fecha_creacion: new Date().toISOString()
-            });
-            const currentCalculo = createCalculo.key;
-
-            const paquetesRef = ref(db, `paquetes/${informeIdPaquete}`);
-            const paqueteSnap = await get(paquetesRef);
-
-            if (paqueteSnap.exists()) {
-                const paqueteData = paqueteSnap.val();
-                const paqueteArray = paqueteData.analisis;
-
-
-                const elementosPaquete = {}
-                for (let i = 0; i < paqueteArray.length; i++) {
-                    const elemento = paqueteArray[i];
-                    elementosPaquete[elemento] = '';
-                }
-
-                const resultadosParams = {
-                    id_lab,
-                    uid_calculo: currentCalculo,
-                    resultados: elementosPaquete
-                }
-
-                await set(ref(db, `informes/${informeId}/informe_resultados`), [resultadosParams]);
-                return console.log('Los datos fueron agregados');
-            }
-        }
-    } catch (error) {
-        throw error
-    }
-}
