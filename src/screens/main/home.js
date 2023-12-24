@@ -38,7 +38,7 @@ export default HomeScreen = () => {
     };
   }, []);
 
-  const firstName = user.displayName ? user.displayName.split(' ')[0] : '';
+  const firstName = user.displayName ? user.displayName.split(' ')[0] : 'Bienvenid@';
   return (
     <>
       <StatusBar backgroundColor='#fafafa'  barStyle="dark-content" />

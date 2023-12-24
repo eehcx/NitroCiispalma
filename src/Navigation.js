@@ -19,7 +19,7 @@ import CustomersList from './screens/main/customers/CustomersList';
 import RegisterCustomer from './screens/main/customers/forms/NewCustomer';
 import RegisterInform from './screens/main/customers/forms/NewInform';
 import InformDetails from './screens/main/customers/InformDetails';
-import ClientDetails from './screens/main/customers/Client.Details';
+import ClientDetails from './screens/main/customers/ClientDetails';
 import RegisterPackage from './screens/main/packages/PackageList';
 import PackageDetails from './screens/main/packages/PackageDetails';
 import NewPackage from './screens/main/packages/forms/NewPackage';
