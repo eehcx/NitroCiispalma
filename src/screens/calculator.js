@@ -7,7 +7,6 @@ import KeyBoard from '../components/calculator/keyBoard';
 import HistoryScreen from './main/calculator/History';
 import CalculationsList from './main/calculator/CalcList';
 import { AlternativeScreen } from '../components/calculator/AlternativeScreen';
-import ModalAlert from '../components/interface/ModalAlert';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 // React Navigation
@@ -56,10 +55,12 @@ export default CalculatorScreen = () => {
     const filterContent = (option) => { setSelectedOption(option); };
 
     useEffect(() => {
+        /*
         if (uidRef.current === null && informIdRef.current === null) {
             alert('Debes selecionar un cliente e informe primero')
             navigation.goBack();
         }
+        */
     }, [uidRef, informIdRef]);
 
     return (
@@ -67,7 +68,7 @@ export default CalculatorScreen = () => {
             <StatusBar backgroundColor='#f1f2f3' barStyle="dark-content" />
             <>
                 {(selectedOption === 'calculate' || selectedOption === 'history' || selectedOption === 'functions') && <MainScreen />}
-                {selectedOption === 'view-kanban' && <AlternativeScreen inputValue={inputValue} />}
+                {selectedOption === 'apps' && <AlternativeScreen inputValue={inputValue} />}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 10 }}>
                         <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("history")}>
@@ -76,8 +77,8 @@ export default CalculatorScreen = () => {
                         <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("calculate")}>
                             <Icon name="calculate" size={30} color={selectedOption === 'calculate' ? '#41525C' : '#bababa'} style={{ marginRight: 10 }}/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("view-kanban")}>
-                            <Icon name="view-kanban" size={30} color={selectedOption === 'view-kanban' ? '#41525C' : '#bababa'} />
+                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("apps")}>
+                            <Icon name="apps" size={30} color={selectedOption === 'apps' ? '#41525C' : '#bababa'} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{ marginTop: 10, marginRight:30 }} onPress={() => filterContent("functions")}>
@@ -88,7 +89,7 @@ export default CalculatorScreen = () => {
                 {selectedOption === 'calculate' && <KeyBoard onValueChange={handleKeyboardValueChange} PressRegister={handleRegister} />}
                 {selectedOption === 'history' && <HistoryScreen />}
                 {selectedOption === 'functions' && <CalculationsList />}
-                {selectedOption === 'view-kanban' && <KeyBoard onValueChange={handleKeyboardValueChange} PressRegister={handleRegister} />}
+                {selectedOption === 'apps' && <KeyBoard onValueChange={handleKeyboardValueChange} PressRegister={handleRegister} />}
             </>
         </View>
     );

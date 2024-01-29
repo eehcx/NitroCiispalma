@@ -161,3 +161,21 @@ export const saveRegistersMicros = async (calculoId, registrosActualizados, elem
 
     console.log('Registros de Micros guardados exitosamente.');
 };
+
+export const saveCalibrationCurve = async (calculoId, name, listado, pendiente) => {
+    try {
+        const db = getDatabase(app);
+        const curveRef = ref(db, `calculos/${calculoId}/curva_calibracion/${name}`);
+
+        const newData = {
+            listado,
+            pendiente,
+        };
+
+        await set(curveRef, newData);
+        console.log('Curva creada exitosamente');
+    } catch (error) {
+        console.error('Error al crear la curva:', error);
+        throw error;
+    }
+};

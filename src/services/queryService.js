@@ -11,10 +11,10 @@ export const getCalculus = (onUpdate) => {
 
     const handleDataChange = (snapshot) => {
         if (snapshot.exists()) {
-        const calculos = Object.keys(snapshot.val()).reverse().slice(0, 3);
-        onUpdate(calculos);
+            const calculos = Object.keys(snapshot.val()).reverse().slice(0, 3);
+            onUpdate(calculos);
         } else {
-        onUpdate([]);
+            onUpdate([]);
         }
     };
 
@@ -43,4 +43,20 @@ export const getCountOfSubcollections = (parentCollection, onUpdate) => {
     return () => {
         off(parentRef, 'value', handleDataChange);
     };
+};
+
+export const getCurve = async (uid, type, onDataReceived) => {
+    const db = getDatabase(app);
+    const curveRef = ref(db, `calculos/${uid}/curva_calibracion/${type}`);
+
+    const unsubscribe = onValue(curveRef, (snapshot) => {
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            onDataReceived(data);
+        } else {
+            onDataReceived([]);
+        }
+    });
+
+    return unsubscribe;
 };

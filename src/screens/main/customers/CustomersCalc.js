@@ -34,7 +34,7 @@ export default CustomersCalc = () => {
     // Radio Button para seleccionar el id de muestra
     const handleRadioButtonPress = async (IdLaboratorio) => {
         setSelectedIdLab(IdLaboratorio);
-        console.log('Informe seleccionado:', IdLaboratorio); 
+        console.log('Muestra seleccionado:', IdLaboratorio); 
         dispatch(setIdLab(IdLaboratorio));
     };
 

@@ -8,6 +8,7 @@ import {
   equalTo,
   child,
   query,
+  getDatabase
 } from 'firebase/database';
 import {db, updateData} from './services';
 
@@ -66,26 +67,26 @@ export const setMuestras = async (calculoId, numLab) => {
   }
 };
 
-export const getMuestras = async informeId => {
+export const getMuestras = async (informeId) => {
   try {
-    const calculoInformeRef = ref(db, `informes/${informeId}/uid_calculo`);
+    const db = getDatabase();
+    const informeRef = ref(db, `informes/${informeId}/informe_resultados/0/uid_calculo`);
 
-    const calculoInformeSnapshot = await get(calculoInformeRef);
+    const calculoIdSnapshot = await get(informeRef);
+    if (calculoIdSnapshot.exists()) {
+      const calculoId = calculoIdSnapshot.val();
+      console.log(calculoId);
 
-    if (calculoInformeSnapshot.exists()) {
-      const calculoId = calculoInformeSnapshot.val();
-
-      const calculoSnapshot = await get(ref(db, `calculos/${calculoId}`));
-
-      if (calculoSnapshot.exists()) {
-        return calculoSnapshot.val().muestras;
+      const snapshot = await get(ref(db, `calculos/${calculoId}`));
+      if (snapshot.exists()) {
+        const muestras = snapshot.val().muestras;
+        return muestras || [];
       }
     }
-
-    return [];
+    return []; // Si no se encuentran datos de muestras, devuelve un array vacío
   } catch (error) {
-    console.error('Error al obtener las muestras del informe:', error.message);
-    throw new Error('Hubo un error al obtener las muestras del informe');
+    console.error('Error al obtener las muestras:', error);
+    throw error;
   }
 };
 

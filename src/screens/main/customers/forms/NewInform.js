@@ -225,7 +225,7 @@ export default RegisterInform = () => {
                                         <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia} maxLength={100} />
                                         <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo} maxLength={100} />
                                         <TextInput multiline={true} numberOfLines={4} placeholder="Observaciones generales" value={Observaciones}  onChangeText={setObservaciones} style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100} />
-                                        <Button icon="chevron-right" buttonColor="#C7FBD7" mode="contained-tonal" contentStyle={{ flexDirection: 'row-reverse', justifyContent: 'space-between' }}labelStyle={{ marginRight: 23 }} onPress={handleSiguiente}> Siguiente Página </Button>
+                                        <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 10}]} onPress={handleSiguiente}>Siguiente Página</Button>
                                     </View>
                                 </View>
                             </>
