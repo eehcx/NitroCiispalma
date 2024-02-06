@@ -1,31 +1,27 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    name: '',
-    prefix: '',
-    slope: null,
-    curveData: [
-        { key: 1, concentracion:"0.0", abs: "0.019"},
-        { key: 2, concentracion:"0.1", abs: "0.093"},
-        { key: 3, concentracion:"0.2", abs: "0.167"},
-        { key: 4, concentracion:"0.4", abs: "0.296"},
-        { key: 5, concentracion:"0.6", abs: "0.444"},
-        { key: 6, concentracion:"0.8", abs: "0.551"},
-        { key: 7, concentracion:"1.0", abs: "0.699"}
-    ]
+    current: 0,
+    names: ['Fósforo OLSEN', 'Fósforo BRAY', 'Boro', 'Azufre'],
+    prefixes: ['fosforo_olsen', 'fosforo_bray', 'boro', 'azufre'],
+    slope: '',
+    curveData: []
 }
 
 export const CalibrationCurveSlice = createSlice({
     name: 'calibrationCurve',
-    initialState, 
+    initialState,
     reducers: {
-        setName: (state, action) => { state.name = action.payload; },
-        setPrefix: (state, action) => { state.prefix = action.payload; },
+        setCurrent: (state, action) => { state.current = action.payload; },
+        incrementCurrent: (state) => { state.current = (state.current === state.names.length - 1) ? 0 : state.current + 1; },
+        decrementCurrent: (state) => { state.current = (state.current === 0) ? state.names.length - 1 : state.current - 1; },
         setSlope: (state, action) => { state.slope = action.payload; },
         setCurveData: (state, action) => { state.curveData = action.payload; },
         reset: () => { return initialState; },
     },
 });
 
-export const { setName, setPrefix, setSlope, setCurveData, reset } = CalibrationCurveSlice.actions;
+export const { setCurrent, setSlope, setCurveData, reset, incrementCurrent, decrementCurrent } = CalibrationCurveSlice.actions;
+export const Current = (state) => state.calibrationCurve.current;
+export const CurrentName = (state) => state.calibrationCurve.names[state.calibrationCurve.current];
 export default CalibrationCurveSlice.reducer;

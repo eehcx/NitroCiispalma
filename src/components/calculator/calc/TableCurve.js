@@ -10,7 +10,7 @@ import Fonts from '../../../styles/Fonts';
 
 export default TableCurve = ({data}) => {
     const calibrationCurve = useSelector(state => state.calibrationCurve);
-    const slope = calibrationCurve.slope || '00.00';
+    let slope = calibrationCurve.slope || '00.00';
     // Scroll
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
@@ -25,15 +25,15 @@ export default TableCurve = ({data}) => {
                             <DataTable.Title numeric>ABS</DataTable.Title>
                         </DataTable.Header>
 
-                        {data.map((curve) => (
-                            <DataTable.Row key={curve.key}>
+                        {data.map((curve, index) => (
+                            <DataTable.Row key={index}>
                                 <DataTable.Cell>{curve.concentracion}</DataTable.Cell>
                                 <DataTable.Cell numeric>{curve.abs}</DataTable.Cell>
                             </DataTable.Row>
                         ))}
                     </DataTable>
                     <View style={{flex: 1, paddingVertical: '10%', paddingHorizontal:20}}>
-                        <Text style={[Fonts.addText, {textAlign: 'center'}]}>{'Pendiente: '+slope}</Text>
+                        <Text style={[Fonts.addText, {textAlign: 'center'}]}>{'Pendiente: '+ slope}</Text>
                     </View>
                 </ScrollView>
             </SafeAreaView>

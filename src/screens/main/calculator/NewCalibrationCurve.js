@@ -47,12 +47,14 @@ export default NewCalibrationCurve = () => {
         try{
             const name = CalibrationCurve.prefix || 'fosforo_olsen';
             const data = CalibrationCurve.curveData || [];
+            let abs = data.map(obj => obj.abs);
+            // Calcular la curva de calibración
             const slope = calcSlope(CalibrationCurve.curveData);
 
             // Servicio para guardar el registro
-            await saveCalibrationCurve(calculoId, name, data, slope);
+            await saveCalibrationCurve(calculoId, name, abs, slope);
 
-            console.log(calculoId, name, data, slope);
+            console.log(calculoId, name, abs, slope);
 
             dispatch(reset());
         }catch (error) {
