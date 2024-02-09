@@ -12,9 +12,10 @@ import ItemListRadioButton from '../../../components/interface/ItemListRadioButt
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setIdLab } from '../../../features/calc/CalculatorSlice';
+import { setIdLab, setIdCalc } from '../../../features/calc/CalculatorSlice';
 // Servicios
 import { getMuestras } from '../../../services/calculos';
+import { getIdcalculus } from '../../../services/queryService';
 
 // Pagina de listado de clientes
 export default CustomersCalc = () => {
@@ -50,6 +51,12 @@ export default CustomersCalc = () => {
             try {
                 const muestrasData = await getMuestras(informId);
                 setMuestras(muestrasData || []); 
+
+                //
+                const uid = await getIdcalculus(informId);
+                dispatch(setIdCalc(uid));
+                console.log(uid);
+
             } catch (error) {
                 console.error('Error al obtener las muestras:', error);
             }

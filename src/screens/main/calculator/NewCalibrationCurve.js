@@ -34,7 +34,7 @@ export default NewCalibrationCurve = () => {
     // Redux 
     const dispatch = useDispatch();
     const CalibrationCurve = useSelector(state => state.calibrationCurve);
-    const calculoId = useSelector(state => state.client.clientId);
+    const calculoId = useSelector(state => state.calculator.IdCalc);
     // Filtro y prefijos del nombre de elemento
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedPrefix, setSelectedPrefix] = useState('');
@@ -47,14 +47,16 @@ export default NewCalibrationCurve = () => {
         try{
             const name = CalibrationCurve.prefix || 'fosforo_olsen';
             const data = CalibrationCurve.curveData || [];
-            let abs = data.map(obj => obj.abs);
             // Calcular la curva de calibración
-            const slope = calcSlope(CalibrationCurve.curveData);
+            const results = calcSlope(CalibrationCurve.curveData);
+            const slope = results.slope.toString();
+            const b = results.b.toString();
+            const r2 = results.r2.toString();
 
             // Servicio para guardar el registro
-            await saveCalibrationCurve(calculoId, name, abs, slope);
+            await saveCalibrationCurve(calculoId, name, data, slope, b, r2);
 
-            console.log(calculoId, name, abs, slope);
+            console.log(calculoId, name, data, slope, b, r2);
 
             dispatch(reset());
         }catch (error) {
@@ -70,7 +72,7 @@ export default NewCalibrationCurve = () => {
             dispatch(setPrefix(selectedPrefix));
 
             // Regresar al incio
-            if (currentIndex === names.length - 1) {
+            if (currentIndex === names.length) { //-1
                 setCurrentIndex(0);
                 navigation.goBack();
             } else {

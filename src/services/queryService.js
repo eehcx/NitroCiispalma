@@ -3,6 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { app } from '../app/firebase';
 import { getDatabase, push, set, ref, orderByKey, limitToLast, onValue, off, get } from 'firebase/database';
 
+export const getIdcalculus = async (informeId) => {
+    try {
+        const db = getDatabase(app);
+        const informeRef = ref(db, `informes/${informeId}/informe_resultados/0/uid_calculo`);
+
+        const calculoIdSnapshot = await get(informeRef);
+        if (calculoIdSnapshot.exists()) {
+            const calculoId = calculoIdSnapshot.val();
+            return calculoId;
+        }
+        return null; // Si no se encuentra el uid del cálculo, devuelve null
+    } catch (error) {
+        console.error('Error al obtener el uid del cálculo:', error);
+        throw error;
+    }
+};
+
 // Consultar ultimos calculos realizados y obtener el uid de cada uno
 
 export const getCalculus = (onUpdate) => {
@@ -45,18 +62,20 @@ export const getCountOfSubcollections = (parentCollection, onUpdate) => {
     };
 };
 
-export const getCurve = async (uid, type, onDataReceived) => {
+export const getCurve = async (uid, element) => {
     const db = getDatabase(app);
-    const curveRef = ref(db, `calculos/${uid}/curva_calibracion/${type}`);
+    const curveRef = ref(db, `calculos/${uid}/curva_calibracion/${element}`);
 
-    const unsubscribe = onValue(curveRef, (snapshot) => {
+    try {
+        const snapshot = await get(curveRef);
+
         if (snapshot.exists()) {
-            const data = snapshot.val();
-            onDataReceived(data);
+            return snapshot.val();
         } else {
-            onDataReceived([]);
+            return null;
         }
-    });
-
-    return unsubscribe;
+    } catch (error) {
+        console.error(`Error al obtener datos de ${element}:`, error);
+        return null;
+    }
 };

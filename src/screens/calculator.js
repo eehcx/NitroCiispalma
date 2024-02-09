@@ -11,6 +11,8 @@ import { AlternativeScreen } from '../components/calculator/AlternativeScreen';
 import { useDispatch, useSelector } from 'react-redux';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
+// Servicios
+import { getCurve } from '../services/queryService';
 
 const MainScreen = ({}) => {
     // Redux 
@@ -34,6 +36,7 @@ export default CalculatorScreen = () => {
     const navigation = useNavigation();
     // Redux 
     const dispatch = useDispatch();
+    const calculoId = useSelector(state => state.calculator.IdCalc);
     const uid = useSelector(state => state.client.clientId);
     const informId = useSelector(state => state.inform.informId);
 
@@ -51,16 +54,30 @@ export default CalculatorScreen = () => {
         console.log('Funciona')
     };
 
+    // Consultar curva
+    const getList = async () => {
+        const prefix = "fosforo_olsen";
+        try {
+            const data = await getCurve(calculoId, prefix);
+
+            if (data === null) {
+                navigation.goBack();
+                navigation.navigate('newCalibrationCurve');
+            } 
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     const [selectedOption, setSelectedOption] = useState("functions");
     const filterContent = (option) => { setSelectedOption(option); };
 
     useEffect(() => {
-        /*
         if (uidRef.current === null && informIdRef.current === null) {
             alert('Debes selecionar un cliente e informe primero')
             navigation.goBack();
         }
-        */
+        getList();
     }, [uidRef, informIdRef]);
 
     return (

@@ -8,10 +8,14 @@ import { calcularBoro, setAbsM, setAbsB, setM, setExtractante, setPesoMuestra } 
 import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../interface/Forms/Input';
+//import { AverageInput } from '../../interface/Forms/AverageInput';
+// Servicios
+import { getCurve } from '../../../services/queryService';
 
 export const BoroCalc = ({ TextLabel }) => {
     // Redux
     const dispatch = useDispatch();
+    const calculoId = useSelector(state => state.client.clientId);
     const currentInput = useSelector(selectCurrentInput);
     const boro = useSelector(state => state.boro);
     // Formula
@@ -21,6 +25,21 @@ export const BoroCalc = ({ TextLabel }) => {
     const [Extractante, setextractante] = useState('');
     const [PesoMuestra, setpesoMuestra] = useState('');
 
+    const getSlope = async () => {
+        const prefix = 'boro';
+        try {
+            const data = await getCurve(calculoId, prefix);
+            if (data !== null) {
+                setm(data.pendiente);
+            }
+            console.log(M);
+        } catch (e) {
+                console.error(e);
+        }
+    };
+
+    //const handleAverage = (value) => { dispatch(setAbsM(value)); };
+
     const handleCalculo = () => {
         NumAbsM = parseFloat(AbsM);
         NumAbsB = parseFloat(AbsB);
@@ -29,10 +48,10 @@ export const BoroCalc = ({ TextLabel }) => {
         NumPesoMuestra = parseFloat(PesoMuestra)
         try{
             if (currentInput === 1) {
-                setabsM(TextLabel); 
+                setabsM(TextLabel);
                 dispatch(setAbsM(NumAbsM));
             } else if (currentInput === 2) {
-                setabsB(TextLabel); 
+                setabsB(TextLabel);
                 dispatch(setAbsB(NumAbsB));
             } else if (currentInput === 3) {
                 setm(TextLabel);
@@ -52,6 +71,7 @@ export const BoroCalc = ({ TextLabel }) => {
 
     useEffect(() => {
         try{
+            getSlope();
             handleCalculo();
         } catch (error) {
             console.error('Error al obtener el Input', error);
@@ -61,9 +81,10 @@ export const BoroCalc = ({ TextLabel }) => {
 
     return(
         <>
+            {/*<AverageInput placeholder={'Absorbancia de la muestra'} label={'AbsM: '} value={AbsM} setValue={setabsM} setDispatch={handleAverage} />*/}
             <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
             <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'}  placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'}  placeholder='Valor de M' value={M} label='M:' />
+            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'}  placeholder='Pendiente de calibración' value={M} label='Pendiente:' />
             <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'}  placeholder='Valor del extractante' value={Extractante} label='Extractante:' />
             <Input backgroundColor={currentInput === 5 ? '#dadada' : '#ECECEC'}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
 

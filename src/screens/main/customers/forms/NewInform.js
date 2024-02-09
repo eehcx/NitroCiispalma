@@ -15,7 +15,7 @@ import { getDatabase, ref, onValue, off } from 'firebase/database';
 import FilterPagesExtended from '../../../../components/interface/filters/FilterPagesExtended';
 import DatePickerComponent from '../../../../components/interface/Forms/DatePicker';
 // Servicios
-import { savePackage, saveInformeResultados, saveInform } from '../../../../services/setService';
+import { saveInform } from '../../../../services/setService';
 import { setInforme } from '../../../../services/informes';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -124,12 +124,11 @@ const ListFoliarPackage = () => {
 export default RegisterInform = () => {
     const dispatch = useDispatch();
     const client = useSelector(state => state.client);
+    const report = useSelector(state => state.report);
     // Form State
     const currentForm = useSelector(selectCurrentForm);
-    const handleSiguiente = () => { 
-        dispatch(setForm(currentForm + 1)); 
-    };
-    //
+    const handleSiguiente = () => { dispatch(setForm(currentForm + 1)); };
+    // Scroll
     const [visible, setVisible] = React.useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
@@ -139,9 +138,8 @@ export default RegisterInform = () => {
     const [muestras, setMuestras] = useState([]);
     // Datos del informe
     const [numMuestras, setNumMuestras] = useState('');
-    //
     const [numMuestra, setNumMuestra] = useState('');
-    const [numSolicitud, setNumSolicitud] = useState('2')
+    const [numSolicitud, setNumSolicitud] = useState('3')
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')
     const [Observaciones, setObservaciones] = useState('')
@@ -153,18 +151,17 @@ export default RegisterInform = () => {
     const handleDateChangeRecepcion = (newDate) => { setDateRecepcion(newDate); };
     // Filtro
     const filterContent = (option) => { setSelectedOption(option); };
-    const [selectedOption, setSelectedOption] = useState("Análisis Suelos"); // Nombre Paquetes
+    const [selectedOption, setSelectedOption] = useState("Análisis Foliar"); // Nombre Paquetes
 
     const handleSaveData = () => {
-        // Aquí puedes obtener los valores de las variables que definiste en tu vista
-        const id = client.clientId;
-        const nombrePaquete = selectedOption;
-        const analisisDelPaquete = analisis.filter(item => item.presente).map(item => item.nombre);
-        //console.log(id)
-
-        // Llamamos a la función saveInform y pasamos los valores correspondientes
-        saveInform( id, dateRecepcion.toISOString(), FechaEntrega.toISOString(), numMuestras, procedencia, tipoCultivo, numSolicitud, metodoUsado, Observaciones, nombrePaquete, analisisDelPaquete, selected );
-        navigation.goBack();
+        const uid = client.clientId;
+        const uid_package = report.uid_package;
+        try {
+            saveInform( uid, uid_package, dateRecepcion.toISOString(), FechaEntrega.toISOString(), numMuestras, procedencia, tipoCultivo, numSolicitud, Observaciones, muestras );
+            navigation.goBack();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleGoBack = () => { navigation.goBack(); dispatch(reset()); };

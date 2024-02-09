@@ -77,8 +77,8 @@ export default function Navigation() {
 
                 <Stack.Screen name="calculator" component={CalculatorScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="CalibrationCurve" component={CalibrationCurveScreen} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' }  }}/>
-                <Stack.Screen name="newCalibrationCurve" component={NewCalibrationCurve} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' },}}/>
-                <Stack.Screen name="curveGraph" component={CurveGraph} options={{ title: 'Gráfica', headerStyle: { backgroundColor: '#f1f2f3' },}}/>
+                <Stack.Screen name="newCalibrationCurve" component={NewCalibrationCurve} options={{ headerShown: false }}/>
+                <Stack.Screen name="curveGraph" component={CurveGraph} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' },}}/>
 
                 <Stack.Screen name="boroDetails" component={BoroDetails} options={{ title: 'Ver fórmula', headerStyle: { backgroundColor: '#fafafa' }  }}/>
                 <Stack.Screen name="InformDetails" component={InformDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
