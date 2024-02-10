@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 // React Native Paper
 import { Button } from 'react-native-paper';
@@ -8,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Olsen, Boron, Sulfur, Bray } from "../../../components/models/CurveData";
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setName, setPrefix, reset } from '../../../features/calc/CalibrationCurveSlice';
+import { reset, Current, CurrentName, incrementCurrent, setCurrent } from '../../../features/calc/CalibrationCurveSlice';
 // Estilos
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
@@ -19,33 +18,20 @@ import { saveCalibrationCurve } from '../../../services/setService';
 // Helpers
 import calcSlope from '../../../utils/helpers/calcSlope';
 
-
-const Welcome = () => {
-    return(
-        <>
-            <Text style={[ Fonts.labelSubtitle ]}>Dale a siguiente</Text>
-        </>
-    );
-};
-
 export default NewCalibrationCurve = () => {
     // Navegación
     const navigation = useNavigation();
     // Redux 
     const dispatch = useDispatch();
     const CalibrationCurve = useSelector(state => state.calibrationCurve);
+    const prefixes = useSelector(state => state.calibrationCurve.prefixes);
+    const index = useSelector(Current);
+    const currentName = useSelector(CurrentName);
     const calculoId = useSelector(state => state.calculator.IdCalc);
-    // Filtro y prefijos del nombre de elemento
-    const [selectedOption, setSelectedOption] = useState('');
-    const [selectedPrefix, setSelectedPrefix] = useState('');
-    const [currentIndex, setCurrentIndex] = useState(0);
-    // Arrays de nombres y prefijos
-    const names = ['Fósforo Olsen', 'Fósforo Bray', 'Azufre', 'Boro'];
-    const PrefNames = ['fosforo_bray', 'azufre', 'boro'];
 
     const handleSave = async () => {
+        const name = prefixes[index];
         try{
-            const name = CalibrationCurve.prefix || 'fosforo_olsen';
             const data = CalibrationCurve.curveData || [];
             // Calcular la curva de calibración
             const results = calcSlope(CalibrationCurve.curveData);
@@ -55,7 +41,6 @@ export default NewCalibrationCurve = () => {
 
             // Servicio para guardar el registro
             await saveCalibrationCurve(calculoId, name, data, slope, b, r2);
-
             console.log(calculoId, name, data, slope, b, r2);
 
             dispatch(reset());
@@ -66,18 +51,14 @@ export default NewCalibrationCurve = () => {
 
     const handleNextElement = () => {
         try{
-            setSelectedOption(names[currentIndex]);
-            dispatch(setName(selectedOption));
-            setSelectedPrefix(PrefNames[currentIndex]);
-            dispatch(setPrefix(selectedPrefix));
 
-            // Regresar al incio
-            if (currentIndex === names.length) { //-1
-                setCurrentIndex(0);
+            // Regresar al inicio
+            if (index === prefixes.length) { //-1
+                dispatch(setCurrent(0));
                 navigation.goBack();
             } else {
                 // Ir hacía adelante
-                setCurrentIndex(currentIndex + 1);
+                dispatch(incrementCurrent());
             }
         }catch (error) {
             console.error('Error al cambiar el nombre', error);
@@ -86,12 +67,8 @@ export default NewCalibrationCurve = () => {
 
     const onPressNext = async () => {
         try {
-            if (selectedOption === '') {
-                handleNextElement();
-            } else{
-                await handleSave();
-                handleNextElement();
-            }
+            await handleSave();
+            handleNextElement();
         } catch (error) {
             console.error('Error al ejecutar handleSave o handleNextElement', error);
         }
@@ -101,12 +78,11 @@ export default NewCalibrationCurve = () => {
         <View style={[{flex: 1, backgroundColor: "#f1f2f3"}]}>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
-                    {selectedOption === '' &&  <Welcome/>}
-                    {selectedOption === 'Fósforo Olsen' &&  <NewCalibrationCurveModal dataJson={Olsen} />}
-                    {selectedOption === 'Fósforo Bray' &&  <NewCalibrationCurveModal dataJson={Bray} />}
-                    {selectedOption === 'Azufre' &&  <NewCalibrationCurveModal dataJson={Sulfur} />}
-                    {selectedOption === 'Boro' &&  <NewCalibrationCurveModal dataJson={Boron} />}
-                    <Text style={[Fonts.labelSubtitleNormal, { marginTop:10 }]}>{CalibrationCurve.name === null ? selectedOption: selectedOption}</Text>
+                    {currentName === 'Fósforo OLSEN' &&  <NewCalibrationCurveModal dataJson={Olsen} />}
+                    {currentName === 'Fósforo BRAY' &&  <NewCalibrationCurveModal dataJson={Bray} />}
+                    {currentName === 'Boro' &&  <NewCalibrationCurveModal dataJson={Boron} />}
+                    {currentName === 'Azufre' &&  <NewCalibrationCurveModal dataJson={Sulfur} />}
+                    <Text style={[Fonts.labelSubtitleNormal, { marginTop:10 }]}>{CalibrationCurve.name === null ? currentName: currentName}</Text>
                 </View>
             </View>
             <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={onPressNext} > SIGUIENTE </Button>

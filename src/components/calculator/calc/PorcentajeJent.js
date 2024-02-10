@@ -3,11 +3,13 @@ import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { setVm, setVb, setN, setP, calcularPorcentajeNt, clear } from '../../../features/calc/foliar/PorcentaJentSlice';
+import { setVm, setVb, setN, setP, setResultado, clear } from '../../../features/calc/foliar/PorcentaJentSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../interface/Forms/Input';
+// Servicios
+import { pctJentCalc } from '../../../utils/calculator/foliarCalc';
 
 export const PorcentaJent = ({ TextLabel }) => {
     // Redux
@@ -21,25 +23,24 @@ export const PorcentaJent = ({ TextLabel }) => {
     const [P, setp] = useState('');
 
     const handleCalculo = () => {
-        NumVm = parseFloat(Vm);
-        NumVb = parseFloat(Vb);
-        NumN = parseFloat(N);
-        NumP = parseFloat(P);
         try{
             if (currentInput === 1) {
                 setvm(TextLabel); 
-                dispatch(setVm(NumVm));
+                dispatch(setVm(parseFloat(Vm)));
             } else if (currentInput === 2) {
                 setvb(TextLabel);
-                dispatch(setVb(NumVb));
+                dispatch(setVb(parseFloat(Vb)));
             } else if (currentInput === 3) {
                 setn(TextLabel);
-                dispatch(setN(NumN));
+                dispatch(setN(parseFloat(N)));
             } else if (currentInput === 4) {
                 setp(TextLabel);
-                dispatch(setP(NumP));
+                dispatch(setP(parseFloat(P)));
             }
-            dispatch(calcularPorcentajeNt());
+
+            const result = pctJentCalc(porcentajent.Vm, porcentajent.Vb, porcentajent.N, porcentajent.p);
+            dispatch(setResultado(result));
+
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }

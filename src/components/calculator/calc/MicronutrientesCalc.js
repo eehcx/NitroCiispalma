@@ -3,11 +3,13 @@ import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, calcularMicronutrientes, clear } from '../../../features/calc/foliar/MicronutrientesSlice';
+import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, setResultado, clear } from '../../../features/calc/foliar/MicronutrientesSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../interface/Forms/Input';
+// Servicios
+import { micronutrientsCalc } from '../../../utils/calculator/foliarCalc';
 
 export const MicronutrientesCalc = ({ TextLabel }) => {
     // Redux
@@ -21,25 +23,24 @@ export const MicronutrientesCalc = ({ TextLabel }) => {
     const [PesoMuestra, setpesoMuestra] = useState('');
 
     const handleCalculo = () => {
-        NumMgLM = parseFloat(mgLM);
-        NumMgLB =parseFloat(mgLB);
-        NumAforo = parseFloat(Aforo);
-        NumPesoMuestra = parseFloat(PesoMuestra);
         try{
             if (currentInput === 1) {
                 setmglm(TextLabel); 
-                dispatch(setMgL_M(NumMgLM));
+                dispatch(setMgL_M(parseFloat(mgLM)));
             } else if (currentInput === 2) {
                 setmglb(TextLabel);
-                dispatch(setMgL_B(NumMgLB));
+                dispatch(setMgL_B(parseFloat(mgLB)));
             } else if (currentInput === 3) {
                 setaforo(TextLabel);
-                dispatch(setAforo(NumAforo));
+                dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 4) {
                 setpesoMuestra(TextLabel);
-                dispatch(setPesoMuestra(NumPesoMuestra));
+                dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
-            dispatch(calcularMicronutrientes());
+
+            const result = micronutrientsCalc(micronutrientes.mgL_M, micronutrientes.mgL_B, micronutrientes.aforo, micronutrientes.pesoMuestra);
+            dispatch(setResultado(result));
+
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }

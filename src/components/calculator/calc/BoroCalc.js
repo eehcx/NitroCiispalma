@@ -3,7 +3,7 @@ import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { calcularBoro, setAbsM, setAbsB, setM, setExtractante, setPesoMuestra } from '../../../features/calc/foliar/BoroSlice';
+import { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, setResultado } from '../../../features/calc/foliar/BoroSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
@@ -11,6 +11,7 @@ import Input from '../../interface/Forms/Input';
 //import { AverageInput } from '../../interface/Forms/AverageInput';
 // Servicios
 import { getCurve } from '../../../services/queryService';
+import { boronCalc } from '../../../utils/calculator/foliarCalc';
 
 export const BoroCalc = ({ TextLabel }) => {
     // Redux
@@ -41,29 +42,26 @@ export const BoroCalc = ({ TextLabel }) => {
     //const handleAverage = (value) => { dispatch(setAbsM(value)); };
 
     const handleCalculo = () => {
-        NumAbsM = parseFloat(AbsM);
-        NumAbsB = parseFloat(AbsB);
-        NumM = parseFloat(M);
-        NumExtractante = parseFloat(Extractante);
-        NumPesoMuestra = parseFloat(PesoMuestra)
         try{
             if (currentInput === 1) {
                 setabsM(TextLabel);
-                dispatch(setAbsM(NumAbsM));
+                dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
                 setabsB(TextLabel);
-                dispatch(setAbsB(NumAbsB));
+                dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
                 setm(TextLabel);
-                dispatch(setM(NumM));
+                dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
                 setextractante(TextLabel);
-                dispatch(setExtractante(NumExtractante));
+                dispatch(setExtractante(parseFloat(Extractante)));
             } else if (currentInput === 5) {
                 setpesoMuestra(TextLabel);
-                dispatch(setPesoMuestra(NumPesoMuestra));
+                dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
-            dispatch(calcularBoro());
+            const result = boronCalc(boro.AbsM, boro.AbsB, boro.m, boro.Extractante, boro.pesoMuestra);
+            dispatch(setResultado(result));
+            console.log('RESULTADO: ', result);
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }

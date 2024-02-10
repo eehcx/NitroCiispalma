@@ -1,4 +1,3 @@
-import React, { useState, useCallback, useEffect  } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 // Icons
 import Icon from 'react-native-vector-icons/MaterialIcons';

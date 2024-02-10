@@ -1,5 +1,5 @@
 //React Native
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 // React Native Paper
 import { PaperProvider, Button } from 'react-native-paper';
@@ -34,6 +34,8 @@ const DataTableCurve = () => {
 };
 
 export default CalibrationCurveScreen = () => {
+  // Navegación
+  const navigation = useNavigation();
   // Redux
   const dispatch = useDispatch();
   const calculoId = useSelector(state => state.calculator.IdCalc);
@@ -47,9 +49,14 @@ export default CalibrationCurveScreen = () => {
       const data = await getCurve(calculoId, prefix);
       console.log(data.listado);
 
-      // Despacha la lista y la pendiente
-      dispatch(setCurveData(data.listado));
-      dispatch(setSlope(parseFloat(data.pendiente).toFixed(4)));
+      if (data === null) {
+        navigation.goBack();
+        navigation.navigate('newCalibrationCurve');
+      } else{
+        // Despacha la lista y la pendiente
+        dispatch(setCurveData(data.listado));
+        dispatch(setSlope(parseFloat(data.pendiente).toFixed(4)));
+      }
       console.log(data);
     } catch (e) {
       console.error(e);

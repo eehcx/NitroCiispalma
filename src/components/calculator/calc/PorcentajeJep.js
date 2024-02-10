@@ -3,13 +3,14 @@ import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, calcularPorcentajeP, clear } from '../../../features/calc/foliar/PorcentaJepSlice';
+import { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, setResultado, clear } from '../../../features/calc/foliar/PorcentaJepSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../interface/Forms/Input';
 // Servicios
 import { getCurve } from '../../../services/queryService';
+import { pctJepCalc } from '../../../utils/calculator/foliarCalc';
 
 export const PorcentaJep = ({ TextLabel }) => {
     // Redux
@@ -41,37 +42,33 @@ export const PorcentaJep = ({ TextLabel }) => {
     };
 
     const handleCalculo = () => {
-        NumAbsM = parseFloat(AbsM);
-        NumAbsB = parseFloat(AbsB);
-        NumM = parseFloat(M);
-        NumB = parseFloat(B);
-        NumAforo = parseFloat(Aforo);
-        NumPesoMuestra = parseFloat(pesoMuestra);
-        NumAlicuota = parseFloat(Alicuota);
         try{
             if (currentInput === 1) {
                 setabsm(TextLabel);
-                dispatch(setAbsM(NumAbsM));
+                dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
                 setabsb(TextLabel);
-                dispatch(setAbsB(NumAbsB));
+                dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
                 setm(TextLabel);
-                dispatch(setM(NumM));
+                dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
                 setb(TextLabel);
-                dispatch(setB(NumB));
+                dispatch(setB(parseFloat(B)));
             } else if (currentInput === 5) {
                 setaforo(TextLabel);
-                dispatch(setAforo(NumAforo));
+                dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 6) {
                 setpesomuestra(TextLabel);
-                dispatch(setPesoMuestra(NumPesoMuestra));
+                dispatch(setPesoMuestra(parseFloat(pesoMuestra)));
             } else if (currentInput === 7) {
                 setalicuota(TextLabel);
-                dispatch(setAlicuota(NumAlicuota));
+                dispatch(setAlicuota(parseFloat(Alicuota)));
             }
-            dispatch(calcularPorcentajeP());
+
+            const result = pctJepCalc(porcentajep.AbsM, porcentajep.AbsB, porcentajep.m, porcentajep.b, porcentajep.aforo, porcentajep.pesoMuestra, porcentajep.alicuota);
+            dispatch(setResultado(result));
+
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }

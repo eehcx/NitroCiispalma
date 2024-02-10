@@ -42,7 +42,7 @@ export const AlternativeScreen = ({ inputValue }) => {
                     <ScrollView onScroll={onScroll}>
                         <View style={{ paddingVertical: 15, paddingHorizontal: 50}}>
                             <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                                <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>{calc.selected ? calc.selected : 'Cálculo'}</Text>
+                                <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: '15%'}]}>{calc.selected ? calc.selected : 'Cálculo'}</Text>
                             </View>
                             {selectedOption === '' && <NullScreen />}
                             {selectedOption === 'Calcular Boro' && <BoroCalc TextLabel={inputValue} />}
