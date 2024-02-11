@@ -11,11 +11,12 @@ import Input from '../../interface/Forms/Input';
 // Servicios
 import { micronutrientsCalc } from '../../../utils/calculator/foliarCalc';
 
-export const MicronutrientesCalc = ({ TextLabel }) => {
+export const MicronutrientesCalc = () => {
     // Redux
     const dispatch = useDispatch();
     const currentInput = useSelector(selectCurrentInput);
     const micronutrientes = useSelector(state => state.micronutrientes);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [mgLM, setmglm] = useState('');
     const [mgLB, setmglb] = useState('');
@@ -25,16 +26,16 @@ export const MicronutrientesCalc = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setmglm(TextLabel); 
+                setmglm(inputValue); 
                 dispatch(setMgL_M(parseFloat(mgLM)));
             } else if (currentInput === 2) {
-                setmglb(TextLabel);
+                setmglb(inputValue);
                 dispatch(setMgL_B(parseFloat(mgLB)));
             } else if (currentInput === 3) {
-                setaforo(TextLabel);
+                setaforo(inputValue);
                 dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 4) {
-                setpesoMuestra(TextLabel);
+                setpesoMuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
 
@@ -52,7 +53,7 @@ export const MicronutrientesCalc = ({ TextLabel }) => {
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
 // Redux
 import { useSelector } from 'react-redux';
+import { Name } from '../../features/calc/CalculatorSlice';
 // Estilos globales
 import Fonts from '../../styles/Fonts';
 
@@ -12,28 +13,11 @@ import { MicronutrientesCalc } from './calc/MicronutrientesCalc';
 import { PorcentaJent } from './calc/PorcentajeJent';
 import { PorcentaJep } from './calc/PorcentajeJep';
 
-const NullScreen = ({}) => {
-
-    return(
-        <>
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center', padding:10 }]}>
-                <Text style={[ Fonts.labelSubtitle ]}>Debes seleccionar un cálculo</Text>
-            </View>
-        </>
-    )
-}
-
-export const AlternativeScreen = ({ inputValue }) => {
-    const calc = useSelector(state => state.calculator);
+export const AlternativeScreen = () => {
+    const calcName = useSelector(Name);
     // Constantes para el scroll
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
-    // Opción seleccionada
-    const [selectedOption, setSelectedOption] = useState(calc.selected);
-    const filterContent = (option) => { setSelectedOption(option); };
-
-    useEffect(() => {
-    }, [inputValue]);
 
     return(
         <>
@@ -42,15 +26,14 @@ export const AlternativeScreen = ({ inputValue }) => {
                     <ScrollView onScroll={onScroll}>
                         <View style={{ paddingVertical: 15, paddingHorizontal: 50}}>
                             <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                                <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: '15%'}]}>{calc.selected ? calc.selected : 'Cálculo'}</Text>
+                                <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: '15%'}]}>{calcName ? calcName : 'Cálculo'}</Text>
                             </View>
-                            {selectedOption === '' && <NullScreen />}
-                            {selectedOption === 'Calcular Boro' && <BoroCalc TextLabel={inputValue} />}
-                            {selectedOption === 'Calcular Azufre' && <AzufreCalc TextLabel={inputValue} />}
-                            {selectedOption === 'Macronutrientes' && <MacronutrientesCalc TextLabel={inputValue} />}
-                            {selectedOption === 'Micronutrientes' && <MicronutrientesCalc TextLabel={inputValue} />}
-                            {selectedOption === 'Porcentaje Jent' && <PorcentaJent TextLabel={inputValue} />}
-                            {selectedOption === 'Porcentaje Jep' && <PorcentaJep TextLabel={inputValue} />}
+                            {calcName === 'Calcular Boro' && <BoroCalc />}
+                            {calcName === 'Calcular Azufre' && <AzufreCalc />}
+                            {calcName === 'Macronutrientes' && <MacronutrientesCalc />}
+                            {calcName === 'Micronutrientes' && <MicronutrientesCalc />}
+                            {calcName === 'Porcentaje Jent' && <PorcentaJent />}
+                            {calcName === 'Porcentaje Jep' && <PorcentaJep />}
                         </View>
                     </ScrollView>
                 </SafeAreaView>

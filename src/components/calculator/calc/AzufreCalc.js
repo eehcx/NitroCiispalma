@@ -11,11 +11,12 @@ import Input from '../../interface/Forms/Input';
 // Servicios
 import { sulfurCalc } from '../../../utils/calculator/foliarCalc';
 
-export const AzufreCalc = ({ TextLabel }) => {
+export const AzufreCalc = () => {
     // Redux
     const dispatch = useDispatch();
     const currentInput = useSelector(selectCurrentInput);
     const azufre = useSelector(state => state.azufre);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [AbsM, setabsM] = useState('');
     const [AbsB, setabsB] = useState('');
@@ -28,25 +29,25 @@ export const AzufreCalc = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setabsM(TextLabel); 
+                setabsM(inputValue); 
                 dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
-                setabsB(TextLabel); 
+                setabsB(inputValue); 
                 dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
-                setm(TextLabel);
+                setm(inputValue);
                 dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
-                setb(TextLabel);
+                setb(inputValue);
                 dispatch(setB(parseFloat(B)));
             } else if (currentInput === 5) {
-                setaforo(TextLabel);
+                setaforo(inputValue);
                 dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 6) {
-                setpesoMuestra(TextLabel);
+                setpesoMuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             } else if (currentInput === 7) {
-                setalicuota(TextLabel);
+                setalicuota(inputValue);
                 dispatch(setAlicuota(parseFloat(alicuota)));
             }
             const result = sulfurCalc(azufre.AbsM, azufre.AbsB, azufre.m, azufre.b, azufre.aforo, azufre.pesoMuestra, azufre.alicuota);
@@ -63,7 +64,7 @@ export const AzufreCalc = ({ TextLabel }) => {
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>

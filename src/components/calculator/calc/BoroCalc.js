@@ -13,12 +13,13 @@ import Input from '../../interface/Forms/Input';
 import { getCurve } from '../../../services/queryService';
 import { boronCalc } from '../../../utils/calculator/foliarCalc';
 
-export const BoroCalc = ({ TextLabel }) => {
+export const BoroCalc = () => {
     // Redux
     const dispatch = useDispatch();
     const calculoId = useSelector(state => state.client.clientId);
     const currentInput = useSelector(selectCurrentInput);
     const boro = useSelector(state => state.boro);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [AbsM, setabsM] = useState('');
     const [AbsB, setabsB] = useState('');
@@ -44,19 +45,19 @@ export const BoroCalc = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setabsM(TextLabel);
+                setabsM(inputValue);
                 dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
-                setabsB(TextLabel);
+                setabsB(inputValue);
                 dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
-                setm(TextLabel);
+                setm(inputValue);
                 dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
-                setextractante(TextLabel);
+                setextractante(inputValue);
                 dispatch(setExtractante(parseFloat(Extractante)));
             } else if (currentInput === 5) {
-                setpesoMuestra(TextLabel);
+                setpesoMuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
             const result = boronCalc(boro.AbsM, boro.AbsB, boro.m, boro.Extractante, boro.pesoMuestra);
@@ -75,7 +76,7 @@ export const BoroCalc = ({ TextLabel }) => {
             console.error('Error al obtener el Input', error);
         }
         console.log(boro);
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>

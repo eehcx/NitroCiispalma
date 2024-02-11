@@ -28,7 +28,7 @@ import UserInformationScreen from './screens/main/profile/UserInfo';
 import ApplicationDataScreen from './screens/main/profile/privacity';
 
 // Calculator
-import BoroDetails from './screens/main/calculator/Details/BoroDetails';
+//import BoroDetails from './screens/main/calculator/Details/BoroDetails';
 import CalibrationCurveScreen from './screens/main/calculator/CalibrationCurve';
 import NewCalibrationCurve from './screens/main/calculator/NewCalibrationCurve';
 import CurveGraph from './screens/main/calculator/CurveGraph';
@@ -38,6 +38,10 @@ const AuthStack = createStackNavigator();
 const UserDataStack = createStackNavigator();
 const navigationRef = React.createRef();
 const Tab = createBottomTabNavigator();
+
+/*
+<Stack.Screen name="boroDetails" component={BoroDetails} options={{ title: 'Ver fórmula', headerStyle: { backgroundColor: '#fafafa' }  }}/>
+*/
 
 // Autentificación 
 const AuthScreens = () => (
@@ -80,7 +84,6 @@ export default function Navigation() {
                 <Stack.Screen name="newCalibrationCurve" component={NewCalibrationCurve} options={{ headerShown: false }}/>
                 <Stack.Screen name="curveGraph" component={CurveGraph} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' },}}/>
 
-                <Stack.Screen name="boroDetails" component={BoroDetails} options={{ title: 'Ver fórmula', headerStyle: { backgroundColor: '#fafafa' }  }}/>
                 <Stack.Screen name="InformDetails" component={InformDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>
                 <Stack.Screen name="registerInform" component={RegisterInform} options={{ headerShown: false }}/>

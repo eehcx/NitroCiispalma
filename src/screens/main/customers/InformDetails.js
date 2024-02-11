@@ -7,7 +7,7 @@ import InputText from '../../../components/interface/Forms/InputText';
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // Servicios
 import { getInforme , updateInforme } from '../../../services/informes';
 

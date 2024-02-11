@@ -3,7 +3,7 @@ import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, PorcentajeMacronutrientes, setResultado, clear } from '../../../features/calc/foliar/MacronutrientesSlice';
+import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, setResultado, clear } from '../../../features/calc/foliar/MacronutrientesSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
@@ -11,11 +11,12 @@ import Input from '../../interface/Forms/Input';
 // Servicios
 import { macroPctCalc } from '../../../utils/calculator/foliarCalc';
 
-export const MacronutrientesCalc = ({ TextLabel }) => {
+export const MacronutrientesCalc = () => {
     // Redux
     const dispatch = useDispatch();
     const currentInput = useSelector(selectCurrentInput);
     const macronutrientes = useSelector(state => state.macronutrientes);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [mgLM, setmglm] = useState('');
     const [mgLB, setmglb] = useState('');
@@ -25,16 +26,16 @@ export const MacronutrientesCalc = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setmglm(TextLabel); 
+                setmglm(inputValue); 
                 dispatch(setMgL_M(parseFloat(mgLM)));
             } else if (currentInput === 2) {
-                setmglb(TextLabel);
+                setmglb(inputValue);
                 dispatch(setMgL_B(parseFloat(mgLB)));
             } else if (currentInput === 3) {
-                setaforo(TextLabel);
+                setaforo(inputValue);
                 dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 4) {
-                setpesoMuestra(TextLabel);
+                setpesoMuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
 
@@ -52,7 +53,7 @@ export const MacronutrientesCalc = ({ TextLabel }) => {
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>

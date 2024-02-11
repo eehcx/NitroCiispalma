@@ -78,14 +78,6 @@ export default CustomersCalc = () => {
                     ) : (
                         <ScrollView onScroll={onScroll}>
                             <>
-                                <View style={{ marginHorizontal:30, width: '85%' }}>
-                                    <TextInput style={[InputForms.input, { marginBottom: 20, borderRadius: 17, }, { height: 43, paddingLeft: 25 }]} placeholder="Ingresa un Id Laboratorio" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
-                                </View>
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }}>
-                                    <Icon name="library-add" size={24} color='#767983' />
-                                    <Text style={[styles.txtLabels, Fonts.addText]}>Añadir muestra</Text>
-                                </TouchableOpacity>
-                                <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
                                 {Muestras.map((muestra, index) => (
                                     <View key={index}>
                                         <ItemListRadioButton title={"Id Laboratorio. " + muestra.IdLab} content="Sin cálculos hechos" onPress={() => handleRadioButtonPress(muestra.IdLab)} status={IdLab === muestra.IdLab ? 'checked' : 'unchecked'} value={muestra.IdLab} details={() => handleDetails(muestra.IdLab)}/>

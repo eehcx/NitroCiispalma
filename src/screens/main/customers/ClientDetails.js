@@ -12,16 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 export default ClientDetails = ({}) => {
     // Redux
     const client = useSelector(state => state.client);
-    const [Resultados, setResultados] = useState(null);
     // Estado de Carga de la página
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
     // Variables
-    const [no_muestras, setNoMuestras] = useState('');
-    const [observaciones, setObservaciones] = useState('');
-    const [procedencia, setProcedencia] = useState('');
-    const [tipo_cultivo, setTipoCultivo] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [razonSocial, setRazonSocial] = useState('');
+    const [telefono, setTelefono] = useState('');
 
     const handleUpdate = async () => {
         try {
@@ -32,7 +30,17 @@ export default ClientDetails = ({}) => {
     };
 
     useEffect(() => {
+        const handleRedux = async () => {
+            try {
+                setNombre(client.Nombre);
+                setRazonSocial(client.RazonSocial);
+                setTelefono(client.Telefono);
+            } catch (error) {
+                console.error('Error al obtener el informe:', error);
+            }
+        };
 
+        handleRedux();
     }, []);
 
     return (
@@ -42,9 +50,9 @@ export default ClientDetails = ({}) => {
                 <ScrollView onScroll={onScroll}>
                     <View style={InputForms.container}>
                         <View style={InputForms.formContainer}>
-                            <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={client.Nombre} label='Nombre' marginRight={200} />
-                            <InputText backgroundColor='#ECECEC' placeholder='Razón social' value={client.RazonSocial} label='Empresa' marginRight={200} />
-                            <InputText backgroundColor='#ECECEC' placeholder='Número de telefono' value={client.Telefono} label='Telefono' marginRight={200} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={nombre} onChange={setNombre} label='Nombre' marginRight={200} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Razón social' value={razonSocial} onChange={setRazonSocial} label='Empresa' marginRight={200} />
+                            <InputText backgroundColor='#ECECEC' placeholder='Número de telefono' value={telefono} onChange={setTelefono} label='Telefono' marginRight={200} />
                         </View>
                     </View>
                 </ScrollView>

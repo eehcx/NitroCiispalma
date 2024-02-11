@@ -12,12 +12,13 @@ import Input from '../../interface/Forms/Input';
 import { getCurve } from '../../../services/queryService';
 import { pctJepCalc } from '../../../utils/calculator/foliarCalc';
 
-export const PorcentaJep = ({ TextLabel }) => {
+export const PorcentaJep = () => {
     // Redux
     const dispatch = useDispatch();
     const currentInput = useSelector(selectCurrentInput);
     const calculoId = useSelector(state => state.client.clientId);
     const porcentajep = useSelector(state => state.porcentajep);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [AbsM, setabsm] = useState('');
     const [AbsB, setabsb] = useState('');
@@ -44,25 +45,25 @@ export const PorcentaJep = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setabsm(TextLabel);
+                setabsm(inputValue);
                 dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
-                setabsb(TextLabel);
+                setabsb(inputValue);
                 dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
-                setm(TextLabel);
+                setm(inputValue);
                 dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
-                setb(TextLabel);
+                setb(inputValue);
                 dispatch(setB(parseFloat(B)));
             } else if (currentInput === 5) {
-                setaforo(TextLabel);
+                setaforo(inputValue);
                 dispatch(setAforo(parseFloat(Aforo)));
             } else if (currentInput === 6) {
-                setpesomuestra(TextLabel);
+                setpesomuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(pesoMuestra)));
             } else if (currentInput === 7) {
-                setalicuota(TextLabel);
+                setalicuota(inputValue);
                 dispatch(setAlicuota(parseFloat(Alicuota)));
             }
 
@@ -81,7 +82,7 @@ export const PorcentaJep = ({ TextLabel }) => {
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>

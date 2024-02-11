@@ -6,10 +6,10 @@ import { MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
 //
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Styles
-import InputForms from '../../../../styles/InputForms';
-import Fonts from '../../../../styles/Fonts';
+import InputForms from '../../../styles/InputForms';
+import Fonts from '../../../styles/Fonts';
 
-export default BoroDetails = () => {
+export default CalcDetails = () => {
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };

@@ -5,7 +5,7 @@ import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text, Tou
 import { MD2Colors, ActivityIndicator, PaperProvider, Divider } from 'react-native-paper';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelected } from '../../../features/calc/CalculatorSlice';
+import { setIndex, Name } from '../../../features/calc/CalculatorSlice';
 // Helpers
 import { formatDateToString } from '../../../utils/helpers/dateHelpers';
 // Styles
@@ -23,41 +23,15 @@ import Fonts from '../../../styles/Fonts';
 const ListFoliar = () => {
     // Redux
     const dispatch = useDispatch();
-    const selected = useSelector(state => state.calculator.selected);
-    // Navegación
-    const navigation = useNavigation();
-    // ID Muestra
-    const [selectedCalculation, setSelectedCalculation] = useState(null);
+    const elements = useSelector(state => state.calculator.calcNames);
+    const calcName = useSelector(Name);
     // Fecha
     const fecha = new Date();
     const fechaFormateada = formatDateToString(fecha);
-    // ID Muestra
+    // Scroll 
     const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
-
-    const elementos = [
-        { id: 0, nombre: 'Micronutrientes' },
-        { id: 1, nombre: 'Macronutrientes' },
-        { id: 2, nombre: 'Calcular Boro' },
-        { id: 3, nombre: 'Calcular Azufre' },
-        { id: 4, nombre: 'Porcentaje Jent' },
-        { id: 5, nombre: 'Porcentaje Jep' }
-    ];
-
-    // Radio Button para seleccionar el id de muestra
-    const handleRadioButtonPress = async (selectedCalcs) => {
-        setSelectedCalculation(selectedCalcs);
-        dispatch(setSelected(selectedCalcs));
-    };
-
-    const handleDetails = async () => {
-        try{
-            alert('Mensaje de pruebas')
-        } catch (error) {
-            console.error('Error al obtener el Input', error);
-        }
-    };
 
     useEffect(() => {
         setLoading(false);
@@ -73,9 +47,9 @@ const ListFoliar = () => {
                         </View>
                     ) : (
                         <ScrollView onScroll={onScroll}>
-                            {elementos.map((elemento, index) => (
+                            {elements.map((name, index) => (
                                 <View key={index}>
-                                    <ItemListRadioButton title={elemento.nombre} content={fechaFormateada} onPress={() => handleRadioButtonPress(elemento.nombre)} status={selected === elemento.nombre ? 'checked' : 'unchecked'} value={elemento.nombre} details={()=> handleDetails()}/>
+                                    <ItemListRadioButton title={name} content={fechaFormateada} onPress={() => dispatch(setIndex(index))} status={calcName === name ? 'checked' : 'unchecked'} value={name} details={()=> alert('Mensaje de pruebas')}/>
                                 </View>
                             ))}
                         </ScrollView>

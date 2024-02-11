@@ -11,11 +11,12 @@ import Input from '../../interface/Forms/Input';
 // Servicios
 import { pctJentCalc } from '../../../utils/calculator/foliarCalc';
 
-export const PorcentaJent = ({ TextLabel }) => {
+export const PorcentaJent = () => {
     // Redux
     const dispatch = useDispatch();
     const currentInput = useSelector(selectCurrentInput);
     const porcentajent = useSelector(state => state.porcentajent);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [Vm, setvm] = useState('');
     const [Vb, setvb] = useState('');
@@ -25,16 +26,16 @@ export const PorcentaJent = ({ TextLabel }) => {
     const handleCalculo = () => {
         try{
             if (currentInput === 1) {
-                setvm(TextLabel); 
+                setvm(inputValue); 
                 dispatch(setVm(parseFloat(Vm)));
             } else if (currentInput === 2) {
-                setvb(TextLabel);
+                setvb(inputValue);
                 dispatch(setVb(parseFloat(Vb)));
             } else if (currentInput === 3) {
-                setn(TextLabel);
+                setn(inputValue);
                 dispatch(setN(parseFloat(N)));
             } else if (currentInput === 4) {
-                setp(TextLabel);
+                setp(inputValue);
                 dispatch(setP(parseFloat(P)));
             }
 
@@ -52,7 +53,7 @@ export const PorcentaJent = ({ TextLabel }) => {
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
 
     return(
         <>
