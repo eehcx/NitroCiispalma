@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, StatusBar } from 'react-native';
 import { Button } from 'react-native-paper';
 // Componentes
-import InputText from '../../../components/interface/Forms/InputText';
+import InputText from '../../../components/common/Forms/InputText';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';

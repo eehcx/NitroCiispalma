@@ -1,3 +1,6 @@
+//React Native
+import React, { useEffect } from 'react';
+//
 import { View, Text } from 'react-native';
 // React Native Paper
 import { Button } from 'react-native-paper';
@@ -19,6 +22,9 @@ import { saveCalibrationCurve } from '../../../services/setService';
 import calcSlope from '../../../utils/helpers/calcSlope';
 
 export default NewCalibrationCurve = () => {
+    const [responseData, setResponseData] = useState(null);
+    const url = 'https://us-central1-ciispalmaapp.cloudfunctions.net/app/api/clients';
+    const method = 'POST';
     // Navegación
     const navigation = useNavigation();
     // Redux 
@@ -46,6 +52,24 @@ export default NewCalibrationCurve = () => {
             dispatch(reset());
         }catch (error) {
             console.error('Error al guardar el registro', error);
+        }
+    };
+
+    const fetchData = async () => {
+        const name = prefixes[index];
+        const results = calcSlope(CalibrationCurve.curveData);
+        const curveData = { listado: CalibrationCurve.curveData || [], slope: results.slope.toString(), b: results.b.toString(), r2: results.r2.toString() };
+
+        const requestData = { calculoId: calculoId, name: name, curveData: curveData };
+        try {
+            const response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(requestData)});
+            if (!response.ok) {
+                throw new Error('Ocurrió un error al hacer la solicitud.');
+            }
+            const responseData = await response.json();
+            setResponseData(responseData);
+        } catch (error) {
+            console.error('Error:', error);
         }
     };
 

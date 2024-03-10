@@ -1,6 +1,6 @@
 //React Native
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView, SafeAreaView } from 'react-native';
 // React Native Paper
 import { PaperProvider, Button } from 'react-native-paper';
 // React Navigation
@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSlope, setCurveData, Current } from '../../../features/calc/CalibrationCurveSlice';
 // Componentes
-import DataNavigator from '../../../components/interface/filters/DataNavigator';
+import DataNavigator from '../../../components/common/filters/DataNavigator';
 import TableCurve from '../../../components/calculator/calc/TableCurve';
 // Servicios
 import { getCurve } from '../../../services/queryService';
@@ -21,13 +21,20 @@ const DataTableCurve = () => {
   const navigation = useNavigation();
   // Redux
   const calibrationCurve = useSelector(state => state.calibrationCurve);
+  // Scroll
+  const [isExtended, setIsExtended] = React.useState(false);
+  const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
     return(
         <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
             <PaperProvider>
-                <DataNavigator />
-                <TableCurve data={calibrationCurve.curveData} />
-                <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
+              <SafeAreaView>
+                <ScrollView onScroll={onScroll}>
+                  <DataNavigator />
+                  <TableCurve data={calibrationCurve.curveData} />
+                  <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
+                </ScrollView>
+              </SafeAreaView>
             </PaperProvider>
         </View>
     );
@@ -47,7 +54,6 @@ export default CalibrationCurveScreen = () => {
     const prefix = prefixes[index];
     try {
       const data = await getCurve(calculoId, prefix);
-      console.log(data.listado);
 
       if (data === null) {
         navigation.goBack();

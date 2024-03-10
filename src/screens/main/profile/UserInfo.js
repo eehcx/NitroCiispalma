@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Componentes
-import EditInfo from '../../../components/interface/Forms/EditInfo';
+import EditInfo from '../../../components/common/Forms/EditInfo';
 // Redux
 import { useSelector } from 'react-redux';
 

@@ -13,8 +13,8 @@ import { getDatabase, ref, onValue, off } from 'firebase/database';
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 //
-import FilterPagesExtended from '../../../components/interface/filters/FilterPagesExtended';
-import ItemListIcon from '../../../components/interface/ItemListIcon';
+import FilterPagesExtended from '../../../components/common/filters/FilterPagesExtended';
+import ItemListIcon from '../../../components/common/ItemListIcon';
 
 const ListSoilsPackage = () => {
     const navigation = useNavigation();

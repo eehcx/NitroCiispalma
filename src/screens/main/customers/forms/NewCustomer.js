@@ -7,7 +7,7 @@ import InputForms from '../../../../styles/InputForms';
 // Real Time Database
 import { setCliente } from '../../../../services/clientes';
 // Componentes
-import InputText from '../../../../components/interface/Forms/InputText';
+import InputText from '../../../../components/common/Forms/InputText';
 
 export default RegisterCustomer = () => {
     const [name, setName] = useState('');

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     // Selección del calculo
     index: 0,
+    sum: 1,
     calcNames: ['Micronutrientes','Macronutrientes','Calcular Boro','Calcular Azufre','Porcentaje Jent','Porcentaje Jep'],
     // Funcionalidad calculadora
     input: 1,
@@ -24,13 +25,22 @@ export const CalculatorSlice = createSlice({
         setIdLab: (state, action) => { state.IdLab = action.payload; },
         setIdCalc: (state, action) => { state.IdCalc = action.payload; },
         // Funcionalidad
+        setSum: (state, action) => { state.sum = action.payload; },
         increment: (state) => { 
-            state.value = initialState.value;
-            state.input = (state.input + 1); 
+            if (state.input < state.sum ) {
+                state.value = initialState.value;
+                state.input = (state.input + 1);
+            } else{
+                state.input = state.sum;
+            }
         },
         decrement: (state) => { 
-            state.value = initialState.value;
-            state.input = (state.input - 1); 
+            if (state.input > 1) {
+                state.value = initialState.value;
+                state.input = (state.input - 1);
+            } else{
+                state.input = 1;
+            }
         },
         updateValue: (state, action) => {
             state.keyboardNumber = action.payload; 
@@ -49,7 +59,7 @@ export const CalculatorSlice = createSlice({
     },
 });
 
-export const { setIndex, increment, decrement, updateValue, Backspace, setIdLab, setIdCalc, reset } = CalculatorSlice.actions;
+export const { setIndex, increment, decrement, updateValue, Backspace, setSum, setIdLab, setIdCalc, reset } = CalculatorSlice.actions;
 export const Index = (state) => state.calculator.index;
 export const Name = (state) => state.calculator.calcNames[state.calculator.index];
 //

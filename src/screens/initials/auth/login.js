@@ -12,7 +12,7 @@ import buttonStyles from '../../../styles/buttonStyles';
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 // Componentes
-import PasswordInput from '../../../components/interface/Forms/PasswordInput';
+import PasswordInput from '../../../components/common/Forms/PasswordInput';
 
 export default LoginScreen = () => {
   const navigation = useNavigation();

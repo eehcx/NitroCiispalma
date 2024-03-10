@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, TextInput, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
-import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
-//
-import Icon from 'react-native-vector-icons/MaterialIcons';
-// Componentes
-import ItemListIcon from '../../../components/interface/ItemListIcon';
-import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
+import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
+import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
 // Servicios
 import { getMuestras } from '../../../services/calculos';
 // Redux
@@ -15,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIdLab } from '../../../features/calc/CalculatorSlice';
 // Styles
 import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
 
 export default CalculatorScreen = () => {
 

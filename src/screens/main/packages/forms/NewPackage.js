@@ -11,8 +11,8 @@ import { setPaquetes } from '../../../../services/paquetes';
 import InputForms from '../../../../styles/InputForms';
 import Fonts from '../../../../styles/Fonts';
 // Components
-import FilterPagesExtended from '../../../../components/interface/filters/FilterPagesExtended';
-import InputText from '../../../../components/interface/Forms/InputText';
+import FilterPagesExtended from '../../../../components/common/filters/FilterPagesExtended';
+import InputText from '../../../../components/common/Forms/InputText';
 
 export default NewPackage = () => {
     // React Navigation

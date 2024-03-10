@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
+import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, setResultado } from '../../../features/calc/foliar/BoroSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
-import Input from '../../interface/Forms/Input';
+import Input from '../../common/Forms/Input';
 //import { AverageInput } from '../../interface/Forms/AverageInput';
 // Servicios
 import { getCurve } from '../../../services/queryService';
@@ -43,6 +43,7 @@ export const BoroCalc = () => {
     //const handleAverage = (value) => { dispatch(setAbsM(value)); };
 
     const handleCalculo = () => {
+        dispatch(setSum(5));
         try{
             if (currentInput === 1) {
                 setabsM(inputValue);

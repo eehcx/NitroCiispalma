@@ -12,11 +12,10 @@ import Fonts from '../../../../styles/Fonts';
 import { app } from '../../../../app/firebase';
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Componentes
-import FilterPagesExtended from '../../../../components/interface/filters/FilterPagesExtended';
-import DatePickerComponent from '../../../../components/interface/Forms/DatePicker';
+import FilterPagesExtended from '../../../../components/common/filters/FilterPagesExtended';
+import DatePickerComponent from '../../../../components/common/Forms/DatePicker';
 // Servicios
 import { saveInform } from '../../../../services/setService';
-import { setInforme } from '../../../../services/informes';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { update, reset, selectCurrentForm, setForm } from '../../../../features/forms/ReportSlice';

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
+import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setVm, setVb, setN, setP, setResultado, clear } from '../../../features/calc/foliar/PorcentaJentSlice';
 // Estilos globales
 import Fonts from '../../../styles/Fonts';
 // Componentes
-import Input from '../../interface/Forms/Input';
+import Input from '../../common/Forms/Input';
 // Servicios
 import { pctJentCalc } from '../../../utils/calculator/foliarCalc';
 
@@ -24,6 +24,7 @@ export const PorcentaJent = () => {
     const [P, setp] = useState('');
 
     const handleCalculo = () => {
+        dispatch(setSum(4));
         try{
             if (currentInput === 1) {
                 setvm(inputValue); 

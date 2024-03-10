@@ -13,7 +13,7 @@ import { getInformesCliente } from '../../../services/informes';
 // Styles
 import InputForms from '../../../styles/InputForms';
 // Componentes
-import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
+import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
 
 // Pagina de listado de clientes
 export default CustomersInform = () => {

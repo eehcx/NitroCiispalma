@@ -13,8 +13,8 @@ import InputForms from '../../../styles/InputForms';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Componentes
-import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
-import FilterPagesExtended from '../../../components/interface/filters/FilterPagesExtended';
+import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
+import FilterPagesExtended from '../../../components/common/filters/FilterPagesExtended';
 // Iconos
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Estilos

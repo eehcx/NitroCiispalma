@@ -7,7 +7,7 @@ import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-nati
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 //Componentes
-import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
+import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
 // Iconos
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Redux

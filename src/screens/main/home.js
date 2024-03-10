@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, StatusBar, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
+import { View, StatusBar, TouchableOpacity, Image, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { tw } from 'nativewind';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
-import Fonts from '../../styles/Fonts';
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { getCountOfSubcollections } from '../../services/queryService';
 import { formatDateToString } from '../../utils/helpers/dateHelpers';
@@ -23,7 +21,6 @@ export default HomeScreen = () => {
   const formattedDate = formatDateToString(currentDate);
 
   // Redux - User
-  const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const client = useSelector(state => state.client);
   const calculator = useSelector(state => state.calculator);
@@ -42,28 +39,26 @@ export default HomeScreen = () => {
   return (
     <>
       <StatusBar backgroundColor='#fafafa'  barStyle="dark-content" />
-      <View className="flex-1 justify-center items-center" style={{ backgroundColor: '#fafafa', paddingBottom: 50 }} >
-        <View style={[{ top: 25, left: 30 }]}>
-          <Text style={[styles.txtState, Fonts.formTitle]}> Hola, {firstName}</Text> 
-          <Text style={[Fonts.labelSubtitle, { top: 38, left: 7,letterSpacing: 0.3, textAlign: "left", position: "absolute", color: "#999" }]}>{formattedDate}</Text>
+      <View className='bg-neutral-50 pb-12'>
+        <View className='top-6 left-8'>
+          <Text className='text-black text-left absolute font-bold text-2xl'> Hola, {firstName}</Text> 
+          <Text className='text-xl top-9 text-left left-2 absolute text-gray-500 tracking-wide' >{formattedDate}</Text>
         </View>
-
-        <View style={{ marginTop: '30%' }}>
-          <TouchableOpacity onPress={()=> navigation.navigate('calculator') } underlayColor="#d7dfe3" style={[styles.groupItem]} >
-            <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }} style={styles.imagesTools} />
+        <View className=' mt-28'>
+          <TouchableOpacity className=' h-72 w-5/6 mx-8' onPress={()=> navigation.navigate('calculator') } underlayColor="#d7dfe3"  >
+            <Image className=' rounded-3xl w-full h-full' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }} />
           </TouchableOpacity>
         </View>
 
-        <View style={[styles.secciones, { top: 30 }]}>
-          <Text style={[Fonts.labelSubtitle, { color: "#000", textAlign: "left", position: "absolute" , fontWeight: "bold" }]}>Cliente</Text>
+        <View className='top-5 mx-10 my-1'>
+          <Text className=' text-black text-left absolute text-xl font-bold'>Cliente</Text>
         </View>
-
-        <View style={{ backgroundColor: "#f0f0f0", height: 90, width: "60%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start', marginTop: "14%", marginBottom: "7%", marginLeft: "5%" }} >
-          <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
+        <View className='bg-gray-200 h-24 w-3/5 rounded-2xl justify-start mt-5 mx-9 my-14'>
+          <View className='flex-row items-center top-4 px-5'>
             <Icon name="dns" size={18} color="#333" />
-            <Text style={{ color: "#333", marginLeft: 10, fontSize: 15 }}>{client.RazonSocial ? client.RazonSocial : 'Cliente seleccionado'}</Text>
+            <Text className='text-black ml-3 text-base'>{client.RazonSocial ? client.RazonSocial : 'Cliente seleccionado'}</Text>
           </View>
-          <Text style={{ color: "#333", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{'No. Laboratorio '+calculator.IdLab ? 'No. Laboratorio '+ calculator.IdLab : 'Id Laboratorio'}</Text>
+          <Text className='text-black ml-5 top-5 font-bold text-lg'>{'No. Laboratorio '+calculator.IdLab ? 'No. Laboratorio '+ calculator.IdLab : 'Id Laboratorio'}</Text>
         </View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
@@ -87,11 +82,3 @@ export default HomeScreen = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  txtState:{ color: "#000", textAlign: "left", position: "absolute" },
-  // Estilos de las secciones o filtros
-  secciones: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 50, marginVertical: 1 },
-  imagesTools: { borderRadius: 22, width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' },
-  groupItem: { height: 300, width: 350, marginHorizontal: 30, backgroundColor: '#d7dfe3', borderRadius: 22 },
-});
