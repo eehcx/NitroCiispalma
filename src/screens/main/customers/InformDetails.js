@@ -65,7 +65,7 @@ export default InformDetails = ({}) => {
     return (
         <>
             <StatusBar backgroundColor='#fafafa' />
-            <SafeAreaView style={{ backgroundColor: '#fafafa', flex: 1 }}>
+            <SafeAreaView className='flex-1 bg-zinc-50'>
                 <ScrollView onScroll={onScroll}>
                     <View style={InputForms.container}>
                         <View style={InputForms.formContainer}>

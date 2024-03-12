@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
 import { ActivityIndicator, MD2Colors, FAB, Portal, PaperProvider } from 'react-native-paper';
 // React Navigation
@@ -14,7 +14,7 @@ import { setNombre, setRazonSocial, setClientId, setTelefono } from '../../../fe
 import { getClientes } from '../../../services/clientes';
 
 // Pagina de listado de clientes
-const CustomersList = () => {
+export default CustomersList = () => {
     const [selectedClientId, setSelectedClientId] = useState(null);
     const dispatch = useDispatch();
     const clientId = useSelector(state => state.client.clientId);
@@ -78,9 +78,9 @@ const CustomersList = () => {
     }, []);
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
+        <View className='flex-1 bg-zinc-50'>
             <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
+                <SafeAreaView className='flex-grow'>
                 {loading ? (
                         <View style={InputForms.container}>
                             <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
@@ -104,8 +104,8 @@ const CustomersList = () => {
                     ]}
                     onStateChange={onStateChange}
                     onPress={() => {
-                        if (open) {
-                        // do something if the speed dial is open
+                        if (open) { 
+                            // do something if the speed dial is open
                         }
                     }}
                     />
@@ -114,11 +114,3 @@ const CustomersList = () => {
         </View>
     );
 };
-
-export default CustomersList;
-
-const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
-    cardList:{ marginTop: 5, marginBottom: 5 },
-    txtLabels: { marginLeft: 16, color: '#67757d', fontSize: 15 },
-});

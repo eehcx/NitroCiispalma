@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, View, Text, TouchableOpacity } from 'react-native';
 // React Native Paper
 import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -12,7 +12,7 @@ import { getDatabase, ref, onValue, off } from 'firebase/database';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
-//
+// Components
 import FilterPagesExtended from '../../../components/common/filters/FilterPagesExtended';
 import ItemListIcon from '../../../components/common/ItemListIcon';
 
@@ -42,9 +42,9 @@ const ListSoilsPackage = () => {
 
 
     return(
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
+        <View className='flex-1 bg-zinc-50'>
             <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
+                <SafeAreaView className='flex-grow'>
                     {loading ? (
                         <View style={InputForms.container}>
                             <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
@@ -90,9 +90,9 @@ const ListFoliarPackage = () => {
 
 
     return(
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
+        <View className='flex-1 bg-zinc-50'>
             <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
+                <SafeAreaView className='flex-grow'>
                     {loading ? (
                         <View style={InputForms.container}>
                             <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
@@ -127,28 +127,20 @@ export default RegisterPackage = () => {
     const filterContent = (option) => { setSelectedOption(option); };
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
-            <View style={[styles.BoxContainer, { paddingHorizontal:20, marginVertical:20 }]}>
-                <View style={[styles.row]}>
+        <View className='flex-1 bg-zinc-50'>
+            <View className=' px-5 my-5'>
+                <View className=' flex-row justify-between'>
                     <FilterPagesExtended text="Análisis Suelos" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Suelos"} onPress={() => filterContent("Análisis Suelos")}/>
                     <FilterPagesExtended text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
                 </View>
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 15 }} onPress={NavigateToNewPackage}>
+            <TouchableOpacity className=' flex-row items-center justify-center p-4' onPress={NavigateToNewPackage}>
                 <Icon name="library-add" size={24} color='#767983' />
-                <Text style={[styles.txtLabels, Fonts.addText]}>Añadir paquete</Text>
+                <Text className=' ml-3 text-zinc-500 text-base' style={[Fonts.addText]}>Añadir paquete</Text>
             </TouchableOpacity>
-            <Divider style={[styles.cardList, { backgroundColor: "#e4e5e6" }]} />
+            <Divider className=' my-1 bg-neutral-300' />
             {selectedOption === 'Análisis Suelos' && <ListSoilsPackage />}
             {selectedOption === 'Análisis Foliar' && <ListFoliarPackage/>}
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
-    cardList:{ marginTop: 5, marginBottom: 5 },
-    txtLabels: { marginLeft: 10, color: '#67757d', fontSize: 15 },
-    // Estilos del container
-    row: { flexDirection: 'row', justifyContent: 'space-between' },
-});

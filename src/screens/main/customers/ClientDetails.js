@@ -46,7 +46,7 @@ export default ClientDetails = ({}) => {
     return (
         <>
             <StatusBar backgroundColor='#fafafa' />
-            <SafeAreaView style={{ backgroundColor: '#fafafa', flex: 1 }}>
+            <SafeAreaView className='bg-zinc-50 flex-1'>
                 <ScrollView onScroll={onScroll}>
                     <View style={InputForms.container}>
                         <View style={InputForms.formContainer}>

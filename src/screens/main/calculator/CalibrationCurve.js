@@ -13,8 +13,6 @@ import DataNavigator from '../../../components/common/filters/DataNavigator';
 import TableCurve from '../../../components/calculator/calc/TableCurve';
 // Servicios
 import { getCurve } from '../../../services/queryService';
-// Estilos
-import Fonts from '../../../styles/Fonts';
 
 const DataTableCurve = () => {
   // Navegación
@@ -26,13 +24,13 @@ const DataTableCurve = () => {
   const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
     return(
-        <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
+        <View className='flex-1 bg-slate-50'>
             <PaperProvider>
               <SafeAreaView>
                 <ScrollView onScroll={onScroll}>
                   <DataNavigator />
                   <TableCurve data={calibrationCurve.curveData} />
-                  <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
+                  <Button className='text-base font-bold m-6' mode="contained" style={[{ backgroundColor: '#41525C' }]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
                 </ScrollView>
               </SafeAreaView>
             </PaperProvider>
@@ -74,7 +72,7 @@ export default CalibrationCurveScreen = () => {
   }, [calibrationCurve.current]);
 
   return (
-      <View style={[{flex: 1, backgroundColor: "#f1f2f3"}]}>
+      <View className='flex-1 bg-slate-50'>
         <DataTableCurve />
       </View>
   );

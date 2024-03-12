@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Avatar, Card, Button, Divider, Appbar  } from 'react-native-paper';
-import { View, StyleSheet, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { Avatar, Card, Button, Divider } from 'react-native-paper';
+import { View, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';

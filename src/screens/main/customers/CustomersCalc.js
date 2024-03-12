@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View, TouchableOpacity, Text, TextInput } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
-import { PaperProvider, MD2Colors, ActivityIndicator, Divider } from 'react-native-paper';
+import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
 // Styles
 import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
 //Componentes
 import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
-// Iconos
-import Icon from 'react-native-vector-icons/MaterialIcons';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setIdLab, setIdCalc } from '../../../features/calc/CalculatorSlice';
@@ -24,7 +21,6 @@ export default CustomersCalc = () => {
     // ID Muestra
     const [selectedIdLab, setSelectedIdLab] = useState(null);
     const IdLab = useSelector(state => state.calculator.IdLab);
-    const [numMuestra, setNumMuestra] = useState('');
     // Redux:
     const informId = useSelector(state => state.inform.informId);
     const [Muestras, setMuestras] = useState([]);
@@ -68,9 +64,9 @@ export default CustomersCalc = () => {
     }, [informId]);
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
+        <View className='flex-1 bg-zinc-50'>
             <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
+                <SafeAreaView className='flex-grow'>
                     {loading ? (
                         <View style={InputForms.container}>
                             <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
@@ -91,9 +87,3 @@ export default CustomersCalc = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
-    cardList:{ marginTop: 5, marginBottom: 5 },
-    txtLabels: { marginLeft: 10, color: '#67757d', fontSize: 15 },
-});

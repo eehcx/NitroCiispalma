@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, StatusBar, TextInput, View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StatusBar, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Componentes
@@ -20,9 +20,9 @@ const MainScreen = ({}) => {
 
     return(
         <>
-            <View style={[styles.ScreenCalculator]}>
-                <Text style={[styles.SubtitleTextScreen]}>{calcName ? calcName : 'Cálculo'}</Text>
-                <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
+            <View className='h-2/6 w-full bg-slate-50'>
+                <Text className='text-right pr-10 mt-16 text-2xl' style={{color: '#bababa'}}>{calcName ? calcName : 'Cálculo'}</Text>
+                <TextInput className=' text-right pr-5 text-7xl' editable={false} placeholder='00000000' value={resultValue} />
             </View>
         </>
     )
@@ -50,28 +50,28 @@ export default CalculatorScreen = () => {
     }, []);
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
-            <StatusBar backgroundColor='#f1f2f3' barStyle="dark-content" />
+        <View className='flex-1 bg-slate-50'>
+            <StatusBar className='bg-slate-50' barStyle="dark-content" />
             <>
                 {(selectedOption === 'calculate' || selectedOption === 'history' || selectedOption === 'functions') && <MainScreen />}
                 {selectedOption === 'apps' && <AlternativeScreen />}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 10 }}>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("history")}>
-                            <Icon name="history" size={30} color={selectedOption === 'history' ? '#41525C' : '#bababa'} style={{ marginRight: 10 }} />
+                <View className='flex-row justify-between'>
+                    <View className='flex-row justify-around m-3'>
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("history")}>
+                            <Icon name="history" size={30} color={selectedOption === 'history' ? '#41525C' : '#bababa'} className='mr-3' />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("calculate")}>
-                            <Icon name="calculate" size={30} color={selectedOption === 'calculate' ? '#41525C' : '#bababa'} style={{ marginRight: 10 }}/>
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("calculate")}>
+                            <Icon name="calculate" size={30} color={selectedOption === 'calculate' ? '#41525C' : '#bababa'} className='mr-3'/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("apps")}>
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("apps")}>
                             <Icon name="apps" size={30} color={selectedOption === 'apps' ? '#41525C' : '#bababa'} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ marginTop: 10, marginRight:30 }} onPress={() => filterContent("functions")}>
+                    <TouchableOpacity className='mt-3 mr-8' onPress={() => filterContent("functions")}>
                         <Icon name="functions" size={30} color={selectedOption === 'functions' ? '#41525C' : '#bababa'}/>
                     </TouchableOpacity>
                 </View>
-                <Divider style={{ backgroundColor: "#ddd", marginHorizontal: 20}} />
+                <Divider className='bg-neutral-200 mx-5'/>
                 {selectedOption === 'calculate' && <KeyBoard PressRegister={handleRegister} />}
                 {selectedOption === 'history' && <HistoryScreen />}
                 {selectedOption === 'functions' && <CalculationsList />}
@@ -80,10 +80,3 @@ export default CalculatorScreen = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    ScreenCalculator:{ height: '35%', width: "100%", backgroundColor: '#f1f2f3' },
-    ScreenText:{ textAlign: 'right', paddingRight: 20, fontSize: 67},
-    SubtitleTextScreen:{ textAlign: 'right', paddingRight: 40, marginTop: 60, fontSize: 27, color: '#bababa' },
-    keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' },
-});

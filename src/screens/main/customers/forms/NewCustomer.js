@@ -22,7 +22,7 @@ export default RegisterCustomer = () => {
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', backgroundColor: "#fafafa" }}>
+        <View className='flex-1 justify-center bg-zinc-50'>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
                     <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={name} onChange={setName}label='Nombre' marginRight={200} />

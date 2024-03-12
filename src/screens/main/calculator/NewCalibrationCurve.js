@@ -1,6 +1,3 @@
-//React Native
-import React, { useEffect } from 'react';
-//
 import { View, Text } from 'react-native';
 // React Native Paper
 import { Button } from 'react-native-paper';
@@ -13,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reset, Current, CurrentName, incrementCurrent, setCurrent } from '../../../features/calc/CalibrationCurveSlice';
 // Estilos
 import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import NewCalibrationCurveModal from '../../../components/calculator/calc/NewCalibrationCurveModal';
 // Servicio
@@ -22,9 +18,6 @@ import { saveCalibrationCurve } from '../../../services/setService';
 import calcSlope from '../../../utils/helpers/calcSlope';
 
 export default NewCalibrationCurve = () => {
-    const [responseData, setResponseData] = useState(null);
-    const url = 'https://us-central1-ciispalmaapp.cloudfunctions.net/app/api/clients';
-    const method = 'POST';
     // Navegación
     const navigation = useNavigation();
     // Redux 
@@ -44,7 +37,6 @@ export default NewCalibrationCurve = () => {
             const slope = results.slope.toString();
             const b = results.b.toString();
             const r2 = results.r2.toString();
-
             // Servicio para guardar el registro
             await saveCalibrationCurve(calculoId, name, data, slope, b, r2);
             console.log(calculoId, name, data, slope, b, r2);
@@ -55,27 +47,8 @@ export default NewCalibrationCurve = () => {
         }
     };
 
-    const fetchData = async () => {
-        const name = prefixes[index];
-        const results = calcSlope(CalibrationCurve.curveData);
-        const curveData = { listado: CalibrationCurve.curveData || [], slope: results.slope.toString(), b: results.b.toString(), r2: results.r2.toString() };
-
-        const requestData = { calculoId: calculoId, name: name, curveData: curveData };
-        try {
-            const response = await fetch(url, { method: method, headers: { 'Content-Type': 'application/json', }, body: JSON.stringify(requestData)});
-            if (!response.ok) {
-                throw new Error('Ocurrió un error al hacer la solicitud.');
-            }
-            const responseData = await response.json();
-            setResponseData(responseData);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
     const handleNextElement = () => {
         try{
-
             // Regresar al inicio
             if (index === prefixes.length) { //-1
                 dispatch(setCurrent(0));
@@ -99,17 +72,17 @@ export default NewCalibrationCurve = () => {
     };
 
     return (
-        <View style={[{flex: 1, backgroundColor: "#f1f2f3"}]}>
+        <View className='flex-1 bg-zinc-100'>
             <View style={InputForms.container}>
                 <View style={InputForms.formContainer}>
                     {currentName === 'Fósforo OLSEN' &&  <NewCalibrationCurveModal dataJson={Olsen} />}
                     {currentName === 'Fósforo BRAY' &&  <NewCalibrationCurveModal dataJson={Bray} />}
                     {currentName === 'Boro' &&  <NewCalibrationCurveModal dataJson={Boron} />}
                     {currentName === 'Azufre' &&  <NewCalibrationCurveModal dataJson={Sulfur} />}
-                    <Text style={[Fonts.labelSubtitleNormal, { marginTop:10 }]}>{CalibrationCurve.name === null ? currentName: currentName}</Text>
+                    <Text className='text-xl font-bold mt-3'>{CalibrationCurve.name === null ? currentName: currentName}</Text>
                 </View>
             </View>
-            <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={onPressNext} > SIGUIENTE </Button>
+            <Button className='text-base font-bold m-6' mode="contained" style={[{ backgroundColor: '#41525C'}]} onPress={onPressNext} > SIGUIENTE </Button>
         </View>
     );
 };

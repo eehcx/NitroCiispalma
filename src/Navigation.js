@@ -80,9 +80,9 @@ export default function Navigation() {
                 <Stack.Screen name="user" component={UserScreens} options={{ headerShown: false }} />
 
                 <Stack.Screen name="calculator" component={CalculatorScreen} options={{ headerShown: false }} />
-                <Stack.Screen name="CalibrationCurve" component={CalibrationCurveScreen} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' }  }}/>
+                <Stack.Screen name="CalibrationCurve" component={CalibrationCurveScreen} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f8fafc' }  }}/>
                 <Stack.Screen name="newCalibrationCurve" component={NewCalibrationCurve} options={{ headerShown: false }}/>
-                <Stack.Screen name="curveGraph" component={CurveGraph} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f1f2f3' },}}/>
+                <Stack.Screen name="curveGraph" component={CurveGraph} options={{ title: 'Curva de calibración', headerStyle: { backgroundColor: '#f8fafc' },}}/>
 
                 <Stack.Screen name="InformDetails" component={InformDetails} options={{ title: 'Modal de edición', headerStyle: { backgroundColor: '#fafafa' }  }} />
                 <Stack.Screen name="registerCustomer" component={RegisterCustomer} options={{ title: 'Agrega un cliente nuevo', headerStyle: { backgroundColor: '#fafafa' },}}/>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
 import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
 // React Navigation
@@ -66,9 +66,9 @@ export default CustomersInform = () => {
     };
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
+        <View className='flex-1 bg-zinc-50'>
             <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
+                <SafeAreaView className='flex-grow'>
                     {loading ? (
                         <View style={InputForms.container}>
                             <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
@@ -87,7 +87,3 @@ export default CustomersInform = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
-});
