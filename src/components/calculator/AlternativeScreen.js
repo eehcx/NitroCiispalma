@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView } from 'react-native';
+import React, { } from 'react';
+import { View, Text, SafeAreaView, ScrollView } from 'react-native';
 // Redux
 import { useSelector } from 'react-redux';
 import { Name } from '../../features/calc/CalculatorSlice';
@@ -21,7 +21,7 @@ export const AlternativeScreen = () => {
 
     return(
         <>
-            <View style={[styles.ScreenCalculator]}>
+            <View className='h-2/6 w-full bg-slate-50'>
                 <SafeAreaView>
                     <ScrollView onScroll={onScroll}>
                         <View style={{ paddingVertical: 15, paddingHorizontal: 50}}>
@@ -41,7 +41,3 @@ export const AlternativeScreen = () => {
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    ScreenCalculator:{ height: '35%', width: "100%", backgroundColor: '#f1f2f3' }
-});

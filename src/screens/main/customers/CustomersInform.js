@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 //React Native
 import { SafeAreaView, ScrollView, View } from 'react-native';
 // React Native Paper
-import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
+import { MD2Colors, ActivityIndicator } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Redux
@@ -67,23 +67,21 @@ export default CustomersInform = () => {
 
     return (
         <View className='flex-1 bg-zinc-50'>
-            <PaperProvider>
-                <SafeAreaView className='flex-grow'>
-                    {loading ? (
-                        <View style={InputForms.container}>
-                            <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
-                        </View>
-                    ) : (
-                        <ScrollView onScroll={onScroll}>
-                            {informesArray.slice().reverse().map((informe, index) => (
-                                <View key={index}>
-                                    <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
-                                </View>
-                            ))}
-                        </ScrollView>
-                    )}
-                </SafeAreaView>
-            </PaperProvider>
+            <SafeAreaView className='flex-grow'>
+                {loading ? (
+                    <View style={InputForms.container}>
+                        <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
+                    </View>
+                ) : (
+                    <ScrollView onScroll={onScroll}>
+                        {informesArray.slice().reverse().map((informe, index) => (
+                            <View key={index}>
+                                <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
+                            </View>
+                        ))}
+                    </ScrollView>
+                )}
+            </SafeAreaView>
         </View>
     );
 };

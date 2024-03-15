@@ -1,5 +1,5 @@
 // redirect.js
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../../../components/loading';
 // Redux

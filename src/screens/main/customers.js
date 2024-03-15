@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 //React Native
 import { StatusBar, View } from 'react-native';
 // React Native Paper
-import { Appbar } from 'react-native-paper';
+import { Appbar, PaperProvider } from 'react-native-paper';
 // Components
 import RenderViews from '../../components/common/RenderingViews';
 import CustomersList from './customers/CustomersList';
 import CustomersCalc from './customers/CustomersCalc';
 import CustomersInform from './customers/CustomersInform';
 import FilterPagesIcon from '../../components/common/filters/FilterPagesIcon';
+import FABGroups from '../../components/interface/FABGroups';
 // Redux
 import { useSelector } from 'react-redux';
 
@@ -39,7 +40,10 @@ export default CustomersScreen = () => {
                     <FilterPagesIcon isDisabled={!informId} icon='functions' iconSize={24} text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "CALC"} onPress={() => filterContent("CALC")}/>
                 </View>
             </View>
-            <RenderViews data={Views} render={selectedOption} />
+            <PaperProvider>
+                <RenderViews data={Views} render={selectedOption} />
+                <FABGroups/>
+            </PaperProvider>
         </View>
     );
 };

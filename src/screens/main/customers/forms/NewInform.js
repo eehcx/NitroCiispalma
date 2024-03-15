@@ -84,7 +84,7 @@ export default RegisterInform = () => {
                     <ScrollView onScroll={onScroll}>
                         {currentForm === 1 && (
                             <>
-                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa" }} visible={visible} actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fstorage.png?alt=media&token=2f904a92-5a0b-4179-a988-503d1f1818d1&_gl=1*1kvs9mz*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA2NTkxNi4yNjMuMS4xNjk3MDY3NTQ5LjE2LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa" }} visible={visible} actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Fstorage.png?alt=media&token=9203def2-8644-4977-bb86-4c1b61157166' }} style={{ width: size, height: size }} /> )}>
                                     <Text className='text-sm'>  Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización. </Text>
                                 </Banner>
                                 <View className='flex-1 p-5 justify-around'>
@@ -104,7 +104,7 @@ export default RegisterInform = () => {
                         )}
                         {currentForm === 2 && (
                             <>
-                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Fsave.png?alt=media&token=87b77d64-997c-4634-8ae5-1faa4c55ea95&_gl=1*15ong9z*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzA4MTIwOS4yNjQuMS4xNjk3MDgxMjIxLjQ4LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Fsave.png?alt=media&token=f7981722-940e-48b7-9834-98b610923a3e' }} style={{ width: size, height: size }} /> )}>
                                     <Text className='text-sm'>  Excelente, ahora procede a completar todos los campos necesarios en el formulario. Recuerda que cada detalle cuenta. </Text>
                                 </Banner>
                                 <View style={InputForms.container}>
@@ -122,7 +122,7 @@ export default RegisterInform = () => {
                         )}
                         {currentForm === 3 && (
                             <>
-                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/Icons3D%2Ffinger-pointing-down.png?alt=media&token=883ff7b4-eb7a-4b83-9ba0-003bb542f692&_gl=1*agqgjq*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5Nzc4NDczMS4yODMuMS4xNjk3Nzg1OTI0LjE3LjAuMA..' }} style={{ width: size, height: size }} /> )}>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Ffinger-pointing-down.png?alt=media&token=ef05119b-f442-42e5-a7ad-d36ce27809f6' }} style={{ width: size, height: size }} /> )}>
                                     <Text className='text-sm'> Casi listo, ahora procede a completar los datos de las muestras que ingresaste anteriormente. </Text>
                                 </Banner>
                                 <View style={InputForms.container}>

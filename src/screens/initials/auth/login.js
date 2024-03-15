@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, View, ImageBackground } from 'react-native';
 import { Text } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -52,7 +52,7 @@ export default LoginScreen = () => {
   };
 
   return (
-    <ImageBackground source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/ui1.jpg?alt=media&token=23fac606-f1db-4f2a-baa5-35156a06461c&_gl=1*inpi9s*_ga*OTkyMTAxNDIzLjE2ODcwNTgxODg.*_ga_CW55HF8NVT*MTY5NzkzMDc4MC4yOTYuMS4xNjk3OTMxNzA1LjM2LjAuMA..' }} style={{ flex: 1, justifyContent: 'center' }} resizeMode="cover" >
+    <ImageBackground className='flex-1 justify-center' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FImages%2Ffondo.jpg?alt=media&token=6768490a-3093-451c-aa41-4cf583fe9d3b' }} resizeMode="cover" >
       <View style={InputForms.container}>
         <View style={InputForms.formContainer}>
           <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: 20}]}>Iniciar sesión</Text>
