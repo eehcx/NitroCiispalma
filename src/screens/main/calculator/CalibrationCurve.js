@@ -61,7 +61,7 @@ export default CalibrationCurveScreen = () => {
         dispatch(setCurveData(data.listado));
         dispatch(setSlope(parseFloat(data.pendiente).toFixed(4)));
       }
-      console.log(data);
+      //console.log(data);
     } catch (e) {
       console.error(e);
     }

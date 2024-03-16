@@ -39,7 +39,7 @@ export default NewCalibrationCurve = () => {
             const r2 = results.r2.toString();
             // Servicio para guardar el registro
             await saveCalibrationCurve(calculoId, name, data, slope, b, r2);
-            console.log(calculoId, name, data, slope, b, r2);
+            //console.log(calculoId, name, data, slope, b, r2);
 
             dispatch(reset());
         }catch (error) {

@@ -4,7 +4,7 @@ import { Text } from 'react-native-paper';
 
 const windowWidth = Dimensions.get('window').width;
 const keySize = windowWidth / 5;
-console.log(keySize)
+//console.log(keySize)
 
 export default CalculatorKeys = ({ label, onPress, backgroundColor }) => (
     <TouchableHighlight className='rounded-2xl md:rounded-3xl' activeOpacity={0} delayPressIn={500} underlayColor={backgroundColor === '#d7dfe3' ? '#d7dfe3' : '#d7dfe4'} onPress={onPress} >

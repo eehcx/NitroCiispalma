@@ -37,7 +37,7 @@ export default NewPackage = () => {
     const addResearch = () => {
         setAnalisis([...analisis, Estudio]);
         setEstudio('');
-        console.log(analisis);
+        //console.log(analisis);
     };
 
     const updateTipo = () => {

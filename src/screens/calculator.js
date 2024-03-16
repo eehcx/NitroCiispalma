@@ -36,11 +36,12 @@ export default CalculatorScreen = () => {
 
     //Registrar
     const handleRegister = () => {
-        console.log('Funciona')
+        //console.log('Funciona')
     };
-
+    // Filtro 
     const [selectedOption, setSelectedOption] = useState("functions");
     const filterContent = (option) => { setSelectedOption(option); };
+
 
     useEffect(() => {
         if (calculoId === null) {

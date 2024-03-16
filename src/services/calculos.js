@@ -75,7 +75,6 @@ export const getMuestras = async (informeId) => {
     const calculoIdSnapshot = await get(informeRef);
     if (calculoIdSnapshot.exists()) {
       const calculoId = calculoIdSnapshot.val();
-      console.log(calculoId);
 
       const snapshot = await get(ref(db, `calculos/${calculoId}`));
       if (snapshot.exists()) {

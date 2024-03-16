@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Avatar, Card, Button, Divider } from 'react-native-paper';
+import { Avatar, Card, Button, Divider, PaperProvider } from 'react-native-paper';
 import { View, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
@@ -53,7 +53,7 @@ const CardInfo = () => {
 
     return(
         <SafeAreaView>
-            {isModalVisible && <ModalAlert visible={isModalVisible} title='Cerrar sesión' message="¿Seguro que desea cerrar sesión?" button='LOGOUT' onPress={()=> handleLogout()} close={handleClose} />}
+        {isModalVisible && <ModalAlert visible={isModalVisible} title='Cerrar sesión' message="¿Seguro que desea cerrar sesión?" button='LOGOUT' onPress={()=> handleLogout()} close={handleClose} />}
             <ScrollView>
                 <View className='m-1 rounded-2xl bg-zinc-50'>
                     <Card.Content>

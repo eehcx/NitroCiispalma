@@ -34,7 +34,6 @@ export default CustomersInform = () => {
     // Radio Button para seleccionar el uid de informe
     const handleRadioButtonPress = async (informId) => {
         setSelectedInformId(informId);
-        console.log('Informe seleccionado:', informId); 
         dispatch(setInformId(informId));
     };
 
@@ -42,7 +41,6 @@ export default CustomersInform = () => {
         try {
             dispatch(setInformId(informeId));
             navigation.navigate('InformDetails');
-            console.log('Inform: ',informeId);
         } catch (error) {
             console.error('Error al obtener datos de informes', error);
         }

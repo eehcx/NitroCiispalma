@@ -45,7 +45,7 @@ export default InformDetails = ({}) => {
         const obtenerDatosInforme = async () => {
             try {
                 const [informe, resultados] = await getInforme(informId);
-                console.log('Informes \n',informe, '\n Resultados \n',resultados);
+                //console.log('Informes \n',informe, '\n Resultados \n',resultados);
                 setResultados({resultados});
 
                 if (resultados) {

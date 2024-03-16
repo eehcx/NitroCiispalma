@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import CalculatorRows from '../../components/calculator/calcRows';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { increment, decrement, reset, updateValue, Backspace } from '../../features/calc/CalculatorSlice';
 // inputValue
 export default KeyBoard = ({ PressRegister }) => {  
     // Redux 
     const dispatch = useDispatch();
-    const calculator = useSelector(state => state.calculator);
 
     const rows = [
         [
@@ -29,18 +27,14 @@ export default KeyBoard = ({ PressRegister }) => {
         ],[
             { label: '0', onPress: () => dispatch(updateValue('0')), backgroundColor: '#f1f2f3'},
             { label: '.', onPress: () => dispatch(updateValue('.')), backgroundColor: '#f1f2f3'},
-            { label: 'C', onPress: () => dispatch(reset()), backgroundColor: '#f1f2f3', borderRadius: 25 },
-            { label: '=', onPress: PressRegister, backgroundColor: '#82BF53', borderRadius: 25 },
+            { label: 'C', onPress: () => dispatch(reset()), backgroundColor: '#f1f2f3'},
+            { label: '=', onPress: PressRegister, backgroundColor: '#82BF53'},
         ]
     ];
 
-    useEffect(() => {
-        console.log('VALOR: ', calculator.value);
-    }, [calculator.value]);
-
     return (
         <>
-            <View className='flex-1 flex-col justify-around  p-5'>
+            <View className='flex-1 flex-col justify-around p-5'>
                 {rows.map((buttons, index) => (
                     <CalculatorRows key={index} buttons={buttons} />
                 ))}

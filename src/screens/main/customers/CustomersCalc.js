@@ -31,7 +31,6 @@ export default CustomersCalc = () => {
     // Radio Button para seleccionar el id de muestra
     const handleRadioButtonPress = async (IdLaboratorio) => {
         setSelectedIdLab(IdLaboratorio);
-        console.log('Muestra seleccionado:', IdLaboratorio); 
         dispatch(setIdLab(IdLaboratorio));
     };
 
@@ -48,16 +47,13 @@ export default CustomersCalc = () => {
                 const muestrasData = await getMuestras(informId);
                 setMuestras(muestrasData || []); 
 
-                //
                 const uid = await getIdcalculus(informId);
                 dispatch(setIdCalc(uid));
-                console.log(uid);
 
             } catch (error) {
                 console.error('Error al obtener las muestras:', error);
             }
         };
-        console.log('Muestras: \n',Muestras);
 
         fetchMuestras();
         setLoading(false);

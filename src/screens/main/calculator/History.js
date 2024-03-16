@@ -12,14 +12,14 @@ import { setIdLab } from '../../../features/calc/CalculatorSlice';
 // Styles
 import InputForms from '../../../styles/InputForms';
 
-export default CalculatorScreen = () => {
+export default HistoryScreen = () => {
 
     // Redux
     const dispatch = useDispatch();
     const IdLab = useSelector(state => state.calculator.IdLab);
     const informId = useSelector(state => state.inform.informId);
     const client = useSelector(state => state.client);
-    console.log(client);
+    //console.log(client);
 
     // ID Muestra
     const [selectedIdLab, setSelectedIdLab] = useState(null);
@@ -31,7 +31,7 @@ export default CalculatorScreen = () => {
     // Radio Button para seleccionar el id de muestra
     const handleRadioButtonPress = async (IdLaboratorio) => {
         setSelectedIdLab(IdLaboratorio);
-        console.log('Informe seleccionado:', IdLaboratorio); 
+        //console.log('Informe seleccionado:', IdLaboratorio); 
         dispatch(setIdLab(IdLaboratorio));
     };
 

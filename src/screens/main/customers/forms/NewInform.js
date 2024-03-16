@@ -69,7 +69,7 @@ export default RegisterInform = () => {
             // Verifica si el número de muestra no está vacío y si no se ha alcanzado el límite
             setMuestras([...muestras, { IdLab: numMuestra }]);
             setNumMuestra('');
-            console.log(muestras)
+            //console.log(muestras)
         }
     };
 

@@ -36,7 +36,7 @@ export default CustomersList = () => {
         dispatch(setNombre(Nombre));
         dispatch(setRazonSocial(RazonSocial));
         dispatch(setTelefono(Telefono));
-        console.log('Cliente seleccionado: \n', Nombre, RazonSocial, clienteId, Telefono);
+        //console.log('Cliente seleccionado: \n', Nombre, RazonSocial, clienteId, Telefono);
     };
 
     const handleDetails = async (clienteId, Nombre, RazonSocial, Telefono) => {

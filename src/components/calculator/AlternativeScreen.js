@@ -24,8 +24,8 @@ export const AlternativeScreen = () => {
             <View className='h-2/6 w-full bg-slate-50'>
                 <SafeAreaView>
                     <ScrollView onScroll={onScroll}>
-                        <View style={{ paddingVertical: 15, paddingHorizontal: 50}}>
-                            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
+                        <View className='py-4 px-12'>
+                            <View className='flex-1 items-center justify-center'>
                                 <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: '15%'}]}>{calcName ? calcName : 'Cálculo'}</Text>
                             </View>
                             {calcName === 'Calcular Boro' && <BoroCalc />}
