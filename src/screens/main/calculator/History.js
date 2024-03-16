@@ -13,7 +13,6 @@ import { setIdLab } from '../../../features/calc/CalculatorSlice';
 import InputForms from '../../../styles/InputForms';
 
 export default HistoryScreen = () => {
-
     // Redux
     const dispatch = useDispatch();
     const IdLab = useSelector(state => state.calculator.IdLab);

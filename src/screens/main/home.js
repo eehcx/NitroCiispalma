@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, StatusBar, TouchableOpacity, Image, Text } from 'react-native';
+import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -45,37 +46,47 @@ export default HomeScreen = () => {
           <Text className='text-xl top-9 text-left left-2 absolute text-gray-500 tracking-wide' >{formattedDate}</Text>
         </View>
         <View className=' mt-28'>
+          <View className='h-1 w-5/6 bg-gray-200 rounded-full m-auto'>
+          </View>
           <TouchableOpacity className=' h-72 w-5/6 mx-8' onPress={()=> navigation.navigate('calculator') } underlayColor="#d7dfe3"  >
-            <Image className=' rounded-3xl w-full h-full' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/calc.jpg?alt=media&token=daba627b-a48f-4092-a32e-8fd337198d43' }} />
+            <Image className=' rounded-3xl w-full h-full' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FImages%2FIMG%202024-03-15%20at%206.33.26%20PM.jpeg?alt=media&token=569c61b2-3f1f-4a1d-b2cf-e2fd30512085' }} />
           </TouchableOpacity>
         </View>
 
-        <View className='top-5 mx-10 my-1'>
-          <Text className=' text-black text-left absolute text-xl font-bold'>Cliente</Text>
-        </View>
-        <View className='bg-gray-200 h-24 w-3/5 rounded-2xl justify-start mt-5 mx-9 my-14'>
-          <View className='flex-row items-center top-4 px-5'>
-            <Icon name="dns" size={18} color="#333" />
-            <Text className='text-black ml-3 text-base'>{client.RazonSocial ? client.RazonSocial : 'Cliente seleccionado'}</Text>
-          </View>
-          <Text className='text-black ml-5 top-5 font-bold text-lg'>{'No. Laboratorio '+calculator.IdLab ? 'No. Laboratorio '+ calculator.IdLab : 'Id Laboratorio'}</Text>
-        </View>
-
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ backgroundColor: "#41525C", height: 75, width: "42%", borderRadius: 20, marginRight: 20, justifyContent: 'flex-start' }} >
-            <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
-              <Icon name="tag" size={18} color="#fff" />
-              <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Cálculos</Text>
+        <View style={{backgroundColor: "#67757d"}} className='h-auto w-11/12 rounded-2xl justify-start mx-auto my-2 py-6'>
+          <View className='flex-row items-center my-auto px-5'>
+            <Icon name="people-alt" size={30} color="#AAFC79" />
+            <View className='flex-col ml-2'>
+              <Text className='text-white text-base font-bold'>Clientes</Text>
+              <Text className='text-white text-base'>{client.RazonSocial ? client.RazonSocial : 'No seleccionado'}</Text>
             </View>
-            <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numCalculos} Registros</Text>
+            <View style={{ width: 1, height: '100%', backgroundColor: '#fafafa', marginHorizontal:10 }}></View>
+            <Icon name="stacked-bar-chart" size={30} color="#AAFC79" />
+            <View className='flex-col ml-2'>
+              <Text className='text-white text-base font-bold'>Id Lab.</Text>
+              <Text className='text-white text-base'>{'Número. '+calculator.IdLab ? 'Número. '+ calculator.IdLab : 'Número. 0'}</Text>
+            </View>
           </View>
+        </View>
 
-          <View style={{ backgroundColor: "#82BF53", height: 75, width: "42%", borderRadius: 20, justifyContent: 'flex-start' }} >
+        <View className='flex-1 mx-10 my-5'>
+          <Text className=' text-black text-left absolute text-xl font-bold'>Estadísticas</Text>
+        </View>
+
+        <View className='flex-row justify-center items-center mt-8'>
+          <View style={{ backgroundColor: "#82BF53", height: 75, width: "43%", borderRadius: 20, marginRight: '5%', justifyContent: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.8, shadowRadius: 2.67, elevation: 2 }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
               <Icon name="groups" size={18} color="#fff" />
-              <Text style={{ color: "#fff", marginLeft: 10, fontSize: 15 }}>Clientes</Text>
+              <Text className='text-white ml-3 text-base'>Clientes</Text>
             </View>
-            <Text style={{ color: "#fff", marginLeft: 20, top:20, fontWeight: "bold", fontSize: 18 }}>{numClientes} Registros</Text>
+            <Text className='text-white ml-5 top-2 font-bold text-lg'>{numClientes} Registros</Text>
+          </View>
+          <View style={{ backgroundColor: "#e4e4e7", height: 75, width: "43%", borderRadius: 20, justifyContent: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.8, shadowRadius: 2.67, elevation: 2 }} >
+            <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
+              <Icon name="tag" size={18} color="#000" />
+              <Text className='text-black ml-3 text-base'>Cálculos</Text>
+            </View>
+            <Text className='text-black ml-5 top-2 font-bold text-lg'>{numCalculos} Registros</Text>
           </View>
         </View>
       </View>

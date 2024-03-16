@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import LoadingScreen from './screens/initials/auth/redirect';
 import InputScreen from './screens/initials/entrace';
@@ -61,10 +61,10 @@ const UserScreens = () => (
 // Barra de navegación 
 const MainBarScreen=()=>{
     return (
-        <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#41525C', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0 } }} >
-            <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="home" size={27} color={color} /> }}/>
-            <Tab.Screen name="customers" component={CustomersScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="inbox" size={27} color={color} /> }}/>
-            <Tab.Screen name="profile" component={ProfileScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="person" size={27} color={color} /> }}/>
+        <Tab.Navigator initialRouteName="home" screenOptions={{ headerShown: false, tabBarActiveTintColor: '#41525C', tabBarInactiveTintColor: '#ccc', tabBarStyle: { display: 'flex', backgroundColor: '#fafafa', paddingVertical: 15, elevation: 0, height:65,  elevation: 0, shadowOpacity: 0, shadowOffset: { width: 0, height: 0 }, shadowRadius: 0, shadowColor: 'transparent'} }} >
+            <Tab.Screen name="home" component={HomeScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="home-variant" size={27} color={color} /> }}/>
+            <Tab.Screen name="customers" component={CustomersScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="file-document-multiple" size={27} color={color} /> }}/>
+            <Tab.Screen name="profile" component={ProfileScreen} options={{ tabBarLabel: '', tabBarIcon: ({ color }) => <Icon name="account" size={27} color={color} /> }}/>
         </Tab.Navigator>
     );
 };
