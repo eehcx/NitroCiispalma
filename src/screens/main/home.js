@@ -46,8 +46,7 @@ export default HomeScreen = () => {
           <Text className='text-xl top-9 text-left left-2 absolute text-gray-500 tracking-wide' >{formattedDate}</Text>
         </View>
         <View className=' mt-28'>
-          <View className='h-1 w-5/6 bg-gray-200 rounded-full m-auto'>
-          </View>
+          <Divider style={{height:1}} className='w-5/6 bg-gray-200 rounded-full m-auto'/>
           <TouchableOpacity className=' h-72 w-5/6 mx-8' onPress={()=> navigation.navigate('calculator') } underlayColor="#d7dfe3"  >
             <Image className=' rounded-3xl w-full h-full' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FImages%2FIMG%202024-03-15%20at%206.33.26%20PM.jpeg?alt=media&token=569c61b2-3f1f-4a1d-b2cf-e2fd30512085' }} />
           </TouchableOpacity>
@@ -58,7 +57,7 @@ export default HomeScreen = () => {
             <Icon name="people-alt" size={30} color="#AAFC79" />
             <View className='flex-col ml-2'>
               <Text className='text-white text-base font-bold'>Clientes</Text>
-              <Text className='text-white text-base'>{client.RazonSocial ? client.RazonSocial : 'No seleccionado'}</Text>
+              <Text className='text-white text-sm'>{client.RazonSocial ? client.RazonSocial : 'No seleccionado'}</Text>
             </View>
             <View style={{ width: 1, height: '100%', backgroundColor: '#fafafa', marginHorizontal:10 }}></View>
             <Icon name="stacked-bar-chart" size={30} color="#AAFC79" />
@@ -74,14 +73,14 @@ export default HomeScreen = () => {
         </View>
 
         <View className='flex-row justify-center items-center mt-8'>
-          <View style={{ backgroundColor: "#82BF53", height: 75, width: "43%", borderRadius: 20, marginRight: '5%', justifyContent: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.8, shadowRadius: 2.67, elevation: 2 }} >
+          <View style={{ backgroundColor: "#82BF53", height: 75, width: "43%", borderRadius: 20, marginRight: '5%', justifyContent: 'flex-start' }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
               <Icon name="groups" size={18} color="#fff" />
               <Text className='text-white ml-3 text-base'>Clientes</Text>
             </View>
             <Text className='text-white ml-5 top-2 font-bold text-lg'>{numClientes} Registros</Text>
           </View>
-          <View style={{ backgroundColor: "#e4e4e7", height: 75, width: "43%", borderRadius: 20, justifyContent: 'flex-start', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.8, shadowRadius: 2.67, elevation: 2 }} >
+          <View style={{ backgroundColor: "#e4e4e7", height: 75, width: "43%", borderRadius: 20, justifyContent: 'flex-start' }} >
             <View style={{ flexDirection: 'row', alignItems: 'center', top: 15, paddingHorizontal: 20 }}>
               <Icon name="tag" size={18} color="#000" />
               <Text className='text-black ml-3 text-base'>Cálculos</Text>

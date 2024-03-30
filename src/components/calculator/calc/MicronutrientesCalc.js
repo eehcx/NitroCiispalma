@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, setResultado, clear } from '../../../features/calc/foliar/MicronutrientesSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 // Servicios
@@ -55,16 +53,20 @@ export const MicronutrientesCalc = () => {
             console.error('Error al obtener el Input', error);
         }
     }, [currentInput, inputValue]);
+    const selected = "bg-slate-100 border-lime-700 border";
+    const inputColor = "bg-slate-100 border-slate-200 border";
+    const textSelected = "text-lime-700";
+    const textColor = "text-gray-500";
 
     return(
         <>
-            <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='miligramos por litro de la muestra' value={mgLM} label='mgL M:' />
-            <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'} placeholder='miligramos por litro del blanco' value={mgLB} label='mgL B:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'} placeholder='Aforo (ml)' value={Aforo} label='Aforo:' />
-            <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
+            <Input backgroundColor={currentInput === 1 ? selected : inputColor} TextColor={currentInput === 1 ? textSelected : textColor} placeholder='miligramos por litro de la muestra' value={mgLM} label='mgL M:' />
+            <Input backgroundColor={currentInput === 2 ? selected : inputColor} TextColor={currentInput === 2 ? textSelected : textColor} placeholder='miligramos por litro del blanco' value={mgLB} label='mgL B:' />
+            <Input backgroundColor={currentInput === 3 ? selected : inputColor} TextColor={currentInput === 3 ? textSelected : textColor} placeholder='Aforo (ml)' value={Aforo} label='Aforo:' />
+            <Input backgroundColor={currentInput === 4 ? selected : inputColor} TextColor={currentInput === 4 ? textSelected : textColor}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
 
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                <Text style={[ Fonts.modalText, {color: '#2F363B', marginBottom: 20}]}>Resultado: {micronutrientes.resultado}</Text>
+            <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
+                <Text className="text-2xl font-semibold text-slate-500">{isNaN(micronutrientes.resultado) ? "0000000000" : micronutrientes.resultado.toFixed(3)}</Text>
             </View>
         </>
     );

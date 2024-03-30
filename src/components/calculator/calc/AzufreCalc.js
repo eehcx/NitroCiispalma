@@ -66,19 +66,23 @@ export const AzufreCalc = () => {
             console.error('Error al obtener el Input', error);
         }
     }, [currentInput, inputValue]);
+    const selected = "bg-slate-100 border-lime-700 border";
+    const inputColor = "bg-slate-100 border-slate-200 border";
+    const textSelected = "text-lime-700";
+    const textColor = "text-gray-500";
 
     return(
         <>
-            <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
-            <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'} placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'} placeholder='Valor de m' value={M} label='M:' />
-            <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'} placeholder='Valor de b' value={B} label='B:' />
-            <Input backgroundColor={currentInput === 5 ? '#dadada' : '#ECECEC'} placeholder='Aforo (ml)' value={Aforo} label='Aforo:' />
-            <Input backgroundColor={currentInput === 6 ? '#dadada' : '#ECECEC'}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
-            <Input backgroundColor={currentInput === 7 ? '#dadada' : '#ECECEC'}  placeholder='Volumen de la alícuota (ml)' value={alicuota} label='Alicuota:' />
+            <Input backgroundColor={currentInput === 1 ? selected : inputColor} TextColor={currentInput === 1 ? textSelected : textColor} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
+            <Input backgroundColor={currentInput === 2 ? selected : inputColor} TextColor={currentInput === 2 ? textSelected : textColor} placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
+            <Input backgroundColor={currentInput === 3 ? selected : inputColor} TextColor={currentInput ===3 ? textSelected : textColor} placeholder='Valor de m' value={M} label='M:' />
+            <Input backgroundColor={currentInput === 4 ? selected : inputColor} TextColor={currentInput === 4 ? textSelected : textColor} placeholder='Valor de b' value={B} label='B:' />
+            <Input backgroundColor={currentInput === 5 ? selected : inputColor} TextColor={currentInput === 5 ? textSelected : textColor} placeholder='Aforo (ml)' value={Aforo} label='Aforo:' />
+            <Input backgroundColor={currentInput === 6 ? selected : inputColor} TextColor={currentInput === 6 ? textSelected : textColor} placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
+            <Input backgroundColor={currentInput === 7 ? selected : inputColor} TextColor={currentInput === 7 ? textSelected : textColor} placeholder='Volumen de la alícuota (ml)' value={alicuota} label='Alicuota:' />
 
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                <Text style={[ Fonts.modalText, {color: '#2F363B', marginBottom: 20}]}>Resultado: {azufre.resultado}</Text>
+            <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
+                <Text className="text-2xl font-semibold text-slate-500">{isNaN(azufre.resultado) ? "0000000000" : azufre.resultado.toFixed(3)}</Text>
             </View>
         </>
     );

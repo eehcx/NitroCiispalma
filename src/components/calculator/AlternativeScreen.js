@@ -1,10 +1,9 @@
 import React, { } from 'react';
 import { View, Text, SafeAreaView, ScrollView } from 'react-native';
+import { Divider } from 'react-native-paper';
 // Redux
 import { useSelector } from 'react-redux';
 import { Name } from '../../features/calc/CalculatorSlice';
-// Estilos globales
-import Fonts from '../../styles/Fonts';
 
 import { BoroCalc } from './calc/BoroCalc';
 import { AzufreCalc } from './calc/AzufreCalc';
@@ -14,6 +13,7 @@ import { PorcentaJent } from './calc/PorcentajeJent';
 import { PorcentaJep } from './calc/PorcentajeJep';
 
 export const AlternativeScreen = () => {
+    const IdLab = useSelector(state => state.calculator.IdLab);
     const calcName = useSelector(Name);
     // Constantes para el scroll
     const [isExtended, setIsExtended] = React.useState(false);
@@ -24,9 +24,10 @@ export const AlternativeScreen = () => {
             <View className='h-2/6 w-full bg-slate-50'>
                 <SafeAreaView>
                     <ScrollView onScroll={onScroll}>
-                        <View className='py-4 px-12'>
-                            <View className='flex-1 items-center justify-center'>
-                                <Text style={[ Fonts.formTitle, {color: '#2F363B', marginBottom: '15%'}]}>{calcName ? calcName : 'Cálculo'}</Text>
+                        <View className='py-3 px-10'>
+                            <View className='flex-row justify-between mb-10 mt-2 px-2'>
+                                <Text className="text-lg font-normal tracking-wide text-gray-800">{calcName ? calcName : 'Cálculo'}: </Text>
+                                <Text className="text-lg font-medium text-black">Id Lab. {IdLab}</Text>
                             </View>
                             {calcName === 'Calcular Boro' && <BoroCalc />}
                             {calcName === 'Calcular Azufre' && <AzufreCalc />}

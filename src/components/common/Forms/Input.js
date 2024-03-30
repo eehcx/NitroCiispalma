@@ -1,13 +1,11 @@
 import { TextInput, Text } from 'react-native';
-import InputForms from '../../../styles/InputForms';
-import Fonts from '../../../styles/Fonts';
 
-export default Input = ({ placeholder, value, label, backgroundColor }) => {
+export default Input = ({ placeholder, value, label, backgroundColor, TextColor }) => {
 
     return (
         <>
-            <Text style={[Fonts.modalText, { marginLeft: 20 }]}>{label}</Text>
-            <TextInput style={[InputForms.input, { marginBottom: 30 }, { height: 41, paddingLeft: 25, borderRadius: 10, backgroundColor: backgroundColor }]} placeholder={placeholder} editable={false} value={value} />
+            <Text className={`font-medium text-base pb-2 px-3 ${TextColor}`}>{label}</Text>
+            <TextInput className={`h-12 w-full mb-8 pl-6 rounded-xl ${backgroundColor}`} placeholder={placeholder} editable={false} value={value} />
         </>
     );
 };

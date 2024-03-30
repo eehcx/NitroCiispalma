@@ -35,7 +35,7 @@ export const saveInform = async (uid_client, uid_package, fecha_recepcion, fecha
         uid_package: uid_package,
         fecha_recepcion: fecha_recepcion,
         fecha_entrega: fecha_entrega,
-        no_muestra: no_muestras,
+        no_muestras: no_muestras,
         procedencia: procedencia,
         tipo_cultivo: tipo_cultivo,
         no_solicitud: no_solicitud,

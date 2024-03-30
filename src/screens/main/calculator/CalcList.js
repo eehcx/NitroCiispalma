@@ -73,8 +73,8 @@ export default CalculationsList = () => {
                 </View>
             </View>
             <TouchableOpacity className='flex-row items-center justify-center p-3' onPress={()=> navigation.navigate('CalibrationCurve')}>
-                <Icon name="analytics" size={24} color='#64748b' />
-                <Text className='ml-3 text-slate-500 text-lg font-semibold'>Curva de calibración</Text>
+                <Icon name="analytics" size={24} color='#4b5563' />
+                <Text className='ml-3 text-gray-600 text-lg font-semibold'>Curva de calibración</Text>
             </TouchableOpacity>
             <Divider className='bg-neutral-300 mx-5'/>
             {selectedOption === 'Análisis Foliar' && <ListFoliar />}

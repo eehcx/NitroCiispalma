@@ -78,18 +78,22 @@ export const BoroCalc = () => {
         }
         console.log(boro);
     }, [currentInput, inputValue]);
+    const selected = "bg-slate-100 border-lime-700 border";
+    const inputColor = "bg-slate-100 border-slate-200 border";
+    const textSelected = "text-lime-700";
+    const textColor = "text-gray-500";
 
     return(
         <>
             {/*<AverageInput placeholder={'Absorbancia de la muestra'} label={'AbsM: '} value={AbsM} setValue={setabsM} setDispatch={handleAverage} />*/}
-            <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
-            <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'}  placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'}  placeholder='Pendiente de calibración' value={M} label='Pendiente:' />
-            <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'}  placeholder='Valor del extractante' value={Extractante} label='Extractante:' />
-            <Input backgroundColor={currentInput === 5 ? '#dadada' : '#ECECEC'}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
+            <Input backgroundColor={currentInput === 1 ? selected : inputColor} TextColor={currentInput === 1 ? textSelected : textColor} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
+            <Input backgroundColor={currentInput === 2 ? selected : inputColor} TextColor={currentInput === 2 ? textSelected : textColor}  placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
+            <Input backgroundColor={currentInput === 3 ? selected : inputColor} TextColor={currentInput === 3 ? textSelected : textColor}  placeholder='Pendiente de calibración' value={M} label='Pendiente:' />
+            <Input backgroundColor={currentInput === 4 ? selected : inputColor} TextColor={currentInput === 4 ? textSelected : textColor}  placeholder='Valor del extractante' value={Extractante} label='Extractante:' />
+            <Input backgroundColor={currentInput === 5 ? selected : inputColor} TextColor={currentInput === 5 ? textSelected : textColor}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
 
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                <Text style={[ Fonts.modalText, {color: '#2F363B', marginBottom: 20}]}>Resultado: {boro.resultado}</Text>
+            <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
+                <Text className="text-2xl font-semibold text-slate-500">{isNaN(boro.resultado) ? "0000000000" : boro.resultado.toFixed(3)}</Text>
             </View>
         </>
     );

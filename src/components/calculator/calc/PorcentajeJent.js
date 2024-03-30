@@ -55,16 +55,20 @@ export const PorcentaJent = () => {
             console.error('Error al obtener el Input', error);
         }
     }, [currentInput, inputValue]);
+    const selected = "bg-slate-100 border-lime-700 border";
+    const inputColor = "bg-slate-100 border-slate-200 border";
+    const textSelected = "text-lime-700";
+    const textColor = "text-gray-500";
 
     return(
         <>
-            <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='Valor de la muestra' value={Vm} label='Vm:' />
-            <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'} placeholder='Valor del blanco' value={Vb} label='Vb:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'} placeholder='Valor de N' value={N} label='N:' />
-            <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'} placeholder='Valor de p' value={P} label='P:' />
+            <Input backgroundColor={currentInput === 1 ? selected : inputColor} TextColor={currentInput === 1 ? textSelected : textColor} placeholder='Valor de la muestra' value={Vm} label='Vm:' />
+            <Input backgroundColor={currentInput === 2 ? selected : inputColor} TextColor={currentInput === 2 ? textSelected : textColor} placeholder='Valor del blanco' value={Vb} label='Vb:' />
+            <Input backgroundColor={currentInput === 3 ? selected : inputColor} TextColor={currentInput === 3 ? textSelected : textColor} placeholder='Valor de N' value={N} label='N:' />
+            <Input backgroundColor={currentInput === 4 ? selected : inputColor} TextColor={currentInput === 4 ? textSelected : textColor} placeholder='Valor de p' value={P} label='P:' />
 
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                <Text style={[ Fonts.modalText, {color: '#2F363B', marginBottom: 20}]}>Resultado: {porcentajent.resultado}</Text>
+            <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
+                <Text className="text-2xl font-semibold text-slate-500">{isNaN(porcentajent.resultado) ? "0000000000" : porcentajent.resultado.toFixed(3)}</Text>
             </View>
         </>
     );

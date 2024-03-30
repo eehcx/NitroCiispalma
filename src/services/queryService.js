@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // Firebase
 import { app } from '../app/firebase';
-import { getDatabase, push, set, ref, orderByKey, limitToLast, onValue, off, get } from 'firebase/database';
+import { getDatabase, push, set, ref, orderByKey, limitToLast, onValue, off, get, onSnapshot } from 'firebase/database';
 
 export const getIdcalculus = async (informeId) => {
     try {
