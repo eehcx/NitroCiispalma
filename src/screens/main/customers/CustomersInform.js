@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
 //React Native
 import { SafeAreaView, ScrollView, View } from 'react-native';
-// React Native Paper
-import { MD2Colors, ActivityIndicator } from 'react-native-paper';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setInformId } from '../../../features/client/informSlice';
-// Servicios
-import { getInformesCliente } from '../../../services/informes';
-// Styles
-import InputForms from '../../../styles/InputForms';
+import { getInforms } from '../../../services/queryService';
 // Componentes
 import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
 
@@ -27,7 +22,6 @@ export default CustomersInform = () => {
     const [Reportes, setReportes] = useState({})
     const informesArray = Object.values(Reportes);
     // Estado de Carga de la página
-    const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
@@ -46,15 +40,14 @@ export default CustomersInform = () => {
         }
     };
 
-    // Obtener el listado de informes del cliente
-    const getInformesClienteData = async (clientId) => {
-        const informes = await getInformesCliente(clientId);
-        setReportes(informes);
-    };
-
     useEffect(() => {
-        getInformesClienteData(clientId);
-        setLoading(false);
+        const unsubscribe = getInforms(clientId, (informesData) => {
+            setReportes(informesData);
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, [clientId]);
 
     // Formateo de fecha
@@ -66,19 +59,13 @@ export default CustomersInform = () => {
     return (
         <View className='flex-1 bg-zinc-50'>
             <SafeAreaView className='flex-grow'>
-                {loading ? (
-                    <View style={InputForms.container}>
-                        <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
-                    </View>
-                ) : (
-                    <ScrollView onScroll={onScroll}>
-                        {informesArray.slice().reverse().map((informe, index) => (
-                            <View key={index}>
-                                <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
-                            </View>
-                        ))}
-                    </ScrollView>
-                )}
+                <ScrollView onScroll={onScroll}>
+                    {informesArray.slice().reverse().map((informe, index) => (
+                        <View key={index}>
+                            <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
+                        </View>
+                    ))}
+                </ScrollView>
             </SafeAreaView>
         </View>
     );

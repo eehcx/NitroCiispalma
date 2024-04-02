@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, setResultado, clear } from '../../../features/calc/foliar/PorcentaJepSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 // Servicios
@@ -42,6 +40,19 @@ export const PorcentaJep = () => {
         }
     };
 
+    const handleCalc = () => {
+        const result = pctJepCalc(
+            parseFloat(AbsM),
+            parseFloat(AbsB),
+            parseFloat(M),
+            parseFloat(B),
+            parseFloat(Aforo),
+            parseFloat(pesoMuestra),
+            parseFloat(Alicuota)
+        );
+        dispatch(setResultado(result));
+    };
+
     const handleCalculo = () => {
         dispatch(setSum(7));
         try{
@@ -68,8 +79,9 @@ export const PorcentaJep = () => {
                 dispatch(setAlicuota(parseFloat(Alicuota)));
             }
 
-            const result = pctJepCalc(porcentajep.AbsM, porcentajep.AbsB, porcentajep.m, porcentajep.b, porcentajep.aforo, porcentajep.pesoMuestra, porcentajep.alicuota);
-            dispatch(setResultado(result));
+            //const result = pctJepCalc(porcentajep.AbsM, porcentajep.AbsB, porcentajep.m, porcentajep.b, porcentajep.aforo, porcentajep.pesoMuestra, porcentajep.alicuota);
+            //dispatch(setResultado(result));
+            handleCalc();
 
         } catch (error) {
             console.error('Error al mandar los datos', error);

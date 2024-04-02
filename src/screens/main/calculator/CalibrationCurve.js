@@ -23,19 +23,19 @@ const DataTableCurve = () => {
   const [isExtended, setIsExtended] = React.useState(false);
   const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
-    return(
-        <View className='flex-1 bg-slate-50'>
-            <PaperProvider>
-              <SafeAreaView>
-                <ScrollView onScroll={onScroll}>
-                  <DataNavigator />
-                  <TableCurve data={calibrationCurve.curveData} />
-                  <Button className='text-base font-bold m-6' mode="contained" style={[{ backgroundColor: '#41525C' }]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
-                </ScrollView>
-              </SafeAreaView>
-            </PaperProvider>
-        </View>
-    );
+  return(
+    <View className='flex-1 bg-slate-50'>
+      <PaperProvider>
+        <SafeAreaView>
+          <ScrollView onScroll={onScroll}>
+            <DataNavigator />
+            <TableCurve data={calibrationCurve.curveData} />
+          </ScrollView>
+        </SafeAreaView>
+      </PaperProvider>
+      <Button className='h-12 items-center rounded-2xl m-6' mode="contained" style={[{ backgroundColor: '#41525C' }]} onPress={()=> {navigation.navigate('curveGraph');}}>VER GRÁFICO</Button>
+    </View>
+  );
 };
 
 export default CalibrationCurveScreen = () => {

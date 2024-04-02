@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, setResultado } from '../../../features/calc/foliar/BoroSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 //import { AverageInput } from '../../interface/Forms/AverageInput';
@@ -42,6 +40,17 @@ export const BoroCalc = () => {
 
     //const handleAverage = (value) => { dispatch(setAbsM(value)); };
 
+    const handleCalc = () => {
+        const result = boronCalc(
+            parseFloat(AbsM),
+            parseFloat(AbsB),
+            parseFloat(M),
+            parseFloat(Extractante),
+            parseFloat(PesoMuestra)
+        );
+        dispatch(setResultado(result));
+    };
+
     const handleCalculo = () => {
         dispatch(setSum(5));
         try{
@@ -61,9 +70,9 @@ export const BoroCalc = () => {
                 setpesoMuestra(inputValue);
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
-            const result = boronCalc(boro.AbsM, boro.AbsB, boro.m, boro.Extractante, boro.pesoMuestra);
-            dispatch(setResultado(result));
-            console.log('RESULTADO: ', result);
+            //const result = boronCalc(boro.AbsM, boro.AbsB, boro.m, boro.Extractante, boro.pesoMuestra);
+            //dispatch(setResultado(result));
+            handleCalc();
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }

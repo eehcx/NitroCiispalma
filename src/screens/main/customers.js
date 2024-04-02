@@ -35,7 +35,7 @@ export default CustomersScreen = () => {
             </Appbar.Header>
             <View className='mb-8 mr-4'>
                 <View className='flex-row justify-between'>
-                    <FilterPagesIcon icon='group' iconSize={24} text="Listado" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "LIST"} onPress={() => filterContent("LIST")}/>
+                    <FilterPagesIcon icon='group' iconSize={24} text="Clientes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "LIST"} onPress={() => filterContent("LIST")}/>
                     <FilterPagesIcon isDisabled={!clientId} icon='feed' iconSize={24} text="Informes" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "INFORM"} onPress={() => filterContent("INFORM")}/>
                     <FilterPagesIcon isDisabled={!informId} icon='functions' iconSize={24} text="Cálculos" marginLeft={15} backgroundColor="#ECECEC" isSelected={selectedOption === "CALC"} onPress={() => filterContent("CALC")}/>
                 </View>

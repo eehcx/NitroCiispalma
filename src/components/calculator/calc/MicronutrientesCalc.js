@@ -21,6 +21,16 @@ export const MicronutrientesCalc = () => {
     const [Aforo, setaforo] = useState('');
     const [PesoMuestra, setpesoMuestra] = useState('');
 
+    const handleCalc = () => {
+        const result = micronutrientsCalc(
+            parseFloat(mgLM),
+            parseFloat(mgLB),
+            parseFloat(Aforo),
+            parseFloat(PesoMuestra)
+        );
+        dispatch(setResultado(result));
+    };
+
     const handleCalculo = () => {
         dispatch(setSum(4));
         try{
@@ -38,8 +48,9 @@ export const MicronutrientesCalc = () => {
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
 
-            const result = micronutrientsCalc(micronutrientes.mgL_M, micronutrientes.mgL_B, micronutrientes.aforo, micronutrientes.pesoMuestra);
-            dispatch(setResultado(result));
+            //const result = micronutrientsCalc(micronutrientes.mgL_M, micronutrientes.mgL_B, micronutrientes.aforo, micronutrientes.pesoMuestra);
+            handleCalc();
+            //dispatch(setResultado(result));
 
         } catch (error) {
             console.error('Error al mandar los datos', error);

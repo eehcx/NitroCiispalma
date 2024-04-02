@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, setResultado, clear } from '../../../features/calc/foliar/azufreSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 // Servicios
@@ -25,6 +23,20 @@ export const AzufreCalc = () => {
     const [Aforo, setaforo] = useState('');
     const [PesoMuestra, setpesoMuestra] = useState('');
     const [alicuota, setalicuota] = useState('');
+
+    const handleCalc = () => {
+        const result = sulfurCalc(
+            parseFloat(AbsM),
+            parseFloat(AbsB),
+            parseFloat(M),
+            parseFloat(B),
+            parseFloat(Aforo),
+            parseFloat(PesoMuestra),
+            parseFloat(alicuota)
+        );
+        dispatch(setResultado(result));
+    };
+
 
     const handleCalculo = () => {
         dispatch(setSum(7));
@@ -51,8 +63,9 @@ export const AzufreCalc = () => {
                 setalicuota(inputValue);
                 dispatch(setAlicuota(parseFloat(alicuota)));
             }
-            const result = sulfurCalc(azufre.AbsM, azufre.AbsB, azufre.m, azufre.b, azufre.aforo, azufre.pesoMuestra, azufre.alicuota);
-            dispatch(setResultado(result));
+            //const result = sulfurCalc(azufre.AbsM, azufre.AbsB, azufre.m, azufre.b, azufre.aforo, azufre.pesoMuestra, azufre.alicuota);
+            //dispatch(setResultado(result));
+            handleCalc();
             //console.log('RESULTADO: ', result);
         } catch (error) {
             console.error('Error al mandar los datos', error);

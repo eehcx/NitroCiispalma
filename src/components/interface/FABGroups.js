@@ -20,7 +20,7 @@ export default FABGroups = () => {
     return (
         <>
             <Portal>
-                <FAB.Group open={open} color='#fff' visible fabStyle={{ backgroundColor:"#41525C" }} rippleColor="#f1f1f1" icon={open ? 'plus' : 'plus'}
+                <FAB.Group open={open} color='#fafafa' visible fabStyle={{ backgroundColor:"#41525C" }} rippleColor="#fafafa" icon={open ? 'plus' : 'plus'}
                 actions={[
                     { color:'#f1f1f1', icon: 'archive', label: 'Paquetes', onPress: handleNavigateToPackage, style: { backgroundColor: '#41525C' } },
                     { color:'#f1f1f1', icon: 'account-plus', label: 'Clientes', onPress: handleNavigateToNewCustomer, style: { backgroundColor: '#41525C' } },

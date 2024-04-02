@@ -27,7 +27,7 @@ export default RegisterCustomer = () => {
                 <View style={InputForms.formContainer}>
                     <InputText backgroundColor='#ECECEC' placeholder='Nombre del cliente' value={name} onChange={setName}label='Nombre' marginRight={200} />
                     <InputText backgroundColor='#ECECEC' placeholder='Razón Social' value={razonSocial} onChange={setRazonSocial} label='Empresa' marginRight={200} />
-                    <InputText backgroundColor='#ECECEC' placeholder='Número de teléfono' value={phone} onChange={setPhone} label='Teléfono' marginRight={200} />
+                    <InputText backgroundColor='#ECECEC' placeholder='Número de teléfono' value={phone} onChange={setPhone} keyboardType='numeric' label='Teléfono' marginRight={200} />
                 </View>
             </View>
             <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaved}> GUARDAR </Button>

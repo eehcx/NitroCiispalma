@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setMgL_M, setMgL_B, setAforo, setPesoMuestra, setResultado, clear } from '../../../features/calc/foliar/MacronutrientesSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 // Servicios
@@ -22,6 +20,16 @@ export const MacronutrientesCalc = () => {
     const [mgLB, setmglb] = useState('');
     const [Aforo, setaforo] = useState('');
     const [PesoMuestra, setpesoMuestra] = useState('');
+
+    const handleCalc = () => {
+        const result = macroPctCalc(
+            parseFloat(mgLM),
+            parseFloat(mgLB),
+            parseFloat(Aforo),
+            parseFloat(PesoMuestra)
+        );
+        dispatch(setResultado(result));
+    };
 
     const handleCalculo = () => {
         dispatch(setSum(4));
@@ -40,8 +48,9 @@ export const MacronutrientesCalc = () => {
                 dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
 
-            const result = macroPctCalc(macronutrientes.mgL_M, macronutrientes.mgL_B, macronutrientes.aforo, macronutrientes.pesoMuestra);
-            dispatch(setResultado(result));
+            //const result = macroPctCalc(macronutrientes.mgL_M, macronutrientes.mgL_B, macronutrientes.aforo, macronutrientes.pesoMuestra);
+            //dispatch(setResultado(result));
+            handleCalc();
 
         } catch (error) {
             console.error('Error al mandar los datos', error);
@@ -69,7 +78,7 @@ export const MacronutrientesCalc = () => {
 
             <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
                 <Text className="text-2xl font-semibold text-slate-500">{isNaN(macronutrientes.resultado) ? "0000000000" : macronutrientes.resultado.toFixed(3)}</Text>
-            </View>
+            </View> 
         </>
     );
 };

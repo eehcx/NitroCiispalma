@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, SafeAreaView, ScrollView, Image } from 'react-native';
 // React Native Paper
 import { PaperProvider, Button, Text, Banner, Divider, Appbar } from 'react-native-paper';
@@ -14,6 +14,7 @@ import DatePickerComponent from '../../../../components/common/Forms/DatePicker'
 import RadioList from '../../../../components/common/RadioList';
 // Servicios
 import { saveInform } from '../../../../services/setService';
+import { getLastSample } from '../../../../services/queryService';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { reset, selectCurrentForm, setForm } from '../../../../features/forms/ReportSlice';
@@ -40,6 +41,7 @@ export default RegisterInform = () => {
     const [procedencia, setProcedencia] = useState('')
     const [tipoCultivo, setTipoCultivo] = useState('')
     const [Observaciones, setObservaciones] = useState('')
+    const [LastIdLab, setLastIdLab] = useState(undefined);
     const [selected, setSelected] = useState(undefined);
     // Fechas 
     const [FechaEntrega, setFechaEntrega] = useState(new Date());
@@ -73,6 +75,25 @@ export default RegisterInform = () => {
         }
     };
 
+    useEffect(() => {
+        getLastSample()
+            .then(muestrasArray => {
+                if (muestrasArray !== null && muestrasArray.length > 0) {
+                    const muestrasPlanas = muestrasArray.flatMap(muestras => muestras);
+
+                    const maxIdLab = Math.max(...muestrasPlanas.map(muestra => parseInt(muestra.IdLab)));
+
+                    //console.log('Valor máximo de IdLab:', maxIdLab);
+                    setLastIdLab(maxIdLab);
+                } else {
+                    console.log('No se encontraron muestras.');
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener las muestras:', error);
+            });
+    }, []);
+
     return (
         <View className='flex-1 bg-zinc-50 justify-center'>
             <Appbar.Header className='bg-zinc-50'>
@@ -85,7 +106,7 @@ export default RegisterInform = () => {
                         {currentForm === 1 && (
                             <>
                                 <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa" }} visible={visible} actions={[ { label: 'Ir a paquetes', onPress: () => NavigateToPackage() }, { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Fstorage.png?alt=media&token=9203def2-8644-4977-bb86-4c1b61157166' }} style={{ width: size, height: size }} /> )}>
-                                    <Text className='text-sm'>  Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización. </Text>
+                                    <Text className='text-base'>  Primero, elige o crea un paquete de análisis para tu cliente. Existe la opción de personalización. </Text>
                                 </Banner>
                                 <View className='flex-1 p-5 justify-around'>
                                     <View className='flex-row justify-between'>
@@ -93,7 +114,7 @@ export default RegisterInform = () => {
                                         <FilterPagesExtended text="Análisis Foliar" backgroundColor="#ECECEC" isSelected={selectedOption === "Análisis Foliar"} onPress={() => filterContent("Análisis Foliar")}/>
                                     </View>
                                 </View>
-                                <TouchableOpacity className='flex-row items-center justify-center p-4'>
+                                <TouchableOpacity className='flex-row items-center justify-center p-4' onPress={()=> navigation.navigate("newPackage")}>
                                     <Icon name="library-add" size={24} color='#767983' />
                                     <Text className='ml-3 text-slate-500 text-base' style={[ Fonts.addText]}>Personalizar paquete</Text>
                                 </TouchableOpacity>
@@ -105,53 +126,58 @@ export default RegisterInform = () => {
                         {currentForm === 2 && (
                             <>
                                 <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Fsave.png?alt=media&token=f7981722-940e-48b7-9834-98b610923a3e' }} style={{ width: size, height: size }} /> )}>
-                                    <Text className='text-sm'>  Excelente, ahora procede a completar todos los campos necesarios en el formulario. Recuerda que cada detalle cuenta. </Text>
+                                    <Text className='text-base'>  Excelente, ahora procede a completar todos los campos necesarios en el formulario. Recuerda que cada detalle cuenta. </Text>
                                 </Banner>
                                 <View style={InputForms.container}>
                                     <View style={InputForms.formContainer}>
                                         <DatePickerComponent Text="Fecha Recepción: " onDateChange={handleDateChangeRecepcion} />
                                         <DatePickerComponent Text="Fecha Entrega: " onDateChange={handleDateChange} />
-                                        <TextInput style={[InputForms.input, { marginBottom: 20, marginTop:10 }, { height: 41, paddingLeft: 25 }]} placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras} maxLength={100} keyboardType="numeric" />
-                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia} maxLength={100} />
-                                        <TextInput style={[InputForms.input, { marginBottom: 20 }, { height: 41, paddingLeft: 25 }]} placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo} maxLength={100} />
-                                        <TextInput multiline={true} numberOfLines={4} placeholder="Observaciones generales" value={Observaciones}  onChangeText={setObservaciones} style={[InputForms.textArea, { marginBottom: 20, paddingLeft: 25  }]} maxLength={100} />
-                                        <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 10}]} onPress={handleSiguiente}>Siguiente Página</Button>
+                                        <TextInput className="w-full h-12 rounded-xl bg-slate-200 px-4 mb-7" placeholder="Número de muestras" value={numMuestras} onChangeText={setNumMuestras} maxLength={100} keyboardType="numeric" />
+                                        <TextInput className="w-full h-12 rounded-xl bg-slate-200 px-4 mb-7" placeholder="Procedencia" value={procedencia} onChangeText={setProcedencia} maxLength={100} />
+                                        <TextInput className="w-full h-12 rounded-xl bg-slate-200 px-4 mb-7" placeholder="Tipo de cultivo" value={tipoCultivo} onChangeText={setTipoCultivo} maxLength={100} />
+                                        <TextInput style={{textAlignVertical: 'top'}} className="w-full h-28 rounded-xl bg-slate-200 mb-7 px-4" multiline={true} numberOfLines={4} placeholder="Observaciones generales" value={Observaciones}  onChangeText={setObservaciones}  maxLength={100} />
+                                        <Button className="flex-1 my-4 w-full rounded-2xl h-11"  mode="contained" style={[{ backgroundColor: '#41525C'}]} onPress={handleSiguiente}>SIGUIENTE</Button>
                                     </View>
                                 </View>
                             </>
                         )}
                         {currentForm === 3 && (
                             <>
-                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa", marginBottom: '6%' }} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => ( <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Ffinger-pointing-down.png?alt=media&token=ef05119b-f442-42e5-a7ad-d36ce27809f6' }} style={{ width: size, height: size }} /> )}>
-                                    <Text className='text-sm'> Casi listo, ahora procede a completar los datos de las muestras que ingresaste anteriormente. </Text>
+                                <Banner theme={{ colors: { primary: 'green' } }} style={{ backgroundColor: "#fafafa",}} visible={visible} actions={[ { label: 'Cerrar', onPress: () => setVisible(false) } ]} icon={({size}) => (  <Image source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FIcons3D%2Ffinger-pointing-down.png?alt=media&token=ef05119b-f442-42e5-a7ad-d36ce27809f6' }} style={{ width: size, height: size }} /> )}>
+                                    <Text className='text-base'> Casi listo, Continúa ingresando detalles para las muestras registradas. Último
+                                        <Text className="font-bold"> IdLab {LastIdLab}.</Text>
+                                    </Text>
                                 </Banner>
-                                <View style={InputForms.container}>
-                                    <View className='mx-8 w-5/6'>
-                                        <TextInput className='mb-5 rounded-2xl h-12 pl-6' style={[InputForms.input]} placeholder="Número de muestra" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
-                                    </View>
-                                    <TouchableOpacity className='flex-row items-center justify-center p-4' onPress={agregarMuestra} disabled={muestras.length >= parseInt(numMuestras, 10)}>
-                                        <Icon name="library-add" size={24} color='#767983' />
-                                        <Text className='ml-3 text-slate-500 text-base' style={[Fonts.addText]}>Añadir muestra</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <Divider className='my-1 bg-neutral-300'/>
-
-                                <SafeAreaView>
-                                    {muestras.map((muestra, index) => (
-                                        <View key={index}>
-                                            <View className='flex-row items-center justify-between p-3'>
-                                                <Icon className='px-4' name="package" size={24} color='#767983'/>
-                                                <View className='flex-col items-start'>
-                                                    <Text className='ml-3 text-slate-500 text-base font-bold' style={[ Fonts.modalText]}>Elemento</Text>
-                                                    <Text className='ml-3 text-slate-500 text-base' style={[ Fonts.cardsText]}>Número de Muestra: {muestra.IdLab}</Text>
-                                                </View>
-                                                <View></View><View></View><View></View>
-                                            </View>
-                                            <Divider className='my-1 bg-neutral-300' />
+                                <View className="my-10">
+                                    <View className="flex-1 justify-center items-center">
+                                        <View className='mx-8 w-5/6'>
+                                            <TextInput className='mb-5 rounded-xl w-full h-11 pl-6 bg-gray-200' placeholder="Id de Laboratorio" value={numMuestra} onChangeText={setNumMuestra} keyboardType="numeric" maxLength={10} />
+                                            <Divider className='my-1 bg-neutral-300'/>
                                         </View>
-                                    ))}
-                                </SafeAreaView>
-                                <Button disabled={muestras.length !== parseInt(numMuestras, 10)} mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={handleSaveData}> ENVIAR </Button>
+                                        <TouchableOpacity className='flex-row items-center justify-center p-4' onPress={agregarMuestra} disabled={muestras.length >= parseInt(numMuestras, 10)}>
+                                            <Icon name="library-add" size={24} color='#64748b' />
+                                            <Text className='ml-3 text-slate-500 text-base' style={[Fonts.addText]}>Añadir muestra</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <Divider className='my-1 bg-neutral-300'/>
+
+                                    <SafeAreaView>
+                                        {muestras.map((muestra, index) => (
+                                            <View key={index}>
+                                                <View className='flex-row items-center justify-between p-3'>
+                                                    <Icon className='px-4' name="fingerprint" size={30} color='#64748b' />
+                                                    <View className='flex-col items-start'>
+                                                        <Text className='ml-3 text-slate-500 text-base font-bold' style={[ Fonts.modalText]}>Elemento</Text>
+                                                        <Text className='ml-3 text-slate-500 text-base' style={[ Fonts.cardsText]}>Número de Muestra: {muestra.IdLab}</Text>
+                                                    </View>
+                                                    <View></View><View></View><View></View>
+                                                </View>
+                                                <Divider className='my-1 bg-neutral-300' />
+                                            </View>
+                                        ))}
+                                    </SafeAreaView>
+                                    <Button className="my-4 rounded-2xl h-11 mx-10" disabled={muestras.length !== parseInt(numMuestras, 10)} mode="contained" style={[{ backgroundColor: '#41525C'}]} onPress={handleSaveData}> ENVIAR </Button>
+                                </View>
                             </>
                         )}
                     </ScrollView>

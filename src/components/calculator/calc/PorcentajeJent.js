@@ -4,8 +4,6 @@ import { View, Text} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
 import { setVm, setVb, setN, setP, setResultado, clear } from '../../../features/calc/foliar/PorcentaJentSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
 // Componentes
 import Input from '../../common/Forms/Input';
 // Servicios
@@ -22,6 +20,16 @@ export const PorcentaJent = () => {
     const [Vb, setvb] = useState('');
     const [N, setn] = useState('');
     const [P, setp] = useState('');
+
+    const handleCalc = () => {
+        const result = pctJentCalc(
+            parseFloat(Vm),
+            parseFloat(Vb),
+            parseFloat(N),
+            parseFloat(P)
+        );
+        dispatch(setResultado(result));
+    };
 
     const handleCalculo = () => {
         dispatch(setSum(4));
@@ -40,8 +48,9 @@ export const PorcentaJent = () => {
                 dispatch(setP(parseFloat(P)));
             }
 
-            const result = pctJentCalc(porcentajent.Vm, porcentajent.Vb, porcentajent.N, porcentajent.p);
-            dispatch(setResultado(result));
+            //const result = pctJentCalc(porcentajent.Vm, porcentajent.Vb, porcentajent.N, porcentajent.p);
+            //dispatch(setResultado(result));
+            handleCalc();
 
         } catch (error) {
             console.error('Error al mandar los datos', error);

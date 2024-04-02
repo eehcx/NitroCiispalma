@@ -4,7 +4,14 @@ const initialState = {
     // Selección del calculo
     index: 0,
     sum: 1,
-    calcNames: ['Micronutrientes','Macronutrientes','Calcular Boro','Calcular Azufre','Porcentaje Jent','Porcentaje Jep'],
+    calcNames: [
+        {name: 'Micronutrientes', description: 'Calcular concentración...'},
+        {name: 'Macronutrientes', description: 'Calcula el porcentaje de...'},
+        {name: 'Calcular Boro', description: 'Calcular concentración...'},
+        {name: 'Calcular Azufre', description: 'Concentración usando...'},
+        {name: 'Porcentaje Jent', description: 'Porcentaje de Nitrógeno...'},
+        {name: 'Porcentaje Jep', description: 'Porcentaje de Fósforo...'},
+    ],
     // Funcionalidad calculadora
     input: 1,
     keyboardNumber: '',
@@ -61,7 +68,7 @@ export const CalculatorSlice = createSlice({
 
 export const { setIndex, increment, decrement, updateValue, Backspace, setSum, setIdLab, setIdCalc, reset } = CalculatorSlice.actions;
 export const Index = (state) => state.calculator.index;
-export const Name = (state) => state.calculator.calcNames[state.calculator.index];
+export const Name = (state) => state.calculator.calcNames[state.calculator.index].name;
 //
 export const selectCurrentInput = (state) => state.calculator.input;
 export default CalculatorSlice.reducer;    

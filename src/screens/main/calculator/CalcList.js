@@ -45,9 +45,9 @@ const ListFoliar = () => {
                         </View>
                     ) : (
                         <ScrollView onScroll={onScroll}>
-                            {elements.map((name, index) => (
+                            {elements.map((element, index) => (
                                 <View key={index}>
-                                    <ItemListRadioButton title={name} content={fechaFormateada} onPress={() => dispatch(setIndex(index))} status={calcName === name ? 'checked' : 'unchecked'} value={name} details={()=> alert('Mensaje de pruebas')}/>
+                                    <ItemListRadioButton title={element.name} content={element.description} onPress={() => dispatch(setIndex(index))} status={calcName === element.name ? 'checked' : 'unchecked'} value={element.name} />
                                 </View>
                             ))}
                         </ScrollView>
@@ -57,7 +57,7 @@ const ListFoliar = () => {
         </View>
     );
 };
-
+//details={()=> alert('Mensaje de pruebas')}
 export default CalculationsList = () => {
     const navigation = useNavigation();
     // Filtro 

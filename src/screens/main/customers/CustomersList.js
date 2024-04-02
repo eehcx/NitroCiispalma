@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setNombre, setRazonSocial, setClientId, setTelefono } from '../../../features/client/clientSlice';
 // Servicio de consulta
 import { getClientes } from '../../../services/clientes';
+import { getClients } from '../../../services/queryService';
 
 // Pagina de listado de clientes
 export default CustomersList = () => {
@@ -22,7 +23,6 @@ export default CustomersList = () => {
     const clientId = useSelector(state => state.client.clientId);
     //const client = useSelector(state => state.client);
     // Estado de Carga de la página
-    const [loading, setLoading] = useState(true);
     // Hooks para el estado de los clientes
     const [clientes, setClientes] = useState([]);
     // Hooks para el estado del componente
@@ -54,37 +54,26 @@ export default CustomersList = () => {
         }
     };
 
-    // Firebase Realtime Database
     useEffect(() => {
-        const obtenerClientes = async () => {
-            try {
-                const clientesData = await getClientes();
-                setClientes(clientesData);
-            } catch (error) {
-                console.error('Error al obtener clientes', error);
-            }
-        };
+        const unsubscribe = getClients((clientesData) => {
+            setClientes(clientesData);
+        });
 
-        obtenerClientes();
-        setLoading(false);
+        return () => { unsubscribe(); };
     }, []);
+        
 
     return (
         <View className='flex-1 bg-zinc-50'>
             <SafeAreaView className='flex-grow'>
-                {loading ? (
-                        <View style={InputForms.container}>
-                            <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
-                        </View>
-                ) : (
-                    <ScrollView onScroll={onScroll}>
+                
+                <ScrollView onScroll={onScroll}>
                         {clientes.slice().reverse().map((cliente, index) => (
                             <View key={index}>
                                 <ItemListRadioButton title={cliente.razon_social} content={cliente.uid} onPress={() => handleRadioButtonPress(cliente.uid, cliente.nombre, cliente.razon_social, cliente.telefono)} status={ clientId === cliente.uid ? 'checked' : 'unchecked'} value={cliente.uid} details={() => handleDetails(cliente.uid, cliente.nombre, cliente.razon_social, cliente.telefono)}/>
                             </View>
                         ))}
                     </ScrollView>
-                )}
             </SafeAreaView>
         </View>
     );

@@ -14,5 +14,4 @@ export default FilterPagesExtended = ({ icon, text, backgroundColor, marginLeft,
 const styles = StyleSheet.create({
     // Estilos de btn
     groupChildLayout: {backgroundColor: "#ECECEC"},
-    FilterContainer: {justifyContent: 'center', alignItems: 'center'},
 });

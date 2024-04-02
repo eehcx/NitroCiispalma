@@ -40,7 +40,7 @@ export default HomeScreen = () => {
   return (
     <>
       <StatusBar backgroundColor='#fafafa'  barStyle="dark-content" />
-      <View className='bg-neutral-50 pb-12'>
+      <View className='bg-neutral-50 w-full pb-32'>
         <View className='top-6 left-8'>
           <Text className='text-black text-left absolute font-bold text-2xl'> Hola, {firstName}</Text> 
           <Text className='text-xl top-9 text-left left-2 absolute text-gray-500 tracking-wide' >{formattedDate}</Text>
