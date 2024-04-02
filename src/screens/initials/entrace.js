@@ -1,25 +1,25 @@
 import buttonStyles from '../../styles/buttonStyles';
 import Fonts from '../../styles/Fonts';
 //REACT NATIVE Y TAILWIND CSS
-import { StyleSheet, ImageBackground, View, Text, TouchableOpacity } from 'react-native';
+import { ImageBackground, View, Text, TouchableOpacity } from 'react-native';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 
 export default InputScreen = () => {
     const navigation = useNavigation();
     return (
-        <View style={{ flex: 1 }}>
-            <ImageBackground source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/fondo.jpg?alt=media&token=b861ad71-5831-490f-aacd-985e67e69d00' }} style={{ flex: 1, resizeMode: 'cover', justifyContent: 'center' }}>
-                <View style={{ flex: 1 }}>
-                <View style={styles.carouselContainer}>
-                    <View style={styles.slide}>
+        <View className='flex-1'>
+            <ImageBackground className='flex-1 object-cover justify-center' source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/ciispalmaapp.appspot.com/o/static%2FImages%2Ffondo.jpg?alt=media&token=6768490a-3093-451c-aa41-4cf583fe9d3b' }}>
+                <View className='flex-1'>
+                <View className='relative justify-end mt-36 w-full h-96'>
+                    <View className='w-80 h-80 p-5 mr-28'>
                         <Text style={[Fonts.headerTitle, { color: '#fafafa' }]}>Aceite de palma</Text>
                         <Text style={[Fonts.labelTitle, { color: '#fafafa' }]}>Un verdadero Tesoro para la Salud y el Sabor</Text>
                     </View>
                 </View>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 30 }}>
+                <View className='flex-1 justify-end'>
+                    <View className='flex-row justify-center mb-8'>
                         <TouchableOpacity style={[buttonStyles.button, { marginRight: 10 }]} onPress={()=> navigation.navigate('login')}>
                             <Text style={[buttonStyles.buttonText, Fonts.buttonTitle]}>LOG IN</Text>
                         </TouchableOpacity>
@@ -27,9 +27,9 @@ export default InputScreen = () => {
                             <Text style={[buttonStyles.buttonText_signup, Fonts.buttonTitle]}>SIGN UP</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ alignItems: 'center', marginBottom: 30 }}>
-                        <Text style={styles.text} >Colabora con 
-                            <Text style={styles.bold} > CIISPALMA</Text>
+                    <View className='items-center mb-8'>
+                        <Text className='text-zinc-50'>Colabora con 
+                            <Text className='font-bold tracking-widest'> CIISPALMA</Text>
                         </Text>
                     </View>
                 </View>
@@ -37,13 +37,3 @@ export default InputScreen = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    carouselContainer: { position: 'relative', justifyContent: 'flex-end', marginTop: 150, bottom: 0, width: '100%', height: 370 },
-    slide: { width: 300, height: 300, padding: 20, marginRight: 100 },
-    indicatorContainer: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 50 },
-    indicator: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#fafafa', marginHorizontal: 4 },
-    activeIndicator: { backgroundColor: '#6c9b6d' },
-    text:{ color:'#fafafa' },
-    bold: { fontWeight: '700', letterSpacing: 1.2}
-});

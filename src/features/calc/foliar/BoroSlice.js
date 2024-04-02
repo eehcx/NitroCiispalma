@@ -18,16 +18,12 @@ export const BoroSlice = createSlice({
         setM: (state, action) => { state.m = action.payload; },
         setExtractante: (state, action) => { state.Extractante = action.payload; },
         setPesoMuestra: (state, action) => { state.pesoMuestra = action.payload; },
-        calcularBoro: (state) => {
-            const { AbsM, AbsB, m, Extractante, pesoMuestra } = state;
-            const FDM = (Extractante / pesoMuestra);
-            state.resultado = ((AbsM - AbsB) / m) * FDM;
-        },
+        setResultado: (state, action) => { state.resultado = action.payload; },
         clear: (state) => {
             Object.assign(state, initialState);
         },
     },
 });
 
-export const { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, calcularBoro, clear } = BoroSlice.actions;
+export const { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, setResultado, clear } = BoroSlice.actions;
 export default BoroSlice.reducer;
