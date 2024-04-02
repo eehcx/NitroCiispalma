@@ -2,18 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { View, Text} from 'react-native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentInput } from '../../../features/calc/CalculatorSlice';
-import { calcularBoro, setAbsM, setAbsB, setM, setExtractante, setPesoMuestra } from '../../../features/calc/foliar/BoroSlice';
-// Estilos globales
-import Fonts from '../../../styles/Fonts';
+import { selectCurrentInput, setSum } from '../../../features/calc/CalculatorSlice';
+import { setAbsM, setAbsB, setM, setExtractante, setPesoMuestra, setResultado } from '../../../features/calc/foliar/BoroSlice';
 // Componentes
-import Input from '../../interface/Forms/Input';
+import Input from '../../common/Forms/Input';
+//import { AverageInput } from '../../interface/Forms/AverageInput';
+// Servicios
+import { getCurve } from '../../../services/queryService';
+import { boronCalc } from '../../../utils/calculator/foliarCalc';
 
-export const BoroCalc = ({ TextLabel }) => {
+export const BoroCalc = () => {
     // Redux
     const dispatch = useDispatch();
+    const calculoId = useSelector(state => state.client.clientId);
     const currentInput = useSelector(selectCurrentInput);
     const boro = useSelector(state => state.boro);
+    const inputValue = useSelector(state => state.calculator.value);
     // Formula
     const [AbsM, setabsM] = useState('');
     const [AbsB, setabsB] = useState('');
@@ -21,30 +25,54 @@ export const BoroCalc = ({ TextLabel }) => {
     const [Extractante, setextractante] = useState('');
     const [PesoMuestra, setpesoMuestra] = useState('');
 
+    const getSlope = async () => {
+        const prefix = 'boro';
+        try {
+            const data = await getCurve(calculoId, prefix);
+            if (data !== null) {
+                setm(data.pendiente);
+            }
+            console.log(M);
+        } catch (e) {
+                console.error(e);
+        }
+    };
+
+    //const handleAverage = (value) => { dispatch(setAbsM(value)); };
+
+    const handleCalc = () => {
+        const result = boronCalc(
+            parseFloat(AbsM),
+            parseFloat(AbsB),
+            parseFloat(M),
+            parseFloat(Extractante),
+            parseFloat(PesoMuestra)
+        );
+        dispatch(setResultado(result));
+    };
+
     const handleCalculo = () => {
-        NumAbsM = parseFloat(AbsM);
-        NumAbsB = parseFloat(AbsB);
-        NumM = parseFloat(M);
-        NumExtractante = parseFloat(Extractante);
-        NumPesoMuestra = parseFloat(PesoMuestra)
+        dispatch(setSum(5));
         try{
             if (currentInput === 1) {
-                setabsM(TextLabel); 
-                dispatch(setAbsM(NumAbsM));
+                setabsM(inputValue);
+                dispatch(setAbsM(parseFloat(AbsM)));
             } else if (currentInput === 2) {
-                setabsB(TextLabel); 
-                dispatch(setAbsB(NumAbsB));
+                setabsB(inputValue);
+                dispatch(setAbsB(parseFloat(AbsB)));
             } else if (currentInput === 3) {
-                setm(TextLabel);
-                dispatch(setM(NumM));
+                setm(inputValue);
+                dispatch(setM(parseFloat(M)));
             } else if (currentInput === 4) {
-                setextractante(TextLabel);
-                dispatch(setExtractante(NumExtractante));
+                setextractante(inputValue);
+                dispatch(setExtractante(parseFloat(Extractante)));
             } else if (currentInput === 5) {
-                setpesoMuestra(TextLabel);
-                dispatch(setPesoMuestra(NumPesoMuestra));
+                setpesoMuestra(inputValue);
+                dispatch(setPesoMuestra(parseFloat(PesoMuestra)));
             }
-            dispatch(calcularBoro());
+            //const result = boronCalc(boro.AbsM, boro.AbsB, boro.m, boro.Extractante, boro.pesoMuestra);
+            //dispatch(setResultado(result));
+            handleCalc();
         } catch (error) {
             console.error('Error al mandar los datos', error);
         }
@@ -52,23 +80,29 @@ export const BoroCalc = ({ TextLabel }) => {
 
     useEffect(() => {
         try{
+            getSlope();
             handleCalculo();
         } catch (error) {
             console.error('Error al obtener el Input', error);
         }
         console.log(boro);
-    }, [currentInput, TextLabel]);
+    }, [currentInput, inputValue]);
+    const selected = "bg-slate-100 border-lime-700 border";
+    const inputColor = "bg-slate-100 border-slate-200 border";
+    const textSelected = "text-lime-700";
+    const textColor = "text-gray-500";
 
     return(
         <>
-            <Input backgroundColor={currentInput === 1 ? '#dadada' : '#ECECEC'} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
-            <Input backgroundColor={currentInput === 2 ? '#dadada' : '#ECECEC'}  placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
-            <Input backgroundColor={currentInput === 3 ? '#dadada' : '#ECECEC'}  placeholder='Valor de M' value={M} label='M:' />
-            <Input backgroundColor={currentInput === 4 ? '#dadada' : '#ECECEC'}  placeholder='Valor del extractante' value={Extractante} label='Extractante:' />
-            <Input backgroundColor={currentInput === 5 ? '#dadada' : '#ECECEC'}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
+            {/*<AverageInput placeholder={'Absorbancia de la muestra'} label={'AbsM: '} value={AbsM} setValue={setabsM} setDispatch={handleAverage} />*/}
+            <Input backgroundColor={currentInput === 1 ? selected : inputColor} TextColor={currentInput === 1 ? textSelected : textColor} placeholder='Absorbancia de la muestra' value={AbsM} label='AbsM:' />
+            <Input backgroundColor={currentInput === 2 ? selected : inputColor} TextColor={currentInput === 2 ? textSelected : textColor}  placeholder='Absorbancia del blanco' value={AbsB} label='AbsB:' />
+            <Input backgroundColor={currentInput === 3 ? selected : inputColor} TextColor={currentInput === 3 ? textSelected : textColor}  placeholder='Pendiente de calibración' value={M} label='Pendiente:' />
+            <Input backgroundColor={currentInput === 4 ? selected : inputColor} TextColor={currentInput === 4 ? textSelected : textColor}  placeholder='Valor del extractante' value={Extractante} label='Extractante:' />
+            <Input backgroundColor={currentInput === 5 ? selected : inputColor} TextColor={currentInput === 5 ? textSelected : textColor}  placeholder='Peso de la muestra (gramos)' value={PesoMuestra} label='Peso Muestra:' />
 
-            <View style={[{ flex: 1, alignItems: 'center', justifyContent: 'center' }]}>
-                <Text style={[ Fonts.modalText, {color: '#2F363B', marginBottom: 20}]}>Resultado: {boro.resultado}</Text>
+            <View className="flex-1 items-center justify-center py-6 rounded-2xl mb-10 bg-slate-200">
+                <Text className="text-2xl font-semibold text-slate-500">{isNaN(boro.resultado) ? "0000000000" : boro.resultado.toFixed(3)}</Text>
             </View>
         </>
     );

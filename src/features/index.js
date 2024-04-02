@@ -12,6 +12,7 @@ import MacronutrientesSlice from './calc/foliar/MacronutrientesSlice';
 import MicronutrientesSlice from './calc/foliar/MicronutrientesSlice';
 import PorcentaJentSlice from './calc/foliar/PorcentaJentSlice';
 import PorcentaJepSlice from './calc/foliar/PorcentaJepSlice';
+import CalibrationCurveSlice from './calc/CalibrationCurveSlice';
 
 const rootReducer = combineReducers({
     user: userSlice,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     macronutrientes: MacronutrientesSlice,
     micronutrientes: MicronutrientesSlice,
     porcentajent: PorcentaJentSlice,
-    porcentajep: PorcentaJepSlice
+    porcentajep: PorcentaJepSlice,
+    calibrationCurve: CalibrationCurveSlice
 });
 
 export default rootReducer;

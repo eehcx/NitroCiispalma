@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, View, StatusBar } from 'react-native';
 import { Button } from 'react-native-paper';
 // Componentes
-import InputText from '../../../components/interface/Forms/InputText';
+import InputText from '../../../components/common/Forms/InputText';
 // Styles
 import InputForms from '../../../styles/InputForms';
 import Fonts from '../../../styles/Fonts';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // Servicios
 import { getInforme , updateInforme } from '../../../services/informes';
 
@@ -45,7 +45,7 @@ export default InformDetails = ({}) => {
         const obtenerDatosInforme = async () => {
             try {
                 const [informe, resultados] = await getInforme(informId);
-                console.log('Informes \n',informe, '\n Resultados \n',resultados);
+                //console.log('Informes \n',informe, '\n Resultados \n',resultados);
                 setResultados({resultados});
 
                 if (resultados) {
@@ -65,7 +65,7 @@ export default InformDetails = ({}) => {
     return (
         <>
             <StatusBar backgroundColor='#fafafa' />
-            <SafeAreaView style={{ backgroundColor: '#fafafa', flex: 1 }}>
+            <SafeAreaView className='flex-1 bg-zinc-50'>
                 <ScrollView onScroll={onScroll}>
                     <View style={InputForms.container}>
                         <View style={InputForms.formContainer}>

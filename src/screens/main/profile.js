@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Avatar, Card, Button, Divider, Appbar  } from 'react-native-paper';
-import { View, StyleSheet, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { Avatar, Card, Button, Divider } from 'react-native-paper';
+import { View, StatusBar, Text, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
@@ -53,52 +53,52 @@ const CardInfo = () => {
 
     return(
         <SafeAreaView>
-            {isModalVisible && <ModalAlert visible={isModalVisible} title='Cerrar sesión' message="¿Seguro que desea cerrar sesión?" button='LOGOUT' onPress={()=> handleLogout()} close={handleClose} />}
+        {isModalVisible && <ModalAlert visible={isModalVisible} title='Cerrar sesión' message="¿Seguro que desea cerrar sesión?" button='LOGOUT' onPress={()=> handleLogout()} close={handleClose} />}
             <ScrollView>
-                <View style={[styles.CardShadow,{ margin: 4, marginBottom: -10, borderRadius: 16, backgroundColor: '#fafafa' }]}>
+                <View className='rounded-2xl bg-slate-100'>
                     <Card.Content>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('user')}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name="person" size={24} color='#767983' />
-                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Editar Perfil</Text>
+                        <TouchableOpacity className='flex-row items-center justify-between p-5' onPress={()=> navigation.navigate('user')}>
+                            <View className='flex-row items-center'>
+                                <Icon name="person" size={24} color='#475569' />
+                                <Text className='ml-4 text-base text-slate-500'>Editar Perfil</Text>
                             </View>
-                            <Icon name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#475569' />
                         </TouchableOpacity>
-                        <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name='lock' size={24} color='#767983' />
-                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Seguridad y contraseña</Text>
+                        <Divider className='bg-stone-200'/>
+                        <TouchableOpacity className='flex-row items-center justify-between p-5'>
+                            <View className='flex-row items-center'>
+                                <Icon name='lock' size={24} color='#475569' />
+                                <Text className='ml-4 text-base text-slate-500'>Seguridad y contraseña</Text>
                             </View>
-                            <Icon name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#475569' />
                         </TouchableOpacity>
-                        <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} >
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name='schedule' size={24} color='#767983' />
-                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Historial de cálculos</Text>
+                        <Divider className='bg-stone-200'/>
+                        <TouchableOpacity className='flex-row items-center justify-between p-5'>
+                            <View className='flex-row items-center'>
+                                <Icon name='schedule' size={24} color='#475569' />
+                                <Text className='ml-4 text-base text-slate-500'>Historial de cálculos</Text>
                             </View>
-                            <Icon name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#475569' />
                         </TouchableOpacity>
-                        <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }} onPress={()=> navigation.navigate('appData')}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name='shield' size={24} color='#767983' />
-                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Políticas de privacidad</Text>
+                        <Divider className='bg-stone-200'/>
+                        <TouchableOpacity className='flex-row items-center justify-between p-5'>
+                            <View className='flex-row items-center'>
+                                <Icon name='shield' size={24} color='#475569' />
+                                <Text className='ml-4 text-base text-slate-500'>Políticas de privacidad</Text>
                             </View>
-                            <Icon name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#475569' />
                         </TouchableOpacity>
-                        <Divider style={{ backgroundColor: "#e4e5e6"}} />
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 20 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Icon name='report' size={24} color='#767983' />
-                                <Text style={[styles.txtLabels, Fonts.cardsText]}>Centro de ayuda</Text>
+                        <Divider className='bg-stone-200'/>
+                        <TouchableOpacity className='flex-row items-center justify-between p-5'>
+                            <View className='flex-row items-center'>
+                                <Icon name='report' size={24} color='#475569'/>
+                                <Text className='ml-4 text-base text-slate-500'>Centro de ayuda</Text>
                             </View>
-                            <Icon name="chevron-right" size={24} color='#767983' />
+                            <Icon name="chevron-right" size={24} color='#475569' />
                         </TouchableOpacity>
-                        <Divider style={{ backgroundColor: "#e4e5e6"}} />
+                        <Divider className='bg-stone-200'/>
                     </Card.Content>
-                    <Button  mode="contained" style={[Fonts.buttonTitle,{ backgroundColor: '#41525C', margin: 25}]} onPress={()=> handleModal()}> LOGOUT </Button>
+                    <Button className="rounded-2xl my-5 mx-8 h-11" mode="contained" style={[{backgroundColor: '#41525C'}]} onPress={()=> handleModal()}> LOGOUT </Button>
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -110,18 +110,15 @@ export default ProfileScreen = () => {
     const user = useSelector(state => state.user);
 
     return (
-        <View style={styles.content}>
-            <StatusBar backgroundColor='#fafafa' barStyle="dark-content" />
-            <Appbar.Header style={{ backgroundColor: '#fafafa', marginLeft: 20}}>
-                <Appbar.Content title="Perfil" />
-            </Appbar.Header>
+        <View className='flex-1 px-2 bg-slate-50'>
+            <StatusBar backgroundColor='#f8fafc' barStyle="dark-content" />
 
-            <View style={[styles.ProfileInfoContent, { marginTop: 5 }]}>
-                <Avatar.Text size={70} label={user.displayName.toUpperCase().substring(0, 1)} style={[styles.aviIcon, {backgroundColor: "#d7dfe4", borderColor: "#bbb", borderWidth: 1}]} />
-                <Text style={[styles.ProfileName, Fonts.subtitles]}>{user.displayName}</Text>
-                <View style={{flex:1, alignItems: 'center'}}>
-                    <View style={[styles.mailContent, styles.mailChild, styles.mailLayout]}>
-                        <Text style={[Fonts.cardsText]}>{ user.email}</Text>
+            <View className='flex-1 h-full items-center justify-center m-5'>
+                <View className='flex-1 flex-col items-center justify-center'>
+                    <Avatar.Text color='#64748b' className="border border-slate-500 bg-slate-100" size={100} label={user.displayName.toUpperCase().substring(0, 1)} />
+                    <Text className='m-4 text-3xl text-slate-500'>{user.displayName}</Text>
+                    <View className='h-8 w-max rounded-xl px-5 bg-slate-200'>
+                        <Text className="text-lg text-slate-500">{user.email}</Text>
                     </View>
                 </View>
             </View>
@@ -129,13 +126,3 @@ export default ProfileScreen = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    content: { flex: 1, backgroundColor: '#fafafa' },
-    ProfileInfoContent: { flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' },
-    ProfileName: { margin: 10 },
-    mailContent: { flexDirection: 'row', alignItems: 'center' },
-    mailLayout: { height: 28, paddingLeft: 20, paddingRight: 20, position: "absolute" },
-    mailChild: { borderRadius: 15, backgroundColor: "#d7dfe4", top: 0, flex: 1 },
-    txtLabels: { marginLeft: 16, color: '#67757d', fontSize: 15 },
-});

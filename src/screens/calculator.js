@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, StatusBar, TextInput, View, Text, TouchableOpacity, Alert } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StatusBar, TextInput, View, Text, TouchableOpacity } from 'react-native';
 import { Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 // Componentes
@@ -7,96 +7,77 @@ import KeyBoard from '../components/calculator/keyBoard';
 import HistoryScreen from './main/calculator/History';
 import CalculationsList from './main/calculator/CalcList';
 import { AlternativeScreen } from '../components/calculator/AlternativeScreen';
-import ModalAlert from '../components/interface/ModalAlert';
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Name } from '../features/calc/CalculatorSlice';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 
 const MainScreen = ({}) => {
     // Redux 
-    const dispatch = useDispatch();
-    const calc = useSelector(state => state.calculator);
+    const calcName = useSelector(Name);
     const [resultValue, setResultValue] = useState('00000000');
 
     return(
         <>
-            <View style={[styles.ScreenCalculator]}>
-                <Text style={[styles.SubtitleTextScreen]}>{calc.selected ? calc.selected : 'Cálculo'}</Text>
-                <TextInput style={[styles.ScreenText]} editable={false} placeholder='00000000' value={resultValue} />
+            <View className='h-2/6 w-full bg-slate-50'>
+                <Text className='text-right pr-10 mt-16 text-2xl' style={{color: '#bababa'}}>{calcName ? calcName : 'Cálculo'}</Text>
+                <TextInput className=' text-right pr-5 text-7xl' editable={false} placeholder='00000000' value={resultValue} />
             </View>
         </>
     )
 }
 
 export default CalculatorScreen = () => {
-    const [isModalVisible, setModalVisible] = useState(false);
     // Navegación
     const navigation = useNavigation();
-    // Redux 
-    const dispatch = useDispatch();
-    const uid = useSelector(state => state.client.clientId);
-    const informId = useSelector(state => state.inform.informId);
-
-    const uidRef = useRef(uid);
-    const informIdRef = useRef(informId);
-
-    // Valores de los inputs (texto)
-    const [inputValue, setInputValue] = useState('');
-    const handleKeyboardValueChange = (newValue) => {
-        setInputValue(newValue);
-    };
+    // Redux
+    const calculoId = useSelector(state => state.calculator.IdCalc);
 
     //Registrar
     const handleRegister = () => {
-        console.log('Funciona')
+        //console.log('Funciona')
     };
-
+    // Filtro 
     const [selectedOption, setSelectedOption] = useState("functions");
     const filterContent = (option) => { setSelectedOption(option); };
 
+
     useEffect(() => {
-        if (uidRef.current === null && informIdRef.current === null) {
+        if (calculoId === null) {
             alert('Debes selecionar un cliente e informe primero')
             navigation.goBack();
         }
-    }, [uidRef, informIdRef]);
+    }, []);
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#f1f2f3"}]}>
-            <StatusBar backgroundColor='#f1f2f3' barStyle="dark-content" />
+        <View className='flex-1 bg-slate-50'>
+            <StatusBar className='bg-slate-50' barStyle="dark-content" />
             <>
                 {(selectedOption === 'calculate' || selectedOption === 'history' || selectedOption === 'functions') && <MainScreen />}
-                {selectedOption === 'view-kanban' && <AlternativeScreen inputValue={inputValue} />}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', margin: 10 }}>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("history")}>
-                            <Icon name="history" size={30} color={selectedOption === 'history' ? '#41525C' : '#bababa'} style={{ marginRight: 10 }} />
+                {selectedOption === 'apps' && <AlternativeScreen />}
+                <View className='flex-row justify-between'>
+                    <View className='flex-row justify-around m-3'>
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("history")}>
+                            <Icon name="history" size={30} color={selectedOption === 'history' ? '#41525C' : '#bababa'} className='mr-3' />
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("calculate")}>
-                            <Icon name="calculate" size={30} color={selectedOption === 'calculate' ? '#41525C' : '#bababa'} style={{ marginRight: 10 }}/>
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("calculate")}>
+                            <Icon name="calculate" size={30} color={selectedOption === 'calculate' ? '#41525C' : '#bababa'} className='mr-3'/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 25 }} onPress={() => filterContent("view-kanban")}>
-                            <Icon name="view-kanban" size={30} color={selectedOption === 'view-kanban' ? '#41525C' : '#bababa'} />
+                        <TouchableOpacity className='ml-6' onPress={() => filterContent("apps")}>
+                            <Icon name="apps" size={30} color={selectedOption === 'apps' ? '#41525C' : '#bababa'} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ marginTop: 10, marginRight:30 }} onPress={() => filterContent("functions")}>
+                    <TouchableOpacity className='mt-3 mr-8' onPress={() => filterContent("functions")}>
                         <Icon name="functions" size={30} color={selectedOption === 'functions' ? '#41525C' : '#bababa'}/>
                     </TouchableOpacity>
                 </View>
-                <Divider style={{ backgroundColor: "#ddd", marginHorizontal: 20}} />
-                {selectedOption === 'calculate' && <KeyBoard onValueChange={handleKeyboardValueChange} PressRegister={handleRegister} />}
+                <Divider className='bg-neutral-200 mx-5'/>
+                {selectedOption === 'calculate' && <KeyBoard PressRegister={handleRegister} />}
                 {selectedOption === 'history' && <HistoryScreen />}
                 {selectedOption === 'functions' && <CalculationsList />}
-                {selectedOption === 'view-kanban' && <KeyBoard onValueChange={handleKeyboardValueChange} PressRegister={handleRegister} />}
+                {selectedOption === 'apps' && <KeyBoard PressRegister={handleRegister} />}
             </>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    ScreenCalculator:{ height: '35%', width: "100%", backgroundColor: '#f1f2f3' },
-    ScreenText:{ textAlign: 'right', paddingRight: 20, fontSize: 67},
-    SubtitleTextScreen:{ textAlign: 'right', paddingRight: 40, marginTop: 60, fontSize: 27, color: '#bababa' },
-    keyboardContainer: { flex: 1, padding: 20, justifyContent: 'space-around' },
-});

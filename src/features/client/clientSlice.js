@@ -16,8 +16,12 @@ const clientSlice = createSlice({
         setRazonSocial: (state, action) => { state.RazonSocial = action.payload; },
         setTelefono: (state, action) => { state.Telefono = action.payload; },
         setFechaCreacion: (state, action) => { state.fechaCreacion = action.payload; },
-        setClientId: (state, action) => {
-            state.clientId = action.payload;
+        setClientId: (state, action) => { state.clientId = action.payload; },
+        update: (state, action) =>{
+            const { Nombre, RazonSocial, Telefono } = action.payload;
+            state.Nombre = Nombre;
+            state.RazonSocial = RazonSocial;
+            state.Telefono = Telefono;
         },
         clear: state => {
             Object.assign(state, initialState);
@@ -25,5 +29,5 @@ const clientSlice = createSlice({
     },
 });
 
-export const { setNombre, setRazonSocial, setTelefono, setFechaCreacion, setClientId, addClient, clear } = clientSlice.actions;
+export const { setNombre, setRazonSocial, setTelefono, setFechaCreacion, setClientId, addClient, clear, update } = clientSlice.actions;
 export default clientSlice.reducer;

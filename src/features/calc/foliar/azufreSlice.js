@@ -15,41 +15,19 @@ export const azufreSlice = createSlice({
     name: 'azufre',
     initialState,
     reducers: {
-        // Reducer para establecer el valor de AbsM
         setAbsM: (state, action) => { state.AbsM = action.payload; },
-        
-        // Reducer para establecer el valor de AbsB
         setAbsB: (state, action) => { state.AbsB = action.payload; },
-        
-        // Reducer para establecer el valor de m
         setM: (state, action) => { state.m = action.payload; },
-        
-        // Reducer para establecer el valor de b
         setB: (state, action) => { state.b = action.payload; },
-        
-        // Reducer para establecer el valor de aforo
         setAforo: (state, action) => { state.aforo = action.payload; },
-        
-        // Reducer para establecer el valor de pesoMuestra
         setPesoMuestra: (state, action) => { state.pesoMuestra = action.payload; },
-        
-        // Reducer para establecer el valor de alicuota
         setAlicuota: (state, action) => { state.alicuota = action.payload; },
-        
-        // Reducer para calcular el resultado y establecerlo
-        calcularAzufre: (state) => {
-            const { AbsM, AbsB, m, b, aforo, pesoMuestra, alicuota } = state;
-            const FDM = (aforo / pesoMuestra);
-            const FDV = (aforo / alicuota);
-            state.resultado = (((AbsM - AbsB) / (m + b)) * FDM * FDV);
-        },
-        
-        // Reducer para limpiar el estado, asignando initialState a state
+        setResultado: (state, action) => { state.resultado = action.payload; },
         clear: (state) => {
             Object.assign(state, initialState);
         },
     },
 });
 
-export const { setAbsM, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, calcularAzufre, clear } = azufreSlice.actions;
+export const { setAbsM, setResultado, setAbsB, setM, setB, setAforo, setPesoMuestra, setAlicuota, clear } = azufreSlice.actions;
 export default azufreSlice.reducer;

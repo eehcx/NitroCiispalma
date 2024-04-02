@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 //React Native
-import { StyleSheet, SafeAreaView, ScrollView, View } from 'react-native';
-// React Native Paper
-import { PaperProvider, MD2Colors, ActivityIndicator } from 'react-native-paper';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 // React Navigation
 import { useNavigation } from '@react-navigation/native';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { setInformId } from '../../../features/client/informSlice';
-// Servicios
-import { getInformesCliente } from '../../../services/informes';
-// Styles
-import InputForms from '../../../styles/InputForms';
+import { getInforms } from '../../../services/queryService';
 // Componentes
-import ItemListRadioButton from '../../../components/interface/ItemListRadioButton';
+import ItemListRadioButton from '../../../components/common/ItemListRadioButton';
 
 // Pagina de listado de clientes
 export default CustomersInform = () => {
@@ -27,14 +22,12 @@ export default CustomersInform = () => {
     const [Reportes, setReportes] = useState({})
     const informesArray = Object.values(Reportes);
     // Estado de Carga de la página
-    const [loading, setLoading] = useState(true);
     const [isExtended, setIsExtended] = React.useState(false);
     const onScroll = ({ nativeEvent }) => { const currentScrollPosition = Math.floor(nativeEvent?.contentOffset?.y) ?? 0; setIsExtended(currentScrollPosition <= 0); };
 
     // Radio Button para seleccionar el uid de informe
     const handleRadioButtonPress = async (informId) => {
         setSelectedInformId(informId);
-        console.log('Informe seleccionado:', informId); 
         dispatch(setInformId(informId));
     };
 
@@ -42,21 +35,19 @@ export default CustomersInform = () => {
         try {
             dispatch(setInformId(informeId));
             navigation.navigate('InformDetails');
-            console.log('Inform: ',informeId);
         } catch (error) {
             console.error('Error al obtener datos de informes', error);
         }
     };
 
-    // Obtener el listado de informes del cliente
-    const getInformesClienteData = async (clientId) => {
-        const informes = await getInformesCliente(clientId);
-        setReportes(informes);
-    };
-
     useEffect(() => {
-        getInformesClienteData(clientId);
-        setLoading(false);
+        const unsubscribe = getInforms(clientId, (informesData) => {
+            setReportes(informesData);
+        });
+
+        return () => {
+            unsubscribe();
+        };
     }, [clientId]);
 
     // Formateo de fecha
@@ -66,28 +57,16 @@ export default CustomersInform = () => {
     };
 
     return (
-        <View style={[{ flex: 1, backgroundColor: "#fafafa"}]}>
-            <PaperProvider>
-                <SafeAreaView style={[styles.container]}>
-                    {loading ? (
-                        <View style={InputForms.container}>
-                            <ActivityIndicator size={'large'} animating={true} color={MD2Colors.green300} />
+        <View className='flex-1 bg-zinc-50'>
+            <SafeAreaView className='flex-grow'>
+                <ScrollView onScroll={onScroll}>
+                    {informesArray.slice().reverse().map((informe, index) => (
+                        <View key={index}>
+                            <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
                         </View>
-                    ) : (
-                        <ScrollView onScroll={onScroll}>
-                            {informesArray.slice().reverse().map((informe, index) => (
-                                <View key={index}>
-                                    <ItemListRadioButton title={informe.tipo_cultivo} content={formatFechaRecepcion(informe.fecha_recepcion)} onPress={() => handleRadioButtonPress(informe.uid)} status={informId === informe.uid ? 'checked' : 'unchecked'} value={informe.uid} details={() => handleDetails(informe.uid)} />
-                                </View>
-                            ))}
-                        </ScrollView>
-                    )}
-                </SafeAreaView>
-            </PaperProvider>
+                    ))}
+                </ScrollView>
+            </SafeAreaView>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: { flexGrow: 1 },
-});
